@@ -1,6 +1,6 @@
-const wiresReducer = (state = { wires:[], pageIndex:0, pageSize:10 }, action) => {
+const loansReducer = (state = { loans:[], pageIndex:0, pageSize:10, backToList:false }, action) => {
     switch(action.type){
-        case "UPDATEWIRELIST":
+        case "UPDATELOANLIST":
             return {
                 ...state,
                 ...action.payload
@@ -8,11 +8,11 @@ const wiresReducer = (state = { wires:[], pageIndex:0, pageSize:10 }, action) =>
         case "SETWIRES":
             return {
                 ...state,
-                wires: [].concat(action.payload)//[...state.wires,action.payload],
+                loans: [].concat(action.payload)//[...state.wires,action.payload],
             };
         default:
         return state;
     }
 }
 
-export default wiresReducer;
+export default loansReducer;

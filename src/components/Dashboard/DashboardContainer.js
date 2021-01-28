@@ -1,23 +1,16 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import "./dashboard.css";
-import WireBatch from "./../wire/wirebatch/WireBatch.js";
-import Wireslist from "./../wire/wirelist/Wireslist";
-import Wiredetails from "./../wire/wiredetails/WireDetails";
-import WireRemittanceDetails from "./../wire/wiredetails/WireRemittanceDetails.js"
+import Loanlist from "./../loans/loanlist/Loanlist.js";
+//import Loandetails from "./../wire/wiredetails/WireDetails";
 import NavBar from "./../Navbar/navbar";
 import LeftNavBar from "./../Leftnavbar/leftnavbar";
 import DashboardMain from "./DashboardMain";
-import ACHFileRecord from "./../ACH/ACHFileRecord/ACHFileRecord.js"
-import ACHBatchRecord from "./../ACH/ACHBatchRecord/ACHBatchRecord.js"
-import ACHDetailEntry from "./../ACH/ACHDetailEntry/ACHDetailEntry.js"
-import ACHDetails from "./../ACH/ACHDetailEntry/ACHDetails.js"
-import DepositList from './../Deposits/DepositList.js'
 import { useSelector } from 'react-redux';
 
-const WireListWrap = props => {
+const LoanListWrap = props => {
   //console.log(props);
-  return <Wireslist batchRec={props.location.state} />;
+  return <Loanlist loanRec={props.location.state} />;
 };
 
 const routes = [
@@ -27,47 +20,19 @@ const routes = [
     main: () => <DashboardMain />
   },
   {
-    path: "/wires",
-    main: () => <WireBatch disType="list" />
-  },
+    path: "/loans",
+    exact: true,
+    main: LoanListWrap
+  }/*,
   {
     path: "/wireslist/:batchId",
     main: WireListWrap
   },
   {
-    path: "/wireslist",
+    path: "/loandetails/:loanID",
     exact: true,
-    main: WireListWrap
-  },
-  {
-    path: "/wiredetails/:wireID",
-    exact: true,
-    main: () => <Wiredetails />
-  },
-  {
-    path: "/WireRemittanceDetails/:wireRemittanceID",
-    main: () => <WireRemittanceDetails />
-  },
-  {
-    path: "/ach",
-    main: () => <ACHFileRecord disType="list" />
-  },
-  {
-    path: "/ACHBatchRecord/:FileID",
-    main: () => <ACHBatchRecord />
-  },
-  {
-    path: "/ACHDetailEntry/:BatchID",
-    main: () => <ACHDetailEntry />
-  },
-  {
-    path: "/ACHDetails/:DetailID",
-    main: () => <ACHDetails />
-  },
-  {
-    path: "/deposits",
-    main: () => <DepositList />
-  }
+    main: () => <Loandetails />
+  }*/
 ];
 
 function DashboardContainer(props) {

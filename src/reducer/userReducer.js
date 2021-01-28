@@ -11,7 +11,7 @@ const userReducer = (state = {
     host:null,
     CUSTOMER_ENABLER: false,
     CUSTOMER_MODIFY_CREATE : false,
-    WIRE_ENABLER           : false,
+    LOAN_ENABLER           : false,
     WIRE_MODIFY_CREATE     : false,
     WIRE_EXPORT            : false,
     DEPOSITS_ENABLER       : false

@@ -278,14 +278,17 @@ function WireDetails(props) {
       showExportBtn = true;
     }
   }
-
-  const onWireExport = () => {
-    console.log("On Wire Export Button Click");
-    setDownloadexcel(!downloadexcel);
-    handleWireStatusChange();
-  }
-  console.log("DownloadExcel Val: "+ downloadexcel);
   */
+  const backToWireList = () => {
+    console.log("Back To Wire List Button Click");
+    dispatch({
+      type:'UPDATEWIRELIST',
+      payload:{
+        backToList:true
+      }
+    });
+    history.goBack();
+  }
   return (
     <React.Fragment>
       <Modal show={isOpen} onHide={hideModal}>
@@ -303,7 +306,7 @@ function WireDetails(props) {
           <div className="col-sm-12 col-md-offset-3">
             <h3 className="text-center">{getTitle()} - Wire {wireID}</h3>
             <div className="btnCls">
-              <button style={{ float: "left" }} type="button" onClick={() => history.goBack()} className="btn btn-primary btn-sm">
+              <button style={{ float: "left" }} type="button" onClick={backToWireList} className="btn btn-primary btn-sm">
                 Back
               </button>
               {/*

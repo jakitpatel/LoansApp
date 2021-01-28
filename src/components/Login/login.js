@@ -39,15 +39,14 @@ function Login(props) {
         }
       }
     }
-
+    
     // Get the Permission based on UID
     let cust_enabler_val = false;
     let cust_modify_create_val = false;
-    let wire_enabler_val       = false;
+    let loan_enabler_val       = true;
     let wire_modify_create_val = false;
     let wire_export_val = false;
-    let ach_enabler_val = false;
-    let deposits_enabler_val = false;
+    /*
     try {
       const options = {
         headers: {
@@ -99,14 +98,12 @@ function Login(props) {
         }
       }
     }
-    
+    */
     console.log("cust_modify_create_val" +cust_modify_create_val);
     console.log("cust_enabler_val" +cust_enabler_val);
-    console.log("wire_enabler_val" +wire_enabler_val);
+    console.log("loan_enabler_val" +loan_enabler_val);
     console.log("wire_modify_create_val" +wire_modify_create_val);
     console.log("wire_export_val" +wire_export_val);
-    console.log("ach_enabler_val" +ach_enabler_val);
-    console.log("deposits_enabler_val : " +deposits_enabler_val);
     
     dispatch({
       type:'UPDATEUSER',
@@ -123,11 +120,9 @@ function Login(props) {
         host : res.data.host,
         CUSTOMER_ENABLER       : cust_enabler_val, 
         CUSTOMER_MODIFY_CREATE : cust_modify_create_val,
-        WIRE_ENABLER           : wire_enabler_val,
+        LOAN_ENABLER           : loan_enabler_val,
         WIRE_MODIFY_CREATE     : wire_modify_create_val,
-        WIRE_EXPORT            : wire_export_val,
-        ACH_ENABLER            : ach_enabler_val,
-        DEPOSITS_ENABLER       : deposits_enabler_val
+        WIRE_EXPORT            : wire_export_val
       }
     });
     setRedirectToDashboard(true);
@@ -147,12 +142,12 @@ function Login(props) {
           <div>
             <form onSubmit={handleLogin}>
               <div className="form-group">
-                <label>UID</label>
+                <label>Email</label>
                 <input
                   type="text"
                   name="email"
                   autoFocus
-                  placeholder="UserId"
+                  placeholder="Email"
                   value={email}
                   className="form-control"
                   onChange={e => setEmail(e.target.value)}

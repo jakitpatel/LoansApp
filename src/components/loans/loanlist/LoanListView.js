@@ -1,14 +1,11 @@
-import React, { useEffect, useMemo } from "react";
-import { useTable, useSortBy, useFilters, usePagination } from 'react-table'
-import styled from 'styled-components'
-import ReactTooltip from 'react-tooltip';
-import './WireBatchListview.css';
-import axios from 'axios';
-import { useSelector } from 'react-redux';
-import {API_KEY, WireBatch_Url} from './../../../const';
+import React, { useEffect, useMemo, useState } from "react";
+import { useTable, useSortBy, useFilters, usePagination, useRowSelect, useAsyncDebounce } from 'react-table';
+import styled from 'styled-components';
+import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+import ReactTooltip from 'react-tooltip';
+import './LoanListView.css';
 import DefaultColumnFilter from './../../Filter/DefaultColumnFilter';
-import {buildSortByUrl, buildPageUrl, buildFilterUrl} from './../../Functions/functions.js';
 
 const Styles = styled.div`
   padding: 1rem;
@@ -38,18 +35,40 @@ const Styles = styled.div`
     }
   }
 `
+const IndeterminateCheckbox = React.forwardRef(
+  ({ indeterminate, ...rest }, ref) => {
+    const defaultRef = React.useRef()
+    const resolvedRef = ref || defaultRef
+
+    React.useEffect(() => {
+      resolvedRef.current.indeterminate = indeterminate
+    }, [resolvedRef, indeterminate])
+
+    return (
+      <>
+        <input type="checkbox" ref={resolvedRef} {...rest} />
+      </>
+    )
+  }
+)
+
 function Table({
   getTbdProps, 
   columns, 
-  data,
+  data, 
   filtersarr, 
   setFiltersarr,
   initialState,
+  pageState,
   fetchData,
   loading,
-  pageCount: controlledPageCount 
+  pageCount: controlledPageCount, 
+  selectedRowsTb, 
+  setSelectedRowsTb,
+  isRefresh,
+  setIsRefresh
 }) {
-
+  /*
   const filterTypes = React.useMemo(
     () => ({
       // Or, override the default text filter to use
@@ -67,16 +86,20 @@ function Table({
     }),
     []
   )
-
+  */
   const defaultColumn = React.useMemo(
     () => ({
       // Let's set up our default Filter UI
       Filter: DefaultColumnFilter,
     }),
     []
-  )
+  );
+
   const location = useLocation();
+  const dispatch = useDispatch();
+
   // Use the state and functions returned from useTable to build your UI
+
   const {
     getTableProps,
     getTableBodyProps,
@@ -86,6 +109,7 @@ function Table({
     getTdProps,
     prepareRow,
     setHiddenColumns,
+    selectedFlatRows,
     // below new props related to 'usePagination' hook
     canPreviousPage,
     canNextPage,
@@ -95,7 +119,7 @@ function Table({
     nextPage,
     previousPage,
     setPageSize,
-    state: { filters, pageIndex, pageSize, sortBy } // Get the state from the instance
+    state: { filters, pageIndex, pageSize, sortBy, selectedRowIds } // Get the state from the instance
   } = useTable({
     getTbdProps,
     columns,
@@ -104,16 +128,138 @@ function Table({
     manualFilters: true,
     manualSortBy: true,
     //filterTypes,
-    initialState: { filters: filtersarr, pageIndex: 0, pageSize: initialState.pageSize, sortBy: initialState.sortBy },
+    initialState: { filters: filtersarr, pageIndex: initialState.pageIndex, pageSize: initialState.pageSize, sortBy: initialState.sortBy },
     manualPagination: true, // Tell the usePagination hook that we'll handle our own data fetching
     //autoResetPage: false,
-    pageCount: controlledPageCount // This means we'll also have to provide our own pageCount.
+    pageCount: controlledPageCount, // This means we'll also have to provide our own pageCount.
+    /*,state: {
+      selectedRowIds: selectedRowsTb
+    }*/
+    
+    useControlledState: state => {
+      return React.useMemo(
+        () => {
+          console.log(pageState);
+          console.log(state);
+          console.log(initialState);
+          let pageIndexVal = state.pageIndex;
+
+          if(pageState.backToList){
+            pageIndexVal = pageState.pageIndex;
+            setTimeout(() => {
+            console.log("pageIndex State : "+pageIndex);
+              dispatch({
+                type:'UPDATEWIRELIST',
+                payload:{
+                  backToList:false
+                }
+              });
+            }, 2000);
+            console.log("setPageIndex : "+pageIndexVal);
+            return ({
+              ...state,
+              pageIndex: pageIndexVal,
+            })
+          } else {
+            return ({
+              ...state
+            })
+          }
+        },
+        [state]
+      )
+    }
   },
   useFilters, // useFilters!
   useSortBy,
-  usePagination
-  )
+  usePagination,
+  useRowSelect,
+  hooks => {
+    hooks.visibleColumns.push(columns => [
+      // Let's make a column for selection
+      {
+        id: 'selection',
+        disableFilters: true,
+        show : true,
+        minWidth: 45,
+        width: 45,
+        maxWidth: 45,
+        // The header can use the table's getToggleAllRowsSelectedProps method
+        // to render a checkbox
+        Header: ({ getToggleAllRowsSelectedProps }) => (
+          <div>
+            <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />
+          </div>
+        ),
+        // The cell can use the individual row's getToggleRowSelectedProps method
+        // to the render a checkbox
+        Cell: ({ row }) => {
+          //console.log("Cell Render");
+          //console.log(row);
+          if (row.original.status !== "DONE" && (row.original.errorMsg == null || row.original.errorMsg === "")) {
+            return (
+              <div>
+                <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
+              </div>
+            );
+          } else {
+            row.isSelected = false;
+            return (
+              <div>
+                <IndeterminateCheckbox
+                  checked={false}
+                  readOnly
+                  style={row.getToggleRowSelectedProps().style}
+                />
+              </div>
+            );
+          }
+        }
+      },
+      ...columns,
+    ])
+  })
+  
+  useEffect(() => {
+    let selWireArr = [];
+      for(let i=0; i<selectedFlatRows.length; i++){
+        if(selectedFlatRows[i].isSelected)
+        selWireArr.push(selectedFlatRows[i].original);
+      }
+    setSelectedRowsTb(selWireArr);
+    //setSelectedRows(selectedFlatRows);
+    console.log(selectedRowIds);
+    
+  }, [setSelectedRowsTb, selectedRowIds]);
 
+  // Debounce our onFetchData call for 100ms
+  const onFetchDataDebounced = useAsyncDebounce(fetchData, 100);
+
+  // Listen for changes in pagination and use the state to fetch our new data
+  React.useEffect(() => {
+    //fetchData({ pageIndex, pageSize });
+    console.log("Page Index :- " +pageIndex);
+    setFiltersarr(filters);
+    onFetchDataDebounced({ pageIndex, pageSize, filters, sortBy });
+  }, [isRefresh, setIsRefresh, onFetchDataDebounced, pageIndex, pageSize, filters, setFiltersarr, sortBy, location.key]);
+  /*
+  useEffect(() => {
+    console.log("After Render Wire List View");
+    if(pageState.backToList){
+      //gotoPage(pageState.pageIndex);
+      console.log("pageIndex State : "+pageIndex);
+      setTimeout(() => {
+        console.log("pageIndex State : "+pageIndex);
+        /*dispatch({
+          type:'UPDATEWIRELIST',
+          payload:{
+            backToList:false
+          }
+        });
+      }, 1000);
+    }
+  }, [dispatch, gotoPage, pageIndex, pageState.backToList, pageState.pageIndex]);
+  */
   /*
   useEffect(() => {
     setHiddenColumns(
@@ -121,14 +267,8 @@ function Table({
     );
   }, [columns, setHiddenColumns]);
   */
-  // Listen for changes in pagination and use the state to fetch our new data
-  React.useEffect(() => {
-    //fetchData({ pageIndex, pageSize });
-    setFiltersarr(filters);
-    fetchData({ pageIndex, pageSize, filters, sortBy });
-  }, [fetchData, pageIndex, pageSize, filters, setFiltersarr, sortBy, location.key]);
-
   // Render the UI for your table
+  //console.log("Table : isRefresh :"+isRefresh);
   return (
     <>
     {/*
@@ -162,6 +302,10 @@ function Table({
         </pre>
       </div>
       */}
+    {/* 
+      Pagination can be built however you'd like. 
+      This is just a very basic UI implementation:
+    */}
     {pageCount>1 &&
     <div className="pagination row">
       <div className="col-md-3">
@@ -217,10 +361,10 @@ function Table({
       </div>
     </div>
     }
-    <table {...getTableProps()}>
+    <table key={isRefresh} {...getTableProps()}>
       <thead>
         {headerGroups.map(headerGroup => (
-          <tr {...headerGroup.getHeaderGroupProps()}>
+            <tr {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map(column => (
               <th width={column.width} {...column.getHeaderProps()}>
                 <div>
@@ -235,9 +379,9 @@ function Table({
                     </span>
                 </div>
                 {/* Render the columns filter UI */}
-                {/*<div>{column.canFilter ? column.render('Filter') : null}</div>*/}
+                <div>{column.canFilter ? column.render('Filter') : null}</div>
               </th>
-            ))}
+              ))}
               {/*
               <th width={column.width} {...column.getHeaderProps(column.getSortByToggleProps())}>{column.render('Header')}
               <span>
@@ -249,8 +393,8 @@ function Table({
                 </span>
               <div>{column.canFilter ? column.render('Filter') : null}</div>
               </th>
-            ))}
-            */}
+              ))}
+              */}
           </tr>
         ))}
       </thead>
@@ -269,91 +413,25 @@ function Table({
         })}
       </tbody>
     </table>
-    {/* 
-        Pagination can be built however you'd like. 
-        This is just a very basic UI implementation:
-      */}
     </>
   )
 }
 
- function WireBatchListview(props) {
-   // We'll start our table without any data
-   const [filtersarr, setFiltersarr] = React.useState([]);
-   const [data, setData] = React.useState([]);
-   const [loading, setLoading] = React.useState(false);
-   const [pageCount, setPageCount] = React.useState(0);
-   const fetchIdRef = React.useRef(0);
-
-   console.log(props.items);
+ function WireListView(props) {
+   //console.log(props.items);
    //const data = React.useMemo(() => props.items, [props.items])
-   
-   const { session_token } = useSelector(state => {
-        return {
-            ...state.userReducer
-        }
-   });
-
+ 
    const columns = React.useMemo(() => props.columnDefs,[props.columnDefs])
    
-   const { initialState } = props;
+   //const [selectedRows, setSelectedRows] = useState([]);
 
-   const resetFilters = React.useCallback(() => setFiltersarr([]), [setFiltersarr]);
-
-   const fetchData = React.useCallback(({ pageSize, pageIndex, filters, sortBy }) => {
-      // This will get called when the table needs new data
-      // You could fetch your data from literally anywhere,
-      // even a server. But for this example, we'll just fake it.
-
-      // Give this fetch an ID
-      const fetchId = ++fetchIdRef.current
-
-      // Set the loading state
-      setLoading(true);
-
-      async function fetchWireBatchList() {
-        const options = {
-          headers: {
-            'X-DreamFactory-API-Key': API_KEY,
-            'X-DreamFactory-Session-Token': session_token
-          }
-        };
-
-        let url = WireBatch_Url;
-        url += buildPageUrl(pageSize,pageIndex);
-        if(filters.length>0){
-          console.log("filters");
-          console.log(filters);
-          url += "&filter=";
-          url += buildFilterUrl(filters);
-        }
-        if(sortBy.length>0){
-          console.log(sortBy);
-          url += buildSortByUrl(sortBy);
-        }
-        url += "&include_count=true";
-        let res = await axios.get(url, options);
-        //console.log(res.data);
-        console.log(res.data.resource);
-        let wireArray = res.data.resource;
-        //console.log(wireArray);
-        setData(wireArray);
-        // Your server could send back total page count.
-        // For now we'll just fake it, too
-        let totalCnt = res.data.meta.count;
-        let pageCnt = Math.ceil(totalCnt / pageSize);
-        console.log("pageCnt : "+pageCnt);
-        setPageCount(Math.ceil(totalCnt / pageSize));
-
-        setLoading(false);
-      }
-      // Only update the data if this is the latest fetch
-      if (fetchId === fetchIdRef.current) {
-        fetchWireBatchList();
-      }
-    }, [session_token])
-
-
+   //const dispatch = useDispatch();
+   let { initialState, selectedRows, 
+    setSelectedRows, filtersarr, 
+    setFiltersarr, loading, 
+    fetchData, pageCount, 
+    data, isRefresh, setIsRefresh, pageState } = props;
+   
    const onRowClick = (state, rowInfo, column, instance) => {
       return {
         onClick: (e, handleOriginal) => {
@@ -380,21 +458,33 @@ function Table({
         }
       }
     }
-
+    console.log(selectedRows);
+    
+    useEffect(() => {
+      ReactTooltip.rebuild();
+    });
+    //console.log("List Table : isRefresh :"+isRefresh);
    return (
     <Styles>
-      <Table getTdProps={onRowClick} 
+      <ReactTooltip delayShow={200} id='wireListTtip' place="right" className="tooltipcls" textColor="#000000" backgroundColor="#f4f4f4" effect="float" multiline={true} />
+      <Table 
+        getTdProps={onRowClick} 
         columns={columns} 
         data={data}
         filtersarr={filtersarr}
         setFiltersarr={setFiltersarr}
         initialState={initialState}
+        pageState={pageState}
         fetchData={fetchData}
         loading={loading}
         pageCount={pageCount}
-      />
+        selectedRowsTb={selectedRows}
+        setSelectedRowsTb={setSelectedRows}
+        isRefresh={isRefresh}
+        setIsRefresh={setIsRefresh}
+        />
     </Styles>
   )
  }
 
- export default WireBatchListview;
+ export default WireListView;

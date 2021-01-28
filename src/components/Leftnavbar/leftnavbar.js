@@ -3,9 +3,6 @@ import { NavLink } from "react-router-dom";
 import * as Icon from "react-feather";
 import { useSelector } from 'react-redux';
 import './Leftnavbar.css';
-import DownloadProtocol from "./../protocol/DownloadProtocol";
-import WireProtocolPdf from './../../Documents/Fedwire.pdf';
-import ACHProtocolPdf from './../../Documents/NACHA_File_Layout_Guide.pdf';
 
 function MenuListItem(props) {
   const components = {
@@ -30,7 +27,7 @@ function MenuListItem(props) {
 // Stateless Function Component
 function LeftNavBar(props) {
   
-  const { WIRE_ENABLER, ACH_ENABLER, DEPOSITS_ENABLER } = useSelector(state => {
+  const { LOAN_ENABLER } = useSelector(state => {
     return {
         ...state.userReducer
     }
@@ -47,31 +44,11 @@ function LeftNavBar(props) {
             enableVal={true}
           />
           <MenuListItem
-            menuName="WireBatch"
-            routePath={`${process.env.PUBLIC_URL}/wires`}
-            iconName="users"
-            enableVal={WIRE_ENABLER}
-          />
-          <MenuListItem
-            menuName="Wires"
-            routePath={`${process.env.PUBLIC_URL}/wireslist`}
-            iconName="trello"
-            enableVal={WIRE_ENABLER}
-          />
-          <MenuListItem
-            menuName="ACH"
-            routePath={`${process.env.PUBLIC_URL}/ach`}
-            iconName="users"
-            enableVal={ACH_ENABLER}
-          />
-          <MenuListItem
-            menuName="Deposits"
-            routePath={`${process.env.PUBLIC_URL}/deposits`}
+            menuName="Loans"
+            routePath={`${process.env.PUBLIC_URL}/loans`}
             iconName="dollarSign"
-            enableVal={DEPOSITS_ENABLER}
+            enableVal={LOAN_ENABLER}
           />
-          <DownloadProtocol protocol={WireProtocolPdf} name="Wire" />
-          <DownloadProtocol protocol={ACHProtocolPdf} name="ACH" />
         </ul>
       </div>
     </nav>

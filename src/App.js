@@ -19,16 +19,8 @@ function App(props) {
         <Switch>
           <Route exact path={`${process.env.PUBLIC_URL}/login`} component={Login} />
           <Route exact path={`${process.env.PUBLIC_URL}/dashboard`} component={Dashboard} />
-          <Route exact path={`${process.env.PUBLIC_URL}/wires`} component={Dashboard} />
-          <Route exact path={`${process.env.PUBLIC_URL}/wireslist`} component={Dashboard} />
-          <Route exact path={`${process.env.PUBLIC_URL}/wireslist/:batchId`} component={Dashboard} />
-          <Route exact path={`${process.env.PUBLIC_URL}/wiredetails/:wireID`} component={Dashboard} />
-          <Route exact path={`${process.env.PUBLIC_URL}/WireRemittanceDetails/:wireRemittanceID`} component={Dashboard} />
-          <Route exact path={`${process.env.PUBLIC_URL}/ach`} component={Dashboard} />
-          <Route exact path={`${process.env.PUBLIC_URL}/ACHBatchRecord/:FileID`} component={Dashboard} />
-          <Route exact path={`${process.env.PUBLIC_URL}/ACHDetailEntry/:BatchID`} component={Dashboard} />
-          <Route exact path={`${process.env.PUBLIC_URL}/ACHDetails/:DetailID`} component={Dashboard} />
-          <Route exact path={`${process.env.PUBLIC_URL}/deposits`} component={Dashboard} />
+          <Route exact path={`${process.env.PUBLIC_URL}/loans`} component={Dashboard} />
+          <Route exact path={`${process.env.PUBLIC_URL}/loandetails/:loanID`} component={Dashboard} />
           <Route exact path={`${process.env.PUBLIC_URL}`} component={Login} />
         </Switch>
       </Provider>

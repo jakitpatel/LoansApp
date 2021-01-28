@@ -1,6 +1,6 @@
 {
-  "name": "wireapp",
-  "homepage": "https://devnycweb01.comfed.local/wireapp",
+  "name": "loanapp",
+  "homepage": "https://devnycweb01.comfed.local/loanapp",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
