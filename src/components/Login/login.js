@@ -19,7 +19,7 @@ function Login(props) {
     let res;
     try {
       const userCred = {
-        username: email,
+        email: email,
         password: password
       };
 

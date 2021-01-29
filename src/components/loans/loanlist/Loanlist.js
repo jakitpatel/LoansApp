@@ -31,7 +31,7 @@ function Loanlist(props) {
 
   const dispatch = useDispatch();
 
-  const { session_token } = useSelector(state => {
+  const { session_token, uid } = useSelector(state => {
       return {
           ...state.userReducer
       }
@@ -165,11 +165,11 @@ function Loanlist(props) {
 
       let url = Loans_Url;
       url += buildPageUrl(pageSize,pageIndex);
-      /*
-      if(batchRec){
-        url += "&filter=(wireBatchID='"+batchRec.wireBatchID+"')";
+      
+      if(uid){
+        url += "&filter=(userName like '%"+uid+"%')";
       }
-      */
+      
       if(filters.length>0){
         console.log("filters");
         console.log(filters);
