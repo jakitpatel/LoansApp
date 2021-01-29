@@ -167,8 +167,8 @@ function Loanlist(props) {
       url += buildPageUrl(pageSize,pageIndex);
       
       if(uid){
-        let tmpUrl = "(userName like %"+uid+"%)";
-        tmpUrl = encodeURIComponent(tmpUrl);
+        let tmpUrl = "(userName%20like%20%27%"+uid+"%%27)";
+        //tmpUrl = encodeURIComponent(tmpUrl);
         url += "&filter="+tmpUrl;
       }
       
