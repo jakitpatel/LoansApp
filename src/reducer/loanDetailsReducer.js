@@ -1,16 +1,16 @@
-const wireDetailsReducer = (state = {wireDetailsObj:{
-    wireID: null,
-    senderInfoFormatVer: "",
-    senderInfoUserReqCorrelation: "",
-    senderInfoTestProdCode: "",
-    senderInfoDupCode:"",
-    typeCode:"",
-    subtypeCode:"",
-    inputCycleDate:"",
-    inputSource: "",
-    inputSeqNum: "",
-    amount: "",
-    senderABANum: "",
+const loanDetailsReducer = (state = {loanDetailsObj:{
+    WFID: null,
+    broker: "",
+    businessName: "",
+    WFtaxID: "",
+    createDate:"",
+    R2ID:"",
+    LoanApplicationNumber:"",
+    LoanAmount:"",
+    PrimaryBorrower: "",
+    Address1: "",
+    Address2: "",
+    brokerList: "",
     senderShortName : "",
     receiverABANum : "",
     receiverShortName : "",
@@ -252,20 +252,19 @@ const wireDetailsReducer = (state = {wireDetailsObj:{
     errorCode: "",
     errorDescription: "",
     errorMsg:"",
-    textWireMsg:"",
-    wireRemittance_by_wireID:[]
-  }, wireRemittanceList:[]
+    textWireMsg:""
+  }
 }, action) => {
     switch(action.type){
-        case "SETWIREDETAILS":
+        case "SETLOANDETAILS":
             return {
                 ...state,
-                wireDetailsObj: action.payload //[].concat(action.payload)//[...state.wires,action.payload],
+                loanDetailsObj: action.payload //[].concat(action.payload)//[...state.wires,action.payload],
             };
         case "UPDATEWIREDETAILSFORM":
             return {
                 ...state,
-                wireDetailsObj: action.payload //{ ...state.wireDetailsObj, [e.target.name]: targetVal }[,action.payload],
+                loanDetailsObj: action.payload //{ ...state.wireDetailsObj, [e.target.name]: targetVal }[,action.payload],
             };
         case "SETWIREREMITTANCEDETAILS":
             return {
@@ -277,4 +276,4 @@ const wireDetailsReducer = (state = {wireDetailsObj:{
     }
 }
 
-export default wireDetailsReducer;
+export default loanDetailsReducer;

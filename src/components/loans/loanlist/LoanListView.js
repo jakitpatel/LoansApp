@@ -173,7 +173,7 @@ function Table({
   useFilters, // useFilters!
   useSortBy,
   usePagination,
-  useRowSelect,
+  useRowSelect/*,
   hooks => {
     hooks.visibleColumns.push(columns => [
       // Let's make a column for selection
@@ -218,7 +218,7 @@ function Table({
       },
       ...columns,
     ])
-  })
+  }*/)
   
   useEffect(() => {
     let selWireArr = [];

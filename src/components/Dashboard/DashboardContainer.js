@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import "./dashboard.css";
 import Loanlist from "./../loans/loanlist/Loanlist.js";
-//import Loandetails from "./../wire/wiredetails/WireDetails";
+import LoanDetails from "./../loans/loandetails/LoanDetails.js";
 import NavBar from "./../Navbar/navbar";
 import LeftNavBar from "./../Leftnavbar/leftnavbar";
 import DashboardMain from "./DashboardMain";
@@ -11,6 +11,11 @@ import { useSelector } from 'react-redux';
 const LoanListWrap = props => {
   //console.log(props);
   return <Loanlist loanRec={props.location.state} />;
+};
+
+const LoanDetailsWrap = props => {
+  //console.log(props);
+  return <LoanDetails loanRec={props.location.state} />;
 };
 
 const routes = [
@@ -27,12 +32,12 @@ const routes = [
   {
     path: "/wireslist/:batchId",
     main: WireListWrap
-  },
+  }*/,
   {
-    path: "/loandetails/:loanID",
+    path: "/loandetails/:WFID",
     exact: true,
-    main: () => <Loandetails />
-  }*/
+    main: LoanDetailsWrap
+  }
 ];
 
 function DashboardContainer(props) {

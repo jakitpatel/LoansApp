@@ -63,7 +63,7 @@ function Loanlist(props) {
         return (
           <Link
             to={{
-              pathname: `${process.env.PUBLIC_URL}/loandetails/${loanObj.loanID}`,
+              pathname: `${process.env.PUBLIC_URL}/loandetails/${loanObj.WFID}`,
               state: obj.row.original
             }}
           >
@@ -76,12 +76,6 @@ function Loanlist(props) {
       field: "WFID",
       Header: "WFID",
       accessor: "WFID",
-      disableFilters: true
-    },
-    {
-      field: "wireBatchID",
-      Header: "WireBatchID",
-      accessor: "wireBatchID",
       disableFilters: true
     },
     {
@@ -142,6 +136,11 @@ function Loanlist(props) {
       Header: "Address2",
       accessor: "Address2",
       disableFilters: true
+    },
+    {
+      field: "brokerList",
+      Header: "brokerList",
+      accessor: "brokerList"
     }
   ];
   

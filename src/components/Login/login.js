@@ -44,7 +44,7 @@ function Login(props) {
     let cust_enabler_val = false;
     let cust_modify_create_val = false;
     let loan_enabler_val       = true;
-    let wire_modify_create_val = false;
+    let loan_modify_create_val = true;
     let wire_export_val = false;
     /*
     try {
@@ -102,7 +102,7 @@ function Login(props) {
     console.log("cust_modify_create_val" +cust_modify_create_val);
     console.log("cust_enabler_val" +cust_enabler_val);
     console.log("loan_enabler_val" +loan_enabler_val);
-    console.log("wire_modify_create_val" +wire_modify_create_val);
+    console.log("loan_modify_create_val" +loan_modify_create_val);
     console.log("wire_export_val" +wire_export_val);
     
     dispatch({
@@ -121,7 +121,7 @@ function Login(props) {
         CUSTOMER_ENABLER       : cust_enabler_val, 
         CUSTOMER_MODIFY_CREATE : cust_modify_create_val,
         LOAN_ENABLER           : loan_enabler_val,
-        WIRE_MODIFY_CREATE     : wire_modify_create_val,
+        LOAN_MODIFY_CREATE     : loan_modify_create_val,
         WIRE_EXPORT            : wire_export_val
       }
     });
