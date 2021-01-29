@@ -167,13 +167,15 @@ function Loanlist(props) {
       url += buildPageUrl(pageSize,pageIndex);
       
       if(uid){
-        url += "&filter=(userName like '%"+uid+"%')";
+        let tmpUrl = "(userName like %"+uid+"%)";
+        tmpUrl = encodeURIComponent(tmpUrl);
+        url += "&filter="+tmpUrl;
       }
       
       if(filters.length>0){
         console.log("filters");
         console.log(filters);
-        if(batchRec){
+        if(uid){
           url += " and ";
         } else {
           url += "&filter=";
