@@ -136,12 +136,12 @@ function Loanlist(props) {
       Header: "Address2",
       accessor: "Address2",
       disableFilters: true
-    },
+    }/*,
     {
       field: "brokerList",
       Header: "brokerList",
       accessor: "brokerList"
-    }
+    }*/
   ];
   
   const fetchData = React.useCallback(({ pageSize, pageIndex, filters, sortBy }) => {
@@ -165,7 +165,7 @@ function Loanlist(props) {
 
       let url = Loans_Url;
       url += buildPageUrl(pageSize,pageIndex);
-      
+      /*
       if(uid){
         let tmpUrl = "(userName%20like%20%27%"+uid+"%%27)";
         let starttmpUrl = "(userName like %";
@@ -174,11 +174,11 @@ function Loanlist(props) {
         let fullqst = encodeURIComponent(starttmpUrl)+val+encodeURIComponent(endst);
         url += "&filter="+fullqst;
       }
-      
+      */
       if(filters.length>0){
         console.log("filters");
         console.log(filters);
-        if(uid){
+        if(batchRec){
           url += " and ";
         } else {
           url += "&filter=";
