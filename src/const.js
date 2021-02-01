@@ -13,6 +13,7 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
 
 let API_URL = "http://localhost:3001/";  // For Local Env
 let Login_Url = API_URL+"login"; // For Local Env
+let Internal_Login_Url = API_URL+"user/session?service=cfsb_ldap";  // For Production Env
 //let Loans_Url = API_URL+"v_fullReport";  // For Local Env
 let Loans_Url = API_URL+"getPPP";  // For Local Env
 let LoanDetails_Url = API_URL+"getLoanDetails";  // For Local Env
@@ -26,6 +27,7 @@ if(env==="PROD"){
      //API_URL = "https://vct9b3qbf8.execute-api.us-east-1.amazonaws.com/cfsb-test/";
 //https://ixx8qndz5a.execute-api.us-east-1.amazonaws.com/csfb_ppp/{proxy+}
     Login_Url = API_URL+"user/session";  // For Production Env
+    Internal_Login_Url = API_URL+"user/session?service=cfsb_ldap";  // For Production Env
     
   //Login_Url = API_URL+"session";  // For Production Env
     //Loans_Url = API_URL+"cfsb_sqlPPPserver/_table/v_fullReport"; 
@@ -38,4 +40,4 @@ if(env==="PROD"){
     Usr_Permission_Url = API_URL+"ppploans/permission?filter=";  // For Production Env
 }     
 
-export { API_URL, Login_Url, Loans_Url, LoanDetails_Url, Usr_Permission_Url };
+export { API_URL, Login_Url, Internal_Login_Url, Loans_Url, LoanDetails_Url, Usr_Permission_Url };
