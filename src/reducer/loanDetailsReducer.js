@@ -11,6 +11,9 @@ const loanDetailsReducer = (state = {loanDetailsObj:{
     Address1: "",
     Address2: "",
     brokerList: "",
+    ReviewerAssigned:"",
+    MentorAssigned: "",
+    FileStatusUpdateComments: "",
     senderShortName : "",
     receiverABANum : "",
     receiverShortName : "",
@@ -261,7 +264,7 @@ const loanDetailsReducer = (state = {loanDetailsObj:{
                 ...state,
                 loanDetailsObj: action.payload //[].concat(action.payload)//[...state.wires,action.payload],
             };
-        case "UPDATEWIREDETAILSFORM":
+        case "UPDATELOANDETAILSFORM":
             return {
                 ...state,
                 loanDetailsObj: action.payload //{ ...state.wireDetailsObj, [e.target.name]: targetVal }[,action.payload],

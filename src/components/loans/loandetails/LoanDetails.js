@@ -14,7 +14,7 @@ function LoanDetails(props) {
   const [modWireDtObj, setModWireDtObj] = useState({});
   const dispatch = useDispatch();
 
-  const { session_token } = useSelector(state => {
+  const { session_token, isInternalUser } = useSelector(state => {
       return {
           ...state.userReducer
       }
@@ -41,7 +41,7 @@ function LoanDetails(props) {
 
   function handleChange(e) {
     console.log("On Handle Change : "+ e.target.name);
-    /*
+    
     let targetVal = "";
     if(e.target.type === "checkbox"){
       targetVal = e.target.checked;
@@ -49,11 +49,10 @@ function LoanDetails(props) {
       targetVal = e.target.value;
     }
     dispatch({
-      type:'UPDATEWIREDETAILSFORM',
-      payload:{ ...wireDetailsObj, [e.target.name]: targetVal }
+      type:'UPDATELOANDETAILSFORM',
+      payload:{ ...loanDetailsObj, [e.target.name]: targetVal }
     });
-    setModWireDtObj({ ...modWireDtObj, [e.target.name]: targetVal });
-    */
+    //setModWireDtObj({ ...modWireDtObj, [e.target.name]: targetVal });
   }
 
   function getTitle() {
@@ -78,6 +77,11 @@ function LoanDetails(props) {
     });
     history.goBack();
   }
+
+  const saveLoanDetails = () => {
+    console.log("Save Loan Details");
+  }
+
   return (
     <React.Fragment>
       <div className="container" style={{marginLeft:"0px", maxWidth: "100%"}}>
@@ -88,6 +92,11 @@ function LoanDetails(props) {
               <button style={{ float: "left" }} type="button" onClick={backToWireList} className="btn btn-primary btn-sm">
                 Back
               </button>
+              {isInternalUser &&
+              <button type="button" style={{ float: "right" }} onClick={saveLoanDetails} className={`btn btn-primary btn-sm`}>
+                  Save
+                </button>
+              }
               <div style={{ clear:"both"}}></div>
             </div>
             <div className="col-sm-12">

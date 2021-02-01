@@ -52,7 +52,7 @@ function CustTextInput(props) {
             //placeholder={props.placeholdertext}
             value={fieldVal}
             onChange={e => props.inputchange(e)}
-            //readOnly={props.readOnlyValue}
+            readOnly={props.readOnlyValue}
           />
         </div>
       </div>
@@ -63,7 +63,7 @@ function CustTextInput(props) {
 function LoanDetailForm(props) {
   let wireDetailsObj = props.custstate;
   let wireID = wireDetailsObj.WFID;
-  const { LOAN_MODIFY_CREATE } = useSelector(state => {
+  const { LOAN_MODIFY_CREATE, isInternalUser } = useSelector(state => {
       return {
           ...state.userReducer
       }
@@ -78,35 +78,11 @@ function LoanDetailForm(props) {
             if(!str.includes(key)){
               if(key==="errorMsg"){
                 return null;
-              } else if(key==="textWireMsg"){
-                let valueSt = "";
-                if(value !== null && value !== ""){
-                  let msgArr = value.split("{");
-                  for (let i = 1; i < msgArr.length; i++) {
-                    msgArr[i] = "{"+msgArr[i] + "\n";
-                  }
-                  valueSt = msgArr.join("");
-                }
-                return (
-                  <div key={key} className="col-sm-12">
-                    <div className="form-group row">
-                      <label className="col-sm-2 col-form-label">textWireMsg</label>
-                      <div className="col-sm-10">
-                          <textarea 
-                          className="form-control" 
-                          rows="3" 
-                          name="textWireMsg"
-                          value={valueSt}
-                          //readOnly
-                          ></textarea>
-                      </div>
-                    </div>
-                  </div>
-                )
               } else {
-                let readOnlyVal = !LOAN_MODIFY_CREATE;
-                if(key==="status" || key==="wireType"){
-                  readOnlyVal = true;
+                let editFields = "ReviewerAssigned MentorAssigned FileStatusUpdateComments";
+                let readOnlyVal = true;
+                if(isInternalUser && (key==="ReviewerAssigned" || key==="MentorAssigned" || key==="FileStatusUpdateComments")){
+                  readOnlyVal = false;
                 }
                 return (
                   <React.Fragment key={key}>
