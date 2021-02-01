@@ -36,7 +36,7 @@ function Loanlist(props) {
 
   const dispatch = useDispatch();
 
-  const { session_token, uid, name } = useSelector(state => {
+  const { session_token, uid, name, isInternalUser } = useSelector(state => {
       return {
           ...state.userReducer
       }
@@ -53,7 +53,7 @@ function Loanlist(props) {
   let { batchRec } = props;
   console.log("backToList : "+backToList);
 
-  const columnDefs = [
+  let columnDefs = [
     {
       Header: "View",
       show : true, 
@@ -76,15 +76,16 @@ function Loanlist(props) {
           </Link>
         );
       }
-    },
-    /*
-    {
-      field: "WFID",
-      Header: "WFID",
-      accessor: "WFID",
-      disableFilters: true
-    },*/
-    {
+    }];
+    if(isInternalUser){
+      columnDefs.push({
+        field: "WFtaxID",
+        Header: "WFtaxID",
+        accessor: "WFtaxID",
+        show: false
+      });
+    }
+    columnDefs.push({
       field: "broker",
       Header: "broker",
       accessor: "broker",
@@ -167,8 +168,7 @@ function Loanlist(props) {
       field: "ErrorMessage",
       Header: "ErrorMessage",
       accessor: "ErrorMessage"
-    }
-  ];
+    });
   
   const fetchData = React.useCallback(({ pageSize, pageIndex, filters, sortBy }) => {
     // This will get called when the table needs new data
