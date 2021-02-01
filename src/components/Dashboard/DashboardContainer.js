@@ -74,7 +74,7 @@ function DashboardContainer(props) {
             <main className="container-fluid">
               <div className="row">
                 <LeftNavBar />
-                <main role="main" className="col-md-9 ml-sm-auto col-lg-10">
+                <main role="main" className="col-md-9 ml-sm-auto col-lg-11">
                   <div className="App">
                     {routes.map((route, index) => (
                       // Render more <Route>s with the same paths as
