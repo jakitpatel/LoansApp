@@ -72,12 +72,13 @@ function Loanlist(props) {
         );
       }
     },
+    /*
     {
       field: "WFID",
       Header: "WFID",
       accessor: "WFID",
       disableFilters: true
-    },
+    },*/
     {
       field: "broker",
       Header: "broker",
@@ -91,27 +92,25 @@ function Loanlist(props) {
       Header: "businessName",
       accessor: "businessName"
     },
-    {
-      name: "WFtaxID",
-      field: "WFtaxID",
-      Header: "WFtaxID",
-      accessor: "WFtaxID"
-    },
-    {
+    /*{
       field: "createDate",
       Header: "createDate",
       accessor: "createDate"
+    },*/
+    {
+      field: "ReviewerAssigned",
+      Header: "ReviewerAssigned",
+      accessor: "ReviewerAssigned"
     },
     {
-      field: "R2ID",
-      Header: "R2ID",
-      accessor: "R2ID"
+      field: "MentorAssigned",
+      Header: "MentorAssigned",
+      accessor: "MentorAssigned"
     },
     {
       field: "LoanApplicationNumber",
       Header: "LoanApplicationNumber",
-      accessor: "LoanApplicationNumber",
-      disableFilters: true,
+      accessor: "LoanApplicationNumber"
     },
     {
       field: "LoanAmount",
@@ -122,26 +121,48 @@ function Loanlist(props) {
     {
       field: "PrimaryBorrower",
       Header: "PrimaryBorrower",
-      accessor: "PrimaryBorrower",
-      disableFilters: true
+      accessor: "PrimaryBorrower"
     },
     {
-      field: "Address1",
-      Header: "Address1",
-      accessor: "Address1",
-      disableFilters: true,
+      field: "TotalRequest",
+      Header: "TotalRequest",
+      accessor: "TotalRequest"
     },
     {
-      field: "Address2",
-      Header: "Address2",
-      accessor: "Address2",
-      disableFilters: true
-    }/*,
+      field: "FileStatusUpdateComments",
+      Header: "FileStatusUpdateComments",
+      accessor: "FileStatusUpdateComments"
+    },
     {
-      field: "brokerList",
-      Header: "brokerList",
-      accessor: "brokerList"
-    }*/
+      field: "ApplicationStatus",
+      Header: "ApplicationStatus",
+      accessor: "ApplicationStatus"
+    },
+    {
+      field: "ImportStatus",
+      Header: "ImportStatus",
+      accessor: "ImportStatus"
+    },
+    {
+      field: "DocumentsSent",
+      Header: "DocumentsSent",
+      accessor: "DocumentsSent"
+    },
+    {
+      field: "DocumentsRequired",
+      Header: "DocumentsRequired",
+      accessor: "DocumentsRequired"
+    },
+    {
+      field: "ASE_Status",
+      Header: "ASE_Status",
+      accessor: "ASE_Status"
+    },
+    {
+      field: "ErrorMessage",
+      Header: "ErrorMessage",
+      accessor: "ErrorMessage"
+    }
   ];
   
   const fetchData = React.useCallback(({ pageSize, pageIndex, filters, sortBy }) => {
