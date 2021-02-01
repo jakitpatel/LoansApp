@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Redirect, useParams, useHistory, useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { CSVLink } from "react-csv";
 //import Listview from "./../../Listview/Listview";
 import LoanListView from "./LoanListView.js";
 import * as Icon from "react-feather";
@@ -16,7 +17,11 @@ import SelectColumnFilter from './../../Filter/SelectColumnFilter.js';
 function Loanlist(props) {
   let history = useHistory();
 
+  const listExportLink = useRef(null);
+  const listDetailsExportLink = useRef(null);
+
   // We'll start our table without any data
+  const [loanListData, setLoanListData] = React.useState([]);
   const [filtersarr, setFiltersarr] = React.useState([]);
   const [data, setData] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
@@ -31,7 +36,7 @@ function Loanlist(props) {
 
   const dispatch = useDispatch();
 
-  const { session_token, uid } = useSelector(state => {
+  const { session_token, uid, name } = useSelector(state => {
       return {
           ...state.userReducer
       }
@@ -221,7 +226,28 @@ function Loanlist(props) {
       let loanArray = res.data.resource;
       //console.log(wireArray);
       //setData(wireArray);
-      
+      //let loanListExpArray = [];
+      //loanListExpArray.push({});
+      let newArray = loanArray.map((data) => {
+        return {
+          'broker' : data.broker,
+          'businessName' : data.businessName,
+          'ReviewerAssigned': data.ReviewerAssigned,
+          'MentorAssigned' : data.MentorAssigned,
+          'LoanApplicationNumber' : data.LoanApplicationNumber,
+          'LoanAmount': data.LoanAmount,
+          'PrimaryBorrower' : data.PrimaryBorrower,
+          'TotalRequest' : data.TotalRequest,
+          'FileStatusUpdateComments': data.FileStatusUpdateComments,
+          'ApplicationStatus' : data.ApplicationStatus,
+          'ImportStatus' : data.ImportStatus,
+          'DocumentsSent': data.DocumentsSent,
+          'DocumentsRequired' : data.DocumentsRequired,
+          'ASE_Status' : data.ASE_Status,
+          'ErrorMessage': data.ErrorMessage
+        }
+      });
+      setLoanListData(newArray);
       dispatch({
         type:'UPDATELOANLIST',
         payload:{
@@ -286,6 +312,25 @@ function Loanlist(props) {
         setIsRefresh={setIsRefresh}
       />
     );
+  let loanFileName = "loanList.csv";
+  let loanDetailsFileName = "loanListDetails.csv";
+  const onLoanListExport = (event, dataType) => {
+    console.log("On Loan List Export Button Click");
+    if(loans.length > 0){
+      console.log(dataType);
+      if(dataType==="List"){
+        listExportLink.current.link.click();
+      } else {
+        listDetailsExportLink.current.link.click();
+      }
+    } else {
+      console.log("Return From Loans Export");
+      alert("No Loan is present");
+      return false;
+    }
+  }
+
+  let headerName = {name} - {uid};
   return (
     <React.Fragment>
       <div className="container" style={{marginLeft:"0px", width:"100%", maxWidth:"100%"}}>
@@ -293,6 +338,42 @@ function Loanlist(props) {
           <div className="col-sm-12 col-md-offset-3">
             <h3 className="title-center">{headerTitle}</h3>
             <div className="btnCls">
+            <React.Fragment>
+                <button type="button" style={{ float: "right" }} onClick={(e)=> {onLoanListExport(e,"ListDetails")}} className={`btn btn-primary btn-sm`}>
+                  Export List Details
+                </button>
+                <button type="button" style={{ float: "right", marginRight:"5px" }} onClick={(e)=> {onLoanListExport(e,"List")}} className={`btn btn-primary btn-sm`}>
+                  Export List
+                </button>
+                <CSVLink
+                      data={loanListData}
+                      headers={headerName}
+                      uFEFF={false}
+                      ref={listExportLink}
+                      filename={loanFileName}
+                      className={`btn btn-primary btn-sm invisible`}
+                      style={{ float: "right" }}
+                      target="_blank"
+                      /*onClick={(event, done) => {
+                        return onWireExport(event, done);
+                      }
+                    }*/
+                    >Export</CSVLink>
+                <CSVLink
+                      data={loans}
+                      headers={headerName}
+                      uFEFF={false}
+                      ref={listDetailsExportLink}
+                      filename={loanDetailsFileName}
+                      className={`btn btn-primary btn-sm invisible`}
+                      style={{ float: "right" }}
+                      target="_blank"
+                      /*onClick={(event, done) => {
+                        return onWireExport(event, done);
+                      }
+                    }*/
+                    >Export</CSVLink>
+              </React.Fragment>
               <div style={{ clear:"both"}}></div>
             </div>
             {disCmp}

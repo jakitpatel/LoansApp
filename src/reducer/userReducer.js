@@ -8,6 +8,7 @@ const userReducer = (state = {
     last_name:null,
     email:null,
     is_sys_admin:null,
+    isInternalUser:null,
     host:null,
     CUSTOMER_ENABLER: false,
     CUSTOMER_MODIFY_CREATE : false,

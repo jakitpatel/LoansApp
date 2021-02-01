@@ -20,12 +20,14 @@ function Login(props) {
   async function handleLogin(e) {
     e.preventDefault();
     let res;
+    let uid;
     try {
       console.log("isInternalUser :"+isInternalUser);
       let userCred = {
         email: email,
         password: password
       };
+      uid = email;
       let url = Login_Url;
       if(isInternalUser){
         userCred = {
@@ -33,6 +35,7 @@ function Login(props) {
           password: password
         };
         url = Internal_Login_Url;
+        uid = username;
       }
 
       res = await axios.post(url, userCred);
@@ -119,8 +122,9 @@ function Login(props) {
             session_token : res.data.session_token,
             session_id : res.data.session_id,  
             id  : res.data.id,
-            uid : email, 
+            uid : uid, 
             name: res.data.name,
+            isInternalUser: isInternalUser,
             first_name : res.data.first_name,
             last_name  : res.data.last_name,
             email : res.data.email,
