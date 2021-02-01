@@ -29,7 +29,7 @@ function Login(props) {
       let url = Login_Url;
       if(isInternalUser){
         userCred = {
-          username: email,
+          username: username,
           password: password
         };
         url = Internal_Login_Url;
