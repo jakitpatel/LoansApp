@@ -89,7 +89,7 @@ function LoanDetails(props) {
         }
       };
       let tmpLoanObj = {
-        LoanApplicationNumberOnly : loanDetailsObj.LoanApplicationNumberOnly,
+        ALDLoanApplicationNumberOnly : loanDetailsObj.ALDLoanApplicationNumberOnly,
         ReviewerAssigned : loanDetailsObj.ReviewerAssigned,
         MentorAssigned   : loanDetailsObj.MentorAssigned,
         LastModifyDate   : loanDetailsObj.LastModifyDate,
