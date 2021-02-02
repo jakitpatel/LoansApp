@@ -102,7 +102,7 @@ function LoanDetails(props) {
       //tmpLoanObj.wireID = wireID;
       //tmpLoanObj.LastUpdateUser = uid;
       //tmpLoanObj.LastUpdateDate = moment().format('YYYY-MM-DD');
-      let res = await axios.put(SetLoans_Url, tmpLoanObj, options);
+      let res = await axios.post(SetLoans_Url, tmpLoanObj, options);
       console.log(res);
       alert("Data saved successfully!");
       //setToCustomer(true);
