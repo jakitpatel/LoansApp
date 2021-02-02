@@ -22,6 +22,15 @@ let LoanDetails_Url = API_URL+"getLoanDetails";  // For Local Env
 let Usr_Permission_Url = API_URL+"wireAppPermission";  // For Local Env
 
 if(env==="PROD"){
+    API_URL   = "https://3gl57cxtbj.execute-api.us-east-1.amazonaws.com/cfsb_ppp1/";  // For Production Env via aws GW
+    Login_Url = API_URL+"brokersession";  // For Production Env
+    Internal_Login_Url = API_URL+"internalsession";  // For Production Env
+    Loans_Url = API_URL+"getppp";
+    SetLoans_Url = API_URL+"setloandata";
+    LoanDetails_Url = API_URL+"getLoanDetails?filter=";  // For Production Env
+    Usr_Permission_Url = API_URL+"ppploans/permission?filter=";  // For Production Env
+
+/*
     //API_URL   = "https://api-int.cfsb.com/api/v2/";  // For Production Env
     API_URL   = "https://ixx8qndz5a.execute-api.us-east-1.amazonaws.com/csfb_ppp/";  // For Production Env via aws GW
   //API_URL   = "https://ixx8qndz5a.execute-api.us-east-1.amazonaws.com/cfsb-test/";  // For Production Env via aws GW
@@ -41,6 +50,7 @@ if(env==="PROD"){
 
     LoanDetails_Url = API_URL+"getLoanDetails?filter=";  // For Production Env
     Usr_Permission_Url = API_URL+"ppploans/permission?filter=";  // For Production Env
+*/
 }     
 
 export { API_URL, Login_Url, Internal_Login_Url, Loans_Url, LoanDetails_Url, Usr_Permission_Url, SetLoans_Url };
