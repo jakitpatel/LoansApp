@@ -83,92 +83,132 @@ function Loanlist(props) {
         Header: "WFtaxID",
         accessor: "WFtaxID",
         show: false
+      },
+      {
+        field: "broker",
+        Header: "broker",
+        accessor: "broker",
+        //Filter: SelectColumnFilter,
+        //filter: 'includes'
+      },
+      {
+        name: "businessName",
+        field: "businessName",
+        Header: "businessName",
+        accessor: "businessName"
+      },
+      /*{
+        field: "createDate",
+        Header: "createDate",
+        accessor: "createDate"
+      },*/
+      {
+        field: "ReviewerAssigned",
+        Header: "ReviewerAssigned",
+        accessor: "ReviewerAssigned"
+      },
+      {
+        field: "MentorAssigned",
+        Header: "MentorAssigned",
+        accessor: "MentorAssigned"
+      },
+      {
+        field: "LoanApplicationNumber",
+        Header: "LoanApplicationNumber",
+        accessor: "LoanApplicationNumber"
+      },
+      {
+        field: "LoanAmount",
+        Header: "LoanAmount",
+        accessor: "LoanAmount",
+        disableFilters: true
+      },
+      {
+        field: "PrimaryBorrower",
+        Header: "PrimaryBorrower",
+        accessor: "PrimaryBorrower"
+      },
+      {
+        field: "TotalRequest",
+        Header: "TotalRequest",
+        accessor: "TotalRequest"
+      },
+      {
+        field: "FileStatusUpdateComments",
+        Header: "FileStatusUpdateComments",
+        accessor: "FileStatusUpdateComments"
+      },
+      {
+        field: "ApplicationStatus",
+        Header: "ApplicationStatus",
+        accessor: "ApplicationStatus"
+      },
+      {
+        field: "ImportStatus",
+        Header: "ImportStatus",
+        accessor: "ImportStatus"
+      },
+      {
+        field: "DocumentsSent",
+        Header: "DocumentsSent",
+        accessor: "DocumentsSent"
+      },
+      {
+        field: "DocumentsRequired",
+        Header: "DocumentsRequired",
+        accessor: "DocumentsRequired"
+      },
+      {
+        field: "ASE_Status",
+        Header: "ASE_Status",
+        accessor: "ASE_Status"
+      },
+      {
+        field: "ErrorMessage",
+        Header: "ErrorMessage",
+        accessor: "ErrorMessage"
+      });
+    } else {
+      columnDefs.push({
+        field: "LastUpdated",
+        Header: "LastUpdated",
+        accessor: "LastUpdated",
+        disableFilters: true
+        //Filter: SelectColumnFilter,
+        //filter: 'includes'
+      },
+      {
+        name: "businessName",
+        field: "businessName",
+        Header: "businessName",
+        accessor: "businessName"
+      },
+      {
+        field: "ReviewerAssigned",
+        Header: "ReviewerAssigned",
+        accessor: "ReviewerAssigned"
+      },
+      {
+        field: "LoanApplicationNumber",
+        Header: "LoanApplicationNumber",
+        accessor: "LoanApplicationNumber"
+      },
+      {
+        field: "LoanStatus",
+        Header: "LoanStatus",
+        accessor: "LoanStatus"
+      },
+      {
+        field: "SBALoanNumber",
+        Header: "SBALoanNumber",
+        accessor: "SBALoanNumber"
+      },
+      {
+        field: "ErrorMessage",
+        Header: "ErrorMessage",
+        accessor: "ErrorMessage"
       });
     }
-    columnDefs.push({
-      field: "broker",
-      Header: "broker",
-      accessor: "broker",
-      //Filter: SelectColumnFilter,
-      //filter: 'includes'
-    },
-    {
-      name: "businessName",
-      field: "businessName",
-      Header: "businessName",
-      accessor: "businessName"
-    },
-    /*{
-      field: "createDate",
-      Header: "createDate",
-      accessor: "createDate"
-    },*/
-    {
-      field: "ReviewerAssigned",
-      Header: "ReviewerAssigned",
-      accessor: "ReviewerAssigned"
-    },
-    {
-      field: "MentorAssigned",
-      Header: "MentorAssigned",
-      accessor: "MentorAssigned"
-    },
-    {
-      field: "LoanApplicationNumber",
-      Header: "LoanApplicationNumber",
-      accessor: "LoanApplicationNumber"
-    },
-    {
-      field: "LoanAmount",
-      Header: "LoanAmount",
-      accessor: "LoanAmount",
-      disableFilters: true,
-    },
-    {
-      field: "PrimaryBorrower",
-      Header: "PrimaryBorrower",
-      accessor: "PrimaryBorrower"
-    },
-    {
-      field: "TotalRequest",
-      Header: "TotalRequest",
-      accessor: "TotalRequest"
-    },
-    {
-      field: "FileStatusUpdateComments",
-      Header: "FileStatusUpdateComments",
-      accessor: "FileStatusUpdateComments"
-    },
-    {
-      field: "ApplicationStatus",
-      Header: "ApplicationStatus",
-      accessor: "ApplicationStatus"
-    },
-    {
-      field: "ImportStatus",
-      Header: "ImportStatus",
-      accessor: "ImportStatus"
-    },
-    {
-      field: "DocumentsSent",
-      Header: "DocumentsSent",
-      accessor: "DocumentsSent"
-    },
-    {
-      field: "DocumentsRequired",
-      Header: "DocumentsRequired",
-      accessor: "DocumentsRequired"
-    },
-    {
-      field: "ASE_Status",
-      Header: "ASE_Status",
-      accessor: "ASE_Status"
-    },
-    {
-      field: "ErrorMessage",
-      Header: "ErrorMessage",
-      accessor: "ErrorMessage"
-    });
   
   const fetchData = React.useCallback(({ pageSize, pageIndex, filters, sortBy }) => {
     // This will get called when the table needs new data
