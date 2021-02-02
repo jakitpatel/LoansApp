@@ -3,7 +3,7 @@ import { useParams, useHistory } from "react-router-dom";
 import LoanDetailForm from "./LoanDetailForm";
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
-import {API_KEY, WireDictionary_Url, Wire_tbl_Url, WireDetails_Url, env} from './../../../const';
+import {API_KEY, SetLoans_Url, Wire_tbl_Url, WireDetails_Url, env} from './../../../const';
 
 function LoanDetails(props) {
   let history = useHistory();
@@ -78,8 +78,44 @@ function LoanDetails(props) {
     history.goBack();
   }
 
-  const saveLoanDetails = () => {
+  const saveLoanDetails = async () => {
     console.log("Save Loan Details");
+    console.log(loanDetailsObj);
+    try {
+      const options = {
+        headers: {
+          'X-DreamFactory-API-Key': API_KEY,
+          'X-DreamFactory-Session-Token': session_token
+        }
+      };
+      let tmpLoanObj = {
+        LoanApplicationNumberOnly : loanDetailsObj.LoanApplicationNumberOnly,
+        ReviewerAssigned : loanDetailsObj.ReviewerAssigned,
+        MentorAssigned   : loanDetailsObj.MentorAssigned,
+        LastModifyDate   : loanDetailsObj.LastModifyDate,
+        StatusAComments  : loanDetailsObj.StatusAComments,
+        StatusBComments  : loanDetailsObj.StatusBComments,
+        StatusCComments  : loanDetailsObj.StatusCComments,
+        StatusDComments  : loanDetailsObj.StatusDComments,
+        StatusAComments  : loanDetailsObj.StatusAComments
+      };
+      //tmpLoanObj.wireID = wireID;
+      //tmpLoanObj.LastUpdateUser = uid;
+      //tmpLoanObj.LastUpdateDate = moment().format('YYYY-MM-DD');
+      let res = await axios.put(SetLoans_Url, tmpLoanObj, options);
+      console.log(res);
+      alert("Data saved successfully!");
+      //setToCustomer(true);
+    } catch (error) {
+      console.log(error.response);
+      if (401 === error.response.status) {
+          // handle error: inform user, go to login, etc
+          let res = error.response.data;
+          alert(res.error.message);
+      } else {
+        alert(error);
+      }
+    }
   }
 
   return (

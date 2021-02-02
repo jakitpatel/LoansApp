@@ -16,6 +16,8 @@ let Login_Url = API_URL+"login"; // For Local Env
 let Internal_Login_Url = API_URL+"login";  // For Production Env
 //let Loans_Url = API_URL+"v_fullReport";  // For Local Env
 let Loans_Url = API_URL+"getPPP";  // For Local Env
+let SetLoans_Url = API_URL+"setloandata";
+
 let LoanDetails_Url = API_URL+"getLoanDetails";  // For Local Env
 let Usr_Permission_Url = API_URL+"wireAppPermission";  // For Local Env
 
@@ -35,9 +37,10 @@ if(env==="PROD"){
    // For Local Env
    //  Loans_Url = API_URL+"ppploans/loans";  // For Local Env
 
-       
+    SetLoans_Url = API_URL+"setloandata";    
+
     LoanDetails_Url = API_URL+"getLoanDetails?filter=";  // For Production Env
     Usr_Permission_Url = API_URL+"ppploans/permission?filter=";  // For Production Env
 }     
 
-export { API_URL, Login_Url, Internal_Login_Url, Loans_Url, LoanDetails_Url, Usr_Permission_Url };
+export { API_URL, Login_Url, Internal_Login_Url, Loans_Url, LoanDetails_Url, Usr_Permission_Url, SetLoans_Url };
