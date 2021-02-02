@@ -81,7 +81,7 @@ function LoanDetailForm(props) {
               } else {
                 let editFields = "ReviewerAssigned MentorAssigned FileStatusUpdateComments";
                 let readOnlyVal = true;
-                if(isInternalUser && (key==="ReviewerAssigned" || key==="MentorAssigned" || key==="FileStatusUpdateComments")){
+                if(isInternalUser && (key==="ReviewerAssigned" || key==="MentorAssigned" || key==="LoanApplicationNumberOnly" || key==="LastModifyDate" || key==="StatusAComments" || key==="StatusBComments" || key==="StatusCComments" || key==="StatusDComments")){
                   readOnlyVal = false;
                 }
                 return (
