@@ -203,7 +203,7 @@ function Loanlist(props) {
       {
         name: "R2_LoanAmount",
         field: "R2_LoanAmount",
-        Header: "R2_LoanAmount",
+        Header: "LoanAmount",
         accessor: "R2_LoanAmount",
         disableFilters: true,
         // provide custom function to format props 
