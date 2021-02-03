@@ -4,7 +4,7 @@ import * as Icon from "react-feather";
 import { useSelector } from 'react-redux';
 import './Leftnavbar.css';
 import DownloadProtocol from "./../protocol/DownloadProtocol";
-import LoanQAndAPdf from './../../Documents/QAndA.pdf';
+import LoanFAQPdf from './../../Documents/FAQ.pdf';
 
 function MenuListItem(props) {
   const components = {
@@ -51,7 +51,7 @@ function LeftNavBar(props) {
             iconName="dollarSign"
             enableVal={LOAN_ENABLER}
           />
-          <DownloadProtocol protocol={LoanQAndAPdf} name="Q&A" />
+          <DownloadProtocol protocol={LoanFAQPdf} name="FAQ" />
         </ul>
       </div>
     </nav>

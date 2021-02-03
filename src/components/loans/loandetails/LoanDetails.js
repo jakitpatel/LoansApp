@@ -89,20 +89,19 @@ function LoanDetails(props) {
         }
       };
       let tmpLoanObj = {
-        ALDLoanApplicationNumberOnly : loanDetailsObj.ALDLoanApplicationNumberOnly,
+        //ALDLoanApplicationNumberOnly : loanDetailsObj.ALDLoanApplicationNumberOnly,
         ReviewerAssigned : loanDetailsObj.ReviewerAssigned,
         MentorAssigned   : loanDetailsObj.MentorAssigned,
         LastModifyDate   : loanDetailsObj.LastModifyDate,
         StatusAComments  : loanDetailsObj.StatusAComments,
         StatusBComments  : loanDetailsObj.StatusBComments,
         StatusCComments  : loanDetailsObj.StatusCComments,
-        StatusDComments  : loanDetailsObj.StatusDComments,
-        StatusAComments  : loanDetailsObj.StatusAComments
+        StatusDComments  : loanDetailsObj.StatusDComments
       };
-      //tmpLoanObj.wireID = wireID;
+      let ald_id = loanDetailsObj.ALD_ID;
       //tmpLoanObj.LastUpdateUser = uid;
       //tmpLoanObj.LastUpdateDate = moment().format('YYYY-MM-DD');
-      let res = await axios.post(SetLoans_Url, tmpLoanObj, options);
+      let res = await axios.put(SetLoans_Url+'/'+ald_id, tmpLoanObj, options);
       console.log(res);
       alert("Data saved successfully!");
       //setToCustomer(true);

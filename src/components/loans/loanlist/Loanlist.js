@@ -121,7 +121,8 @@ function Loanlist(props) {
         field: "LoanAmount",
         Header: "LoanAmount",
         accessor: "LoanAmount",
-        disableFilters: true
+        disableFilters: true,
+        Cell: props => new Intl.NumberFormat('en-US',{ style: 'currency', currency: 'USD' }).format(props.value) // '$100.00'
       },
       {
         field: "PrimaryBorrower",
@@ -170,46 +171,54 @@ function Loanlist(props) {
       });
     } else {
       columnDefs.push({
-        field: "LastUpdated",
-        Header: "LastUpdated",
-        accessor: "LastUpdated",
-        disableFilters: true
+        field: "ALDLoanApplicationNumberOnly",
+        Header: "ALDLoanApplicationNumberOnly",
+        accessor: "ALDLoanApplicationNumberOnly"
+        //Filter: SelectColumnFilter,
+        //filter: 'includes'
+      },{
+        field: "PrimaryBorrower",
+        Header: "PrimaryBorrower",
+        accessor: "PrimaryBorrower"
         //Filter: SelectColumnFilter,
         //filter: 'includes'
       },
       {
-        name: "businessName",
-        field: "businessName",
-        Header: "businessName",
-        accessor: "businessName"
+        name: "R2_LoanAmount",
+        field: "R2_LoanAmount",
+        Header: "R2_LoanAmount",
+        accessor: "R2_LoanAmount",
+        disableFilters: true,
+        // provide custom function to format props 
+        Cell: props => new Intl.NumberFormat('en-US',{ style: 'currency', currency: 'USD' }).format(props.value) // '$100.00'
       },
       {
-        field: "ReviewerAssigned",
-        Header: "ReviewerAssigned",
-        accessor: "ReviewerAssigned"
+        field: "MentorAssigned",
+        Header: "MentorAssigned",
+        accessor: "MentorAssigned"
       },
       {
-        field: "LoanApplicationNumber",
-        Header: "LoanApplicationNumber",
-        accessor: "LoanApplicationNumber"
+        field: "LastModifyDate",
+        Header: "LastModifyDate",
+        accessor: "LastModifyDate",
+        disableFilters: true
       },
       {
-        field: "LoanStatus",
-        Header: "LoanStatus",
-        accessor: "LoanStatus"
+        field: "SBAStatus",
+        Header: "SBAStatus",
+        accessor: "SBAStatus"
       },
       {
         field: "SBALoanNumber",
         Header: "SBALoanNumber",
         accessor: "SBALoanNumber"
-      },
-      {
-        field: "ErrorMessage",
-        Header: "ErrorMessage",
-        accessor: "ErrorMessage"
       });
     }
   
+  function toCurrency(numberString) {
+      let number = parseFloat(numberString);
+      return number.toLocaleString('USD');
+  }
   const fetchData = React.useCallback(({ pageSize, pageIndex, filters, sortBy }) => {
     // This will get called when the table needs new data
     // You could fetch your data from literally anywhere,
@@ -370,7 +379,7 @@ function Loanlist(props) {
     }
   }
 
-  let headerName = {name} - {uid};
+  let headerName = ""+{name} - {uid};
   return (
     <React.Fragment>
       <div className="container" style={{marginLeft:"0px", width:"100%", maxWidth:"100%"}}>
