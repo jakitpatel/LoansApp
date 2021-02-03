@@ -53,32 +53,31 @@ function Loanlist(props) {
   let { batchRec } = props;
   console.log("backToList : "+backToList);
 
-  let columnDefs = [
-    {
-      Header: "View",
-      show : true, 
-      width: 55,
-      //id: 'colViewWireDetail',
-      accessor: row => row.attrbuiteName,
-      disableFilters: true,
-      //filterable: false, // Overrides the table option
-      Cell: obj => {
-        //console.log(obj.row);
-        let loanObj = obj.row.original;
-        return (
-          <Link
-            to={{
-              pathname: `${process.env.PUBLIC_URL}/loandetails/${loanObj.ALDLoanApplicationNumberOnly}`,
-              state: obj.row.original
-            }}
-          >
-            <Icon.Edit />
-          </Link>
-        );
-      }
-    }];
+  let columnDefs = [];
     if(isInternalUser){
       columnDefs.push({
+        Header: "View",
+        show : true, 
+        width: 55,
+        //id: 'colViewWireDetail',
+        accessor: row => row.attrbuiteName,
+        disableFilters: true,
+        //filterable: false, // Overrides the table option
+        Cell: obj => {
+          //console.log(obj.row);
+          let loanObj = obj.row.original;
+          return (
+            <Link
+              to={{
+                pathname: `${process.env.PUBLIC_URL}/loandetails/${loanObj.ALDLoanApplicationNumberOnly}`,
+                state: obj.row.original
+              }}
+            >
+              <Icon.Edit />
+            </Link>
+          );
+        }
+      },{
         field: "WFtaxID",
         Header: "WFtaxID",
         accessor: "WFtaxID",
@@ -208,7 +207,7 @@ function Loanlist(props) {
       },
       {
         field: "MentorAssigned",
-        Header: "MentorAssigned",
+        Header: "BankContact",
         accessor: "MentorAssigned"
       },
       {
