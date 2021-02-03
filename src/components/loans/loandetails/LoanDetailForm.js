@@ -74,7 +74,7 @@ function LoanDetailForm(props) {
       <div className="sm-vert-form form-row">
         {
           Object.entries(wireDetailsObj).map(([key, value]) => {
-            let str = "wireID wireBatchID wireDoc_by_wireID derivedErrorMsg row_num";
+            let str = "userName wireBatchID wireDoc_by_wireID derivedErrorMsg row_num";
             if(!str.includes(key)){
               if(key==="errorMsg"){
                 return null;

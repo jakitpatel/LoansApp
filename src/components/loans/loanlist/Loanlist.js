@@ -68,7 +68,7 @@ function Loanlist(props) {
         return (
           <Link
             to={{
-              pathname: `${process.env.PUBLIC_URL}/loandetails/${loanObj.WFID}`,
+              pathname: `${process.env.PUBLIC_URL}/loandetails/${loanObj.ALDLoanApplicationNumberOnly}`,
               state: obj.row.original
             }}
           >
@@ -172,7 +172,7 @@ function Loanlist(props) {
     } else {
       columnDefs.push({
         field: "ALDLoanApplicationNumberOnly",
-        Header: "ALDLoanApplicationNumberOnly",
+        Header: "LoanApplicationNumber",
         accessor: "ALDLoanApplicationNumberOnly"
         //Filter: SelectColumnFilter,
         //filter: 'includes'

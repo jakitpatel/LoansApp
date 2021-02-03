@@ -26,11 +26,11 @@ function LoanDetails(props) {
     }
   });
 
-  let { WFID } = useParams();
+  let { ALDLoanApplicationNumberOnly } = useParams();
   let loanRec = props.loanRec;
   console.log(loanRec);
   useEffect(() => {
-    console.log("WFID : "+WFID);
+    console.log("ALDLoanApplicationNumberOnly : "+ALDLoanApplicationNumberOnly);
     let ignore = false;
     dispatch({
       type:'SETLOANDETAILS',
@@ -122,7 +122,7 @@ function LoanDetails(props) {
       <div className="container" style={{marginLeft:"0px", maxWidth: "100%"}}>
         <div className="row">
           <div className="col-sm-12 col-md-offset-3">
-            <h3 className="text-center">{getTitle()} - Loan {WFID}</h3>
+            <h3 className="text-center">{getTitle()} - Loan {ALDLoanApplicationNumberOnly}</h3>
             <div className="btnCls">
               <button style={{ float: "left" }} type="button" onClick={backToWireList} className="btn btn-primary btn-sm">
                 Back
