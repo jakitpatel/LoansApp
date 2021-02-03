@@ -34,7 +34,7 @@ const routes = [
     main: WireListWrap
   }*/,
   {
-    path: "/loandetails/:WFID",
+    path: "/loandetails/:ALDLoanApplicationNumberOnly",
     exact: true,
     main: LoanDetailsWrap
   }
