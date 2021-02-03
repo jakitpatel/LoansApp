@@ -122,7 +122,14 @@ function Loanlist(props) {
         Header: "LoanAmount",
         accessor: "LoanAmount",
         disableFilters: true,
-        Cell: props => new Intl.NumberFormat('en-US',{ style: 'currency', currency: 'USD' }).format(props.value) // '$100.00'
+        Cell: props => {
+          return (
+            <div style={{textAlign: "right"}}>
+             {new Intl.NumberFormat('en-US',{ style: 'currency', currency: 'USD' }).format(props.value)}
+            </div>
+          )
+          // '$100.00'
+        }
       },
       {
         field: "PrimaryBorrower",
@@ -190,7 +197,14 @@ function Loanlist(props) {
         accessor: "R2_LoanAmount",
         disableFilters: true,
         // provide custom function to format props 
-        Cell: props => new Intl.NumberFormat('en-US',{ style: 'currency', currency: 'USD' }).format(props.value) // '$100.00'
+        Cell: props => {
+          return (
+            <div style={{textAlign: "right"}}>
+             {new Intl.NumberFormat('en-US',{ style: 'currency', currency: 'USD' }).format(props.value)}
+            </div>
+          )
+          // '$100.00'
+        }
       },
       {
         field: "MentorAssigned",
