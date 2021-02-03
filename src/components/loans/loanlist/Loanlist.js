@@ -122,6 +122,9 @@ function Loanlist(props) {
         accessor: "LoanAmount",
         disableFilters: true,
         Cell: props => {
+          if(props.value===null) {
+            return null;
+          }
           return (
             <div style={{textAlign: "right"}}>
              {new Intl.NumberFormat('en-US',{ style: 'currency', currency: 'USD' }).format(props.value)}
@@ -185,7 +188,15 @@ function Loanlist(props) {
       },{
         field: "PrimaryBorrower",
         Header: "PrimaryBorrower",
-        accessor: "PrimaryBorrower"
+        accessor: "PrimaryBorrower",
+        Cell: props => {
+          let loanObj = props.row.original;
+          if(props.value===null) {
+            return loanObj.businessName;
+          } else {
+            return props.value;
+          }
+        }
         //Filter: SelectColumnFilter,
         //filter: 'includes'
       },
@@ -197,9 +208,12 @@ function Loanlist(props) {
         disableFilters: true,
         // provide custom function to format props 
         Cell: props => {
+          if(props.value===null) {
+            return null;
+          }
           return (
             <div style={{textAlign: "right"}}>
-             {new Intl.NumberFormat('en-US',{ style: 'currency', currency: 'USD' }).format(props.value)}
+             { new Intl.NumberFormat('en-US',{ style: 'currency', currency: 'USD' }).format(props.value)}
             </div>
           )
           // '$100.00'
