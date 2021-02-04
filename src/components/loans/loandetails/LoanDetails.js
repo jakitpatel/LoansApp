@@ -97,7 +97,17 @@ function LoanDetails(props) {
         StatusAComments  : loanDetailsObj.StatusAComments,
         StatusBComments  : loanDetailsObj.StatusBComments,
         StatusCComments  : loanDetailsObj.StatusCComments,
-        StatusDComments  : loanDetailsObj.StatusDComments
+        StatusDComments  : loanDetailsObj.StatusDComments,
+        MentorEmail      : loanDetailsObj.MentorEmail,
+        MentorPhone      : loanDetailsObj.MentorPhone,
+        statusIndication : loanDetailsObj.statusIndication,
+        businessIndication  : loanDetailsObj.businessIndication,
+        statusIndication : loanDetailsObj.statusIndication,
+        businessIndication  : loanDetailsObj.businessIndication,
+        personalIndication  : loanDetailsObj.personalIndication,
+        ownershipIndication : loanDetailsObj.ownershipIndication,
+        documentIndication  : loanDetailsObj.documentIndication,
+        finacialSeachIndication  : loanDetailsObj.finacialSeachIndication
       };
       let ald_id = loanDetailsObj.ALD_ID;
       //tmpLoanObj.LastUpdateUser = uid;
