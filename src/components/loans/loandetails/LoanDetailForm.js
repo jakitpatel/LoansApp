@@ -78,7 +78,7 @@ function LoanDetailForm(props) {
             let readOnlyVal = true;
             if(!str.includes(key)){
               if(isInternalUser){
-                if(isInternalUser && (key==="ReviewerAssigned" || key==="MentorAssigned" || key==="LoanApplicationNumberOnly" || key==="StatusAComments" || key==="StatusBComments" || key==="StatusCComments" || key==="StatusDComments")){
+                if(isInternalUser && (key==="ReviewerAssigned" || key==="MentorAssigned" || key==="LoanApplicationNumberOnly" || key==="StatusAComments" || key==="StatusBComments" || key==="StatusCComments" || key==="StatusDComments" || key==="statusIndication" || key==="businessIndication" || key==="personalIndication" || key==="ownershipIndication" || key==="documentIndication" || key==="finacialSeachIndication" || key==="MentorEmail" || key==="MentorPhone")){
                   readOnlyVal = false;
                 }
                 return (
