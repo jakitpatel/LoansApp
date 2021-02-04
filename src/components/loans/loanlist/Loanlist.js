@@ -22,6 +22,7 @@ function Loanlist(props) {
 
   // We'll start our table without any data
   const [loanListData, setLoanListData] = React.useState([]);
+  const [loanDetailsData, setLoanDetailsData] = React.useState([]);
   const [filtersarr, setFiltersarr] = React.useState([]);
   const [data, setData] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
@@ -332,25 +333,71 @@ function Loanlist(props) {
       //let loanListExpArray = [];
       //loanListExpArray.push({});
       let newArray = loanArray.map((data) => {
-        return {
-          'broker' : data.broker,
-          'businessName' : data.businessName,
-          'ReviewerAssigned': data.ReviewerAssigned,
-          'MentorAssigned' : data.MentorAssigned,
-          'LoanApplicationNumber' : data.LoanApplicationNumber,
-          'LoanAmount': data.LoanAmount,
-          'PrimaryBorrower' : data.PrimaryBorrower,
-          'TotalRequest' : data.TotalRequest,
-          'FileStatusUpdateComments': data.FileStatusUpdateComments,
-          'ApplicationStatus' : data.ApplicationStatus,
-          'ImportStatus' : data.ImportStatus,
-          'DocumentsSent': data.DocumentsSent,
-          'DocumentsRequired' : data.DocumentsRequired,
-          'ASE_Status' : data.ASE_Status,
-          'ErrorMessage': data.ErrorMessage
+        if(isInternalUser){
+          return {
+            'broker' : data.broker,
+            'businessName' : data.businessName,
+            'ReviewerAssigned': data.ReviewerAssigned,
+            'MentorAssigned' : data.MentorAssigned,
+            'LoanApplicationNumber' : data.LoanApplicationNumber,
+            'LoanAmount': data.LoanAmount,
+            'PrimaryBorrower' : data.PrimaryBorrower,
+            'TotalRequest' : data.TotalRequest,
+            'FileStatusUpdateComments': data.FileStatusUpdateComments,
+            'ApplicationStatus' : data.ApplicationStatus,
+            'ImportStatus' : data.ImportStatus,
+            'DocumentsSent': data.DocumentsSent,
+            'DocumentsRequired' : data.DocumentsRequired,
+            'ASE_Status' : data.ASE_Status,
+            'ErrorMessage': data.ErrorMessage
+          }
+        } else {
+          let amt = data.R2_LoanAmount;
+          if(amt!==null) {
+            amt = new Intl.NumberFormat('en-US',{ style: 'currency', currency: 'USD' }).format(amt);
+          }
+          return {
+            'ALDLoanApplicationNumberOnly' : data.ALDLoanApplicationNumberOnly,
+            'BusinessName' : data.PrimaryBorrower,
+            'R2_LoanAmount': amt,
+            'MentorAssigned' : data.MentorAssigned,
+            'LastModifyDate' : data.LastModifyDate,
+            'SBAStatus' : data.SBAStatus,
+            'SBALoanNumber': data.SBALoanNumber,
+            'statusIndication' : data.statusIndication
+          }
         }
       });
       setLoanListData(newArray);
+      if(isInternalUser){
+        setLoanDetailsData(loanArray);
+      } else {
+        let newDetailArray = loanArray.map((data) => {
+            let amt = data.R2_LoanAmount;
+            if(amt!==null) {
+              amt = new Intl.NumberFormat('en-US',{ style: 'currency', currency: 'USD' }).format(amt);
+            }
+            return {
+              'ALDLoanApplicationNumberOnly' : data.ALDLoanApplicationNumberOnly,
+              'BusinessName' : data.PrimaryBorrower,
+              'R2_LoanAmount': data.R2_LoanAmount,
+              'SBAStatus' : data.SBAStatus,
+              'ErrorMessage' : data.ErrorMessage,
+              'MentorAssigned' : data.MentorAssigned,
+              'MentorEmail' : data.MentorEmail,
+              'MentorPhone' : data.MentorPhone,
+              'LastModifyDate' : data.LastModifyDate,
+              'SBALoanNumber': data.SBALoanNumber,
+              'statusIndication' : data.statusIndication,
+              'businessIndication' : data.businessIndication,
+              'personalIndication' : data.personalIndication,
+              'ownershipIndication' : data.ownershipIndication,
+              'documentIndication' : data.documentIndication,
+              'finacialSeachIndication' : data.finacialSeachIndication
+            }
+        });
+        setLoanDetailsData(newDetailArray);
+      }
       dispatch({
         type:'UPDATELOANLIST',
         payload:{
@@ -463,7 +510,7 @@ function Loanlist(props) {
                     }*/
                     >Export</CSVLink>
                 <CSVLink
-                      data={loans}
+                      data={loanDetailsData}
                       headers={headerName}
                       uFEFF={false}
                       ref={listDetailsExportLink}
