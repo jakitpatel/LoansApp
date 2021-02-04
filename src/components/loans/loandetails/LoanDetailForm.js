@@ -29,7 +29,7 @@ function CustTextInput(props) {
   }
   //// Label Tooltip
   let labelTooltip = "";
-  let fieldLabel = props.labelText;
+  let fieldLabel = props.labelText+":";
 
   let fieldVal = props.val;
   if(fieldVal === null && fieldClass === "form-control" && tooltip === ""){
@@ -41,7 +41,7 @@ function CustTextInput(props) {
   return (
     <div className="col-sm-4">
       <div className="form-group row">
-        <label data-for='wireDetailForm' data-tip={labelTooltip} className="col-sm-5 col-form-label">{props.labelText}</label>
+        <label data-for='wireDetailForm' data-tip={labelTooltip} className="col-sm-4 col-form-label">{fieldLabel}</label>
         <div className="col-sm-7">
           <input
             type="text"
@@ -101,7 +101,10 @@ function LoanDetailForm(props) {
                   value = wireDetailsObj.businessName;
                 } else if(key==="ALDLoanApplicationNumberOnly"){
                   labelText = "Application #";
+                } else if(key==="R2_LoanAmount" && value!==null){
+                    value = new Intl.NumberFormat('en-US',{ style: 'currency', currency: 'USD' }).format(value);
                 }
+                
                 let fieldArr = fiedls_exist.split(" ");
                 let found = false;
                 for(var j=0; j<fieldArr.length;j++){
