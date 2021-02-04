@@ -380,7 +380,7 @@ function Loanlist(props) {
             return {
               'ALDLoanApplicationNumberOnly' : data.ALDLoanApplicationNumberOnly,
               'BusinessName' : data.PrimaryBorrower,
-              'R2_LoanAmount': data.R2_LoanAmount,
+              'R2_LoanAmount': amt,
               'SBAStatus' : data.SBAStatus,
               'ErrorMessage' : data.ErrorMessage,
               'MentorAssigned' : data.MentorAssigned,
