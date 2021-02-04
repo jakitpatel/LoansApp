@@ -180,14 +180,36 @@ function Loanlist(props) {
       });
     } else {
       columnDefs.push({
+        Header: "View",
+        show : true, 
+        width: 55,
+        //id: 'colViewWireDetail',
+        accessor: row => row.attrbuiteName,
+        disableFilters: true,
+        //filterable: false, // Overrides the table option
+        Cell: obj => {
+          //console.log(obj.row);
+          let loanObj = obj.row.original;
+          return (
+            <Link
+              to={{
+                pathname: `${process.env.PUBLIC_URL}/loandetails/${loanObj.ALDLoanApplicationNumberOnly}`,
+                state: obj.row.original
+              }}
+            >
+              <Icon.Edit />
+            </Link>
+          );
+        }
+      },{
         field: "ALDLoanApplicationNumberOnly",
-        Header: "LoanApplicationNumber",
+        Header: "Application #",
         accessor: "ALDLoanApplicationNumberOnly"
         //Filter: SelectColumnFilter,
         //filter: 'includes'
       },{
         field: "PrimaryBorrower",
-        Header: "PrimaryBorrower",
+        Header: "Business Name",
         accessor: "PrimaryBorrower",
         Cell: props => {
           let loanObj = props.row.original;
@@ -203,7 +225,7 @@ function Loanlist(props) {
       {
         name: "R2_LoanAmount",
         field: "R2_LoanAmount",
-        Header: "LoanAmount",
+        Header: "Loan Amount",
         accessor: "R2_LoanAmount",
         disableFilters: true,
         // provide custom function to format props 
@@ -221,24 +243,29 @@ function Loanlist(props) {
       },
       {
         field: "MentorAssigned",
-        Header: "BankContact",
+        Header: "Bank Contact",
         accessor: "MentorAssigned"
       },
       {
         field: "LastModifyDate",
-        Header: "LastModifyDate",
+        Header: "Date Modified",
         accessor: "LastModifyDate",
         disableFilters: true
       },
       {
         field: "SBAStatus",
-        Header: "SBAStatus",
+        Header: "SBA Status",
         accessor: "SBAStatus"
       },
       {
         field: "SBALoanNumber",
-        Header: "SBALoanNumber",
+        Header: "SBA Loan #",
         accessor: "SBALoanNumber"
+      },
+      {
+        field: "statusIndication",
+        Header: "Status",
+        accessor: "statusIndication"
       });
     }
   

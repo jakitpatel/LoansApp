@@ -51,6 +51,6 @@ if(env==="PROD"){
     LoanDetails_Url = API_URL+"getLoanDetails?filter=";  // For Production Env
     Usr_Permission_Url = API_URL+"ppploans/permission?filter=";  // For Production Env
 */
-}     
+}    
 
 export { API_URL, Login_Url, Internal_Login_Url, Loans_Url, LoanDetails_Url, Usr_Permission_Url, SetLoans_Url };

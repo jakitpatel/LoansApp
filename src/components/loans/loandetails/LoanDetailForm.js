@@ -74,14 +74,11 @@ function LoanDetailForm(props) {
       <div className="sm-vert-form form-row">
         {
           Object.entries(wireDetailsObj).map(([key, value]) => {
-            let str = "userName wireBatchID wireDoc_by_wireID derivedErrorMsg row_num";
+            let str = "userName row_num";
+            let readOnlyVal = true;
             if(!str.includes(key)){
-              if(key==="errorMsg"){
-                return null;
-              } else {
-                let editFields = "ReviewerAssigned MentorAssigned FileStatusUpdateComments";
-                let readOnlyVal = true;
-                if(isInternalUser && (key==="ReviewerAssigned" || key==="MentorAssigned" || key==="LoanApplicationNumberOnly" || key==="LastModifyDate" || key==="StatusAComments" || key==="StatusBComments" || key==="StatusCComments" || key==="StatusDComments")){
+              if(isInternalUser){
+                if(isInternalUser && (key==="ReviewerAssigned" || key==="MentorAssigned" || key==="LoanApplicationNumberOnly" || key==="StatusAComments" || key==="StatusBComments" || key==="StatusCComments" || key==="StatusDComments")){
                   readOnlyVal = false;
                 }
                 return (
@@ -97,6 +94,36 @@ function LoanDetailForm(props) {
                     />
                   </React.Fragment>
                 )
+              } else {
+                let fiedls_exist = "ALDLoanApplicationNumberOnly PrimaryBorrowers R2_LoanAmount SBAStatus ErrorMessage MentorAssigned MentorEmail MentorPhone LastModifyDate SBALoanNumber statusIndication businessIndication personalIndication documentIndication finacialSeachIndication";
+                let labelText = key;
+                if(key==="PrimaryBorrowers" && value===null){
+                  value = wireDetailsObj.businessName;
+                } else if(key==="ALDLoanApplicationNumberOnly"){
+                  labelText = "Application #";
+                }
+                let fieldArr = fiedls_exist.split(" ");
+                let found = false;
+                for(var j=0; j<fieldArr.length;j++){
+                  if(fieldArr[j] === key){
+                    found = true;
+                  }
+                }
+                if(found === true){
+                  return (
+                    <React.Fragment key={key}>
+                      <CustTextInput
+                        placeholdertext={key}
+                        labelText={labelText}
+                        nameref={key}
+                        inputchange={props.oncustinputchange}
+                        val={value}
+                        wireDtObj={wireDetailsObj}
+                        readOnlyValue={readOnlyVal}
+                      />
+                    </React.Fragment>
+                  )
+                }
               }
             } else {
               return null;

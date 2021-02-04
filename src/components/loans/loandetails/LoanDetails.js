@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import LoanDetailForm from "./LoanDetailForm";
 import axios from 'axios';
+import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
 import {API_KEY, SetLoans_Url, Wire_tbl_Url, WireDetails_Url, env} from './../../../const';
 
@@ -92,7 +93,7 @@ function LoanDetails(props) {
         //ALDLoanApplicationNumberOnly : loanDetailsObj.ALDLoanApplicationNumberOnly,
         ReviewerAssigned : loanDetailsObj.ReviewerAssigned,
         MentorAssigned   : loanDetailsObj.MentorAssigned,
-        LastModifyDate   : loanDetailsObj.LastModifyDate,
+        //LastModifyDate   : loanDetailsObj.LastModifyDate,
         StatusAComments  : loanDetailsObj.StatusAComments,
         StatusBComments  : loanDetailsObj.StatusBComments,
         StatusCComments  : loanDetailsObj.StatusCComments,
@@ -100,7 +101,7 @@ function LoanDetails(props) {
       };
       let ald_id = loanDetailsObj.ALD_ID;
       //tmpLoanObj.LastUpdateUser = uid;
-      //tmpLoanObj.LastUpdateDate = moment().format('YYYY-MM-DD');
+      tmpLoanObj.LastModifyDate = moment().format('YYYY-MM-DD');
       let res = await axios.put(SetLoans_Url+'/'+ald_id, tmpLoanObj, options);
       console.log(res);
       alert("Data saved successfully!");
