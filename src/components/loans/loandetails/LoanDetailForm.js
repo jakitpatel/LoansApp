@@ -81,19 +81,44 @@ function LoanDetailForm(props) {
                 if(isInternalUser && (key==="ReviewerAssigned" || key==="MentorAssigned" || key==="LoanApplicationNumberOnly" || key==="StatusAComments" || key==="StatusBComments" || key==="StatusCComments" || key==="StatusDComments" || key==="statusIndication" || key==="businessIndication" || key==="personalIndication" || key==="ownershipIndication" || key==="documentIndication" || key==="finacialSeachIndication" || key==="MentorEmail" || key==="MentorPhone")){
                   readOnlyVal = false;
                 }
-                return (
-                  <React.Fragment key={key}>
-                    <CustTextInput
-                      placeholdertext={key}
-                      labelText={key}
-                      nameref={key}
-                      inputchange={props.oncustinputchange}
-                      val={value}
-                      wireDtObj={wireDetailsObj}
-                      readOnlyValue={readOnlyVal}
-                    />
-                  </React.Fragment>
-                )
+                if(key==="statusIndication"){
+                  return (
+                    <React.Fragment key={key}>
+                      <div className="col-sm-4">
+                        <div className="form-group row">
+                          <label className="col-sm-4 col-form-label">{key}:</label>
+                          <div className="col-sm-7">
+                            <select
+                              className="form-control custom-select"
+                              name={key}
+                              value={value}
+                              onChange={e => props.oncustinputchange(e)}
+                            >
+                              <option value="Untouched">Untouched</option>                
+                              <option value="All OK">All OK</option>
+                              <option value="Issue Identified">Issue Identified</option>
+                              <option value="Issue Resolved">Issue Resolved</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </React.Fragment>
+                  )
+                } else {
+                  return (
+                    <React.Fragment key={key}>
+                      <CustTextInput
+                        placeholdertext={key}
+                        labelText={key}
+                        nameref={key}
+                        inputchange={props.oncustinputchange}
+                        val={value}
+                        wireDtObj={wireDetailsObj}
+                        readOnlyValue={readOnlyVal}
+                      />
+                    </React.Fragment>
+                  )
+                }
               } else {
                 let fiedls_exist = "ALDLoanApplicationNumberOnly PrimaryBorrowers R2_LoanAmount SBAStatus ErrorMessage MentorAssigned MentorEmail MentorPhone LastModifyDate SBALoanNumber statusIndication businessIndication personalIndication documentIndication finacialSeachIndication";
                 let labelText = key;
