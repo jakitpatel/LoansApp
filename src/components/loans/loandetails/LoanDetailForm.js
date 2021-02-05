@@ -258,6 +258,9 @@ function LoanDetailForm(props) {
                                 onChange={e => props.oncustinputchange(e)}
                               >
                                 <option value=""></option>
+                                <option value="Untouched">Untouched</option>                
+                                <option value="All OK">All OK</option>
+                                <option value="Identified">Issue Identified</option>
                                 <option value="Resolved">Issue Resolved</option>
                               </select>
                             </div>

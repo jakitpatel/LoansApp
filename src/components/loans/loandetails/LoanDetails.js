@@ -112,6 +112,10 @@ function LoanDetails(props) {
           finacialSeachIndication  : loanDetailsObj.finacialSeachIndication
         };
       } else {
+        if(loanDetailsObj.statusIndication!=="Resolved"){
+          alert("Please select Issue Resolved option to save.");
+          return;
+        }
         tmpLoanObj = {
           statusIndication : loanDetailsObj.statusIndication,
         };
