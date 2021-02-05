@@ -144,7 +144,7 @@ function LoanDetails(props) {
     }
   }
   let showResolvedIssueBtn = true;
-  if(loanDetailsObj.statusIndication==="Resolved"){
+  if(loanDetailsObj.statusIndication==="Resolved" || loanDetailsObj.statusIndication==="" || loanDetailsObj.statusIndication===null){
     showResolvedIssueBtn = false;
   }
   if(isInternalUser){
