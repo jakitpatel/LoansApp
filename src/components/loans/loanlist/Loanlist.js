@@ -405,8 +405,6 @@ function Loanlist(props) {
           pageSize:pageSize,
           loans:loanArray
         }
-        //type:'SETWIRES',
-        //payload:wireArray
       });
       
       // Your server could send back total page count.

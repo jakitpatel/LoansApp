@@ -61,19 +61,125 @@ function CustTextInput(props) {
 }
 
 function LoanDetailForm(props) {
-  let wireDetailsObj = props.custstate;
-  let wireID = wireDetailsObj.WFID;
-  const { LOAN_MODIFY_CREATE, isInternalUser } = useSelector(state => {
+  const { isInternalUser } = useSelector(state => {
       return {
           ...state.userReducer
       }
   });
+  let loanDetailsObj = props.custstate;
+  let loadDtOrdObj = loanDetailsObj;
+  if(isInternalUser){
+    loadDtOrdObj = {
+      "broker": loanDetailsObj.broker,
+      "businessName": loanDetailsObj.businessName,
+      "WFtaxID": loanDetailsObj.WFtaxID,
+      "createDate": loanDetailsObj.createDate,
+      "R2_LoanApplicationNumber": loanDetailsObj.R2_LoanApplicationNumber,
+      "R2_LoanAmount": loanDetailsObj.R2_LoanAmount,
+      "PrimaryBorrower": loanDetailsObj.PrimaryBorrower,
+      "Address1": loanDetailsObj.Address1,
+      "Address2": loanDetailsObj.Address2,
+      "ReviewerAssigned": loanDetailsObj.ReviewerAssigned,
+      "MentorAssigned": loanDetailsObj.MentorAssigned,
+      "MentorEmail": loanDetailsObj.MentorEmail,
+      "MentorPhone": loanDetailsObj.MentorPhone,
+      "StatusAComments": loanDetailsObj.StatusAComments,
+      "StatusBComments": loanDetailsObj.StatusBComments,
+      "StatusCComments": loanDetailsObj.StatusCComments,
+      "StatusDComments": loanDetailsObj.StatusDComments,
+      "statusIndication": loanDetailsObj.statusIndication,
+      "businessIndication": loanDetailsObj.businessIndication,
+      "personalIndication": loanDetailsObj.personalIndication,
+      "ownershipIndication": loanDetailsObj.ownershipIndication,
+      "documentIndication": loanDetailsObj.documentIndication,
+      "finacialSeachIndication": loanDetailsObj.finacialSeachIndication,
+      "AdobeSigned147": loanDetailsObj.AdobeSigned147,
+      "AdobeSigned147Date": loanDetailsObj.AdobeSigned147Date,
+      "AdobeSigned2483": loanDetailsObj.AdobeSigned2483,
+      "AdobeSigned2483Date": loanDetailsObj.AdobeSigned2483Date,
+      "AdobeSigned2484":loanDetailsObj.AdobeSigned2484,
+      "AdobeSigned2484Date": loanDetailsObj.AdobeSigned2484Date,
+      "ApplicationAutoImported": loanDetailsObj.ApplicationAutoImported,
+      "ApplicationCreatedDate": loanDetailsObj.ApplicationCreatedDate,
+      "ApplicationImportedDate": loanDetailsObj.ApplicationImportedDate,
+      "R2_ApplicationStatus": loanDetailsObj.R2_ApplicationStatus,
+      "AuthorizedSigner1": loanDetailsObj.AuthorizedSigner1,
+      "AuthorizedSignerEmail1": loanDetailsObj.AuthorizedSignerEmail1,
+      "AuthorizedSigner2": loanDetailsObj.AuthorizedSigner2,
+      "AuthorizedSignerEmail2": loanDetailsObj.AuthorizedSignerEmail2,
+      "AuthorizedSigner3": loanDetailsObj.AuthorizedSigner3,
+      "AuthorizedSignerEmail3": loanDetailsObj.AuthorizedSignerEmail3,
+      "Branch": loanDetailsObj.Branch,
+      "City": loanDetailsObj.City,
+      "DateBusinessEstablished": loanDetailsObj.DateBusinessEstablished,
+      "Email": loanDetailsObj.Email,
+      "ExportStatus": loanDetailsObj.ExportStatus,
+      "FirstDrawLoanAmount": loanDetailsObj.FirstDrawLoanAmount,
+      "FirstDrawSbaLoanNumber": loanDetailsObj.FirstDrawSbaLoanNumber,
+      "FranchiseNumber": loanDetailsObj.FranchiseNumber,
+      "HasExportErrors": loanDetailsObj.HasExportErrors,
+      "IndustryCode": loanDetailsObj.IndustryCode,
+      "Is_TaxID_SSN": loanDetailsObj.Is_TaxID_SSN,
+      "IsFranchiseCorporation": loanDetailsObj.IsFranchiseCorporation,
+      "IsSecondDrawLoan": loanDetailsObj.IsSecondDrawLoan,
+      "R2_LoanOfficer": loanDetailsObj.R2_LoanOfficer,
+      "LoanStatus": loanDetailsObj.LoanStatus,
+      "NumberOfEmployees": loanDetailsObj.NumberOfEmployees,
+      "OutstandingEIDL": loanDetailsObj.OutstandingEIDL,
+      "PayrollMonthlyAverageAmount": loanDetailsObj.PayrollMonthlyAverageAmount,
+      "Phone": loanDetailsObj.Phone,
+      "PostalCode": loanDetailsObj.PostalCode,
+      "PrimaryContactFirstName": loanDetailsObj.PrimaryContactFirstName,
+      "PrimaryContactLastName": loanDetailsObj.PrimaryContactLastName,
+      "Revenue2020": loanDetailsObj.Revenue2020,
+      "RevenueReferenceQuarter": loanDetailsObj.RevenueReferenceQuarter,
+      "RevenueReduction": loanDetailsObj.RevenueReduction,
+      "SBAApplicationNumber":loanDetailsObj.SBAApplicationNumber,
+      "SBAApprovalDate": loanDetailsObj.SBAApprovalDate,
+      "SBALoanNumber": loanDetailsObj.SBALoanNumber,
+      "SBAStatus": loanDetailsObj.SBAStatus,
+      "State": loanDetailsObj.State,
+      "R2_TaxID": loanDetailsObj.R2_TaxID,
+      "UseOfProceedsForSupplierCosts": loanDetailsObj.UseOfProceedsForSupplierCosts,
+      "ASE_LoanApplicationNumber": loanDetailsObj.ASE_LoanApplicationNumber,
+      "Borrower": loanDetailsObj.Borrower,
+      "LoanAmount": loanDetailsObj.LoanAmount,
+      "ASE_Status": loanDetailsObj.ASE_Status,
+      "ErrorMessage": loanDetailsObj.ErrorMessage,
+      "LoanApplicationNumber": loanDetailsObj.LoanApplicationNumber,
+      "StartDate"   : loanDetailsObj.StartDate,
+      "LastUpdated" : loanDetailsObj.LastUpdated,
+      "Origin"      : loanDetailsObj.Origin,
+      "ApplicationCategory": loanDetailsObj.ApplicationCategory,
+      "PrimaryBorrowers": loanDetailsObj.PrimaryBorrowers,
+      "TotalRequest"    : loanDetailsObj.TotalRequest,
+      "PPL_Broker"      : loanDetailsObj.PPL_Broker,
+      "ApplicationStatus": loanDetailsObj.ApplicationStatus,
+      "ImportStatus": loanDetailsObj.ImportStatus,
+      "LoanOfficer": loanDetailsObj.LoanOfficer,
+      "FirstLoanName": loanDetailsObj.FirstLoanName,
+      "FirstLoanStatus": loanDetailsObj.FirstLoanStatus,
+      "FirstLoanAmount": loanDetailsObj.FirstLoanAmount,
+      "FirstLoanTerm":loanDetailsObj.FirstLoanTerm,
+      "Person":loanDetailsObj.Person,
+      "Business": loanDetailsObj.Business,
+      "DocumentsSent": loanDetailsObj.DocumentsSent,
+      "DocumentsRequired": loanDetailsObj.DocumentsRequired,
+      "Purpose":loanDetailsObj.Purpose,
+      "TaxID": loanDetailsObj.TaxID,
+      "ALD_ID": loanDetailsObj.ALD_ID,
+      "ALDLoanApplicationNumberOnly": loanDetailsObj.ALDLoanApplicationNumberOnly,
+      "LastModifyDate": loanDetailsObj.LastModifyDate,
+      "userName": loanDetailsObj.userName
+    };
+  }
+  
   return (
     <React.Fragment>
       <ReactTooltip delayShow={200} id='wireDetailForm' place="right" className="tooltipcls" textColor="#000000" backgroundColor="#f4f4f4" effect="float" multiline={true} />
       <div className="sm-vert-form form-row">
         {
-          Object.entries(wireDetailsObj).map(([key, value]) => {
+          Object.entries(loadDtOrdObj).map(([key, value]) => {
             let str = "userName row_num";
             let readOnlyVal = true;
             if(!str.includes(key)){
@@ -113,7 +219,7 @@ function LoanDetailForm(props) {
                         nameref={key}
                         inputchange={props.oncustinputchange}
                         val={value}
-                        wireDtObj={wireDetailsObj}
+                        wireDtObj={loadDtOrdObj}
                         readOnlyValue={readOnlyVal}
                       />
                     </React.Fragment>
@@ -123,7 +229,7 @@ function LoanDetailForm(props) {
                 let fiedls_exist = "ALDLoanApplicationNumberOnly PrimaryBorrowers R2_LoanAmount SBAStatus ErrorMessage MentorAssigned MentorEmail MentorPhone LastModifyDate SBALoanNumber statusIndication businessIndication personalIndication documentIndication finacialSeachIndication";
                 let labelText = key;
                 if(key==="PrimaryBorrowers" && value===null){
-                  value = wireDetailsObj.businessName;
+                  value = loadDtOrdObj.businessName;
                 } else if(key==="ALDLoanApplicationNumberOnly"){
                   labelText = "Application #";
                 } else if(key==="R2_LoanAmount" && value!==null){
@@ -146,7 +252,7 @@ function LoanDetailForm(props) {
                         nameref={key}
                         inputchange={props.oncustinputchange}
                         val={value}
-                        wireDtObj={wireDetailsObj}
+                        wireDtObj={loadDtOrdObj}
                         readOnlyValue={readOnlyVal}
                       />
                     </React.Fragment>
