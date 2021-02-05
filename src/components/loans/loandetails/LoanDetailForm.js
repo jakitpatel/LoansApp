@@ -188,6 +188,9 @@ function LoanDetailForm(props) {
                   readOnlyVal = false;
                 }
                 if(key==="statusIndication"){
+                  if(value===null){
+                    value = "";
+                  }
                   return (
                     <React.Fragment key={key}>
                       <div className="col-sm-4">
@@ -245,6 +248,9 @@ function LoanDetailForm(props) {
                 }
                 if(found === true){
                   if(key==="statusIndication"){
+                    if(value===null){
+                      value = "";
+                    }
                     return (
                       <React.Fragment key={key}>
                         <div className="col-sm-4">

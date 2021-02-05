@@ -91,6 +91,10 @@ function LoanDetails(props) {
       };
       let tmpLoanObj = {};
       if(isInternalUser){
+        let statusVal = loanDetailsObj.statusIndication;
+        if(statusVal===""){
+          statusVal = null;
+        }
         tmpLoanObj = {
           //ALDLoanApplicationNumberOnly : loanDetailsObj.ALDLoanApplicationNumberOnly,
           ReviewerAssigned : loanDetailsObj.ReviewerAssigned,
@@ -102,9 +106,7 @@ function LoanDetails(props) {
           StatusDComments  : loanDetailsObj.StatusDComments,
           MentorEmail      : loanDetailsObj.MentorEmail,
           MentorPhone      : loanDetailsObj.MentorPhone,
-          statusIndication : loanDetailsObj.statusIndication,
-          businessIndication  : loanDetailsObj.businessIndication,
-          statusIndication : loanDetailsObj.statusIndication,
+          statusIndication : statusVal,
           businessIndication  : loanDetailsObj.businessIndication,
           personalIndication  : loanDetailsObj.personalIndication,
           ownershipIndication : loanDetailsObj.ownershipIndication,
