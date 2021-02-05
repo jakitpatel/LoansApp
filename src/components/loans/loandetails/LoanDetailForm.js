@@ -200,10 +200,11 @@ function LoanDetailForm(props) {
                               value={value}
                               onChange={e => props.oncustinputchange(e)}
                             >
+                              <option value=""></option>
                               <option value="Untouched">Untouched</option>                
                               <option value="All OK">All OK</option>
-                              <option value="Issue Identified">Issue Identified</option>
-                              <option value="Issue Resolved">Issue Resolved</option>
+                              <option value="Identified">Issue Identified</option>
+                              <option value="Resolved">Issue Resolved</option>
                             </select>
                           </div>
                         </div>
@@ -256,7 +257,8 @@ function LoanDetailForm(props) {
                                 value={value}
                                 onChange={e => props.oncustinputchange(e)}
                               >
-                                <option value="Issue Resolved">Issue Resolved</option>
+                                <option value=""></option>
+                                <option value="Resolved">Issue Resolved</option>
                               </select>
                             </div>
                           </div>
