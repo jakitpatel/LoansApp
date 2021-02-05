@@ -143,6 +143,13 @@ function LoanDetails(props) {
       //backToWireList();
     }
   }
+  let showResolvedIssueBtn = true;
+  if(loanDetailsObj.statusIndication==="Resolved"){
+    showResolvedIssueBtn = false;
+  }
+  if(isInternalUser){
+    showResolvedIssueBtn = false;
+  }
 
   return (
     <React.Fragment>
@@ -159,7 +166,7 @@ function LoanDetails(props) {
                   Save
                 </button>
               }
-              {!isInternalUser &&
+              {showResolvedIssueBtn &&
               <button type="button" style={{ float: "right" }} onClick={saveLoanDetails} className={`btn btn-primary btn-sm`}>
                   Resolve Issue
                 </button>
