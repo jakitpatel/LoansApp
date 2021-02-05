@@ -114,12 +114,13 @@ function LoanDetails(props) {
           finacialSeachIndication  : loanDetailsObj.finacialSeachIndication
         };
       } else {
+        /*
         if(loanDetailsObj.statusIndication!=="Resolved"){
           alert("Please select Issue Resolved option to save.");
           return;
-        }
+        }*/
         tmpLoanObj = {
-          statusIndication : loanDetailsObj.statusIndication,
+          statusIndication : "Resolved",
         };
       }
       let ald_id = loanDetailsObj.ALD_ID;
@@ -128,6 +129,7 @@ function LoanDetails(props) {
       let res = await axios.put(SetLoans_Url+'/'+ald_id, tmpLoanObj, options);
       console.log(res);
       alert("Data saved successfully!");
+      backToWireList();
       //setToCustomer(true);
     } catch (error) {
       console.log(error.response);
@@ -138,6 +140,7 @@ function LoanDetails(props) {
       } else {
         alert(error);
       }
+      //backToWireList();
     }
   }
 
@@ -151,11 +154,16 @@ function LoanDetails(props) {
               <button style={{ float: "left" }} type="button" onClick={backToWireList} className="btn btn-primary btn-sm">
                 Back
               </button>
-              {/*isInternalUser &&*/}
+              {isInternalUser &&
               <button type="button" style={{ float: "right" }} onClick={saveLoanDetails} className={`btn btn-primary btn-sm`}>
                   Save
                 </button>
-              
+              }
+              {!isInternalUser &&
+              <button type="button" style={{ float: "right" }} onClick={saveLoanDetails} className={`btn btn-primary btn-sm`}>
+                  Resolve Issue
+                </button>
+              }
               <div style={{ clear:"both"}}></div>
             </div>
             <div className="col-sm-12">
