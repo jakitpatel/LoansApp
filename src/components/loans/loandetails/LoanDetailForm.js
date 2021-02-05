@@ -226,13 +226,12 @@ function LoanDetailForm(props) {
                   )
                 }
               } else {
-                let fiedls_exist = "ALDLoanApplicationNumberOnly PrimaryBorrowers R2_LoanAmount SBAStatus ErrorMessage MentorAssigned MentorEmail MentorPhone LastModifyDate SBALoanNumber statusIndication businessIndication personalIndication documentIndication finacialSeachIndication";
+                //let fiedls_exist = "ALDLoanApplicationNumberOnly PrimaryBorrowers R2_LoanAmount SBAStatus ErrorMessage MentorAssigned MentorEmail MentorPhone LastModifyDate SBALoanNumber statusIndication businessIndication personalIndication documentIndication finacialSeachIndication";
+                let fiedls_exist = "ApplicationCreatedDate businessName LoanApplicationNumber MentorAssigned MentorPhone MentorEmail LastModifyDate AdobeSigned2483Date LoanStatus FirstDrawLoanAmount FirstDrawSbaLoanNumber IsSecondDrawLoan SBALoanNumber SBAApprovalDate SBAStatus ErrorMessage statusIndication businessIndication personalIndication ownershipIndication documentIndication financialSearchIndication PrimaryContactFirstName PrimaryContactLastName Phone Email";
                 let labelText = key;
                 if(key==="PrimaryBorrowers" && value===null){
                   value = loadDtOrdObj.businessName;
-                } else if(key==="ALDLoanApplicationNumberOnly"){
-                  labelText = "Application #";
-                } else if(key==="R2_LoanAmount" && value!==null){
+                } else if((key==="R2_LoanAmount" || key==="FirstDrawLoanAmount") && value!==null){
                     value = new Intl.NumberFormat('en-US',{ style: 'currency', currency: 'USD' }).format(value);
                 }
                 
