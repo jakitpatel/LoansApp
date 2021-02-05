@@ -89,26 +89,33 @@ function LoanDetails(props) {
           'X-DreamFactory-Session-Token': session_token
         }
       };
-      let tmpLoanObj = {
-        //ALDLoanApplicationNumberOnly : loanDetailsObj.ALDLoanApplicationNumberOnly,
-        ReviewerAssigned : loanDetailsObj.ReviewerAssigned,
-        MentorAssigned   : loanDetailsObj.MentorAssigned,
-        //LastModifyDate   : loanDetailsObj.LastModifyDate,
-        StatusAComments  : loanDetailsObj.StatusAComments,
-        StatusBComments  : loanDetailsObj.StatusBComments,
-        StatusCComments  : loanDetailsObj.StatusCComments,
-        StatusDComments  : loanDetailsObj.StatusDComments,
-        MentorEmail      : loanDetailsObj.MentorEmail,
-        MentorPhone      : loanDetailsObj.MentorPhone,
-        statusIndication : loanDetailsObj.statusIndication,
-        businessIndication  : loanDetailsObj.businessIndication,
-        statusIndication : loanDetailsObj.statusIndication,
-        businessIndication  : loanDetailsObj.businessIndication,
-        personalIndication  : loanDetailsObj.personalIndication,
-        ownershipIndication : loanDetailsObj.ownershipIndication,
-        documentIndication  : loanDetailsObj.documentIndication,
-        finacialSeachIndication  : loanDetailsObj.finacialSeachIndication
-      };
+      let tmpLoanObj = {};
+      if(isInternalUser){
+        tmpLoanObj = {
+          //ALDLoanApplicationNumberOnly : loanDetailsObj.ALDLoanApplicationNumberOnly,
+          ReviewerAssigned : loanDetailsObj.ReviewerAssigned,
+          MentorAssigned   : loanDetailsObj.MentorAssigned,
+          //LastModifyDate   : loanDetailsObj.LastModifyDate,
+          StatusAComments  : loanDetailsObj.StatusAComments,
+          StatusBComments  : loanDetailsObj.StatusBComments,
+          StatusCComments  : loanDetailsObj.StatusCComments,
+          StatusDComments  : loanDetailsObj.StatusDComments,
+          MentorEmail      : loanDetailsObj.MentorEmail,
+          MentorPhone      : loanDetailsObj.MentorPhone,
+          statusIndication : loanDetailsObj.statusIndication,
+          businessIndication  : loanDetailsObj.businessIndication,
+          statusIndication : loanDetailsObj.statusIndication,
+          businessIndication  : loanDetailsObj.businessIndication,
+          personalIndication  : loanDetailsObj.personalIndication,
+          ownershipIndication : loanDetailsObj.ownershipIndication,
+          documentIndication  : loanDetailsObj.documentIndication,
+          finacialSeachIndication  : loanDetailsObj.finacialSeachIndication
+        };
+      } else {
+        tmpLoanObj = {
+          statusIndication : loanDetailsObj.statusIndication,
+        };
+      }
       let ald_id = loanDetailsObj.ALD_ID;
       //tmpLoanObj.LastUpdateUser = uid;
       tmpLoanObj.LastModifyDate = moment().format('YYYY-MM-DD');
@@ -138,11 +145,11 @@ function LoanDetails(props) {
               <button style={{ float: "left" }} type="button" onClick={backToWireList} className="btn btn-primary btn-sm">
                 Back
               </button>
-              {isInternalUser &&
+              {/*isInternalUser &&*/}
               <button type="button" style={{ float: "right" }} onClick={saveLoanDetails} className={`btn btn-primary btn-sm`}>
                   Save
                 </button>
-              }
+              
               <div style={{ clear:"both"}}></div>
             </div>
             <div className="col-sm-12">
