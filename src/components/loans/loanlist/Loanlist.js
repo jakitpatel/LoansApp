@@ -203,15 +203,15 @@ function Loanlist(props) {
           );
         }
       },{
-        field: "ALDLoanApplicationNumberOnly",
-        Header: "Application #",
-        accessor: "ALDLoanApplicationNumberOnly"
+        field: "ApplicationCreatedDate",
+        Header: "Application Created on",
+        accessor: "ApplicationCreatedDate"
         //Filter: SelectColumnFilter,
         //filter: 'includes'
       },{
-        field: "PrimaryBorrower",
+        field: "businessName",
         Header: "Business Name",
-        accessor: "PrimaryBorrower",
+        accessor: "businessName"/*,
         Cell: props => {
           let loanObj = props.row.original;
           if(props.value===null) {
@@ -219,28 +219,15 @@ function Loanlist(props) {
           } else {
             return props.value;
           }
-        }
+        }*/
         //Filter: SelectColumnFilter,
         //filter: 'includes'
       },
       {
-        name: "R2_LoanAmount",
-        field: "R2_LoanAmount",
-        Header: "Loan Amount",
-        accessor: "R2_LoanAmount",
-        disableFilters: true,
-        // provide custom function to format props 
-        Cell: props => {
-          if(props.value===null) {
-            return null;
-          }
-          return (
-            <div style={{textAlign: "right"}}>
-             { new Intl.NumberFormat('en-US',{ style: 'currency', currency: 'USD' }).format(props.value)}
-            </div>
-          )
-          // '$100.00'
-        }
+        name: "LoanApplicationNumber",
+        field: "LoanApplicationNumber",
+        Header: "Loan Application #",
+        accessor: "LoanApplicationNumber"
       },
       {
         field: "MentorAssigned",
@@ -249,8 +236,19 @@ function Loanlist(props) {
       },
       {
         field: "LastModifyDate",
-        Header: "Date Modified",
+        Header: "Last Modified",
         accessor: "LastModifyDate",
+        disableFilters: true
+      },
+      {
+        field: "SBALoanNumber",
+        Header: "SBA Loan #",
+        accessor: "SBALoanNumber"
+      },
+      {
+        field: "SBAApprovalDate",
+        Header: "SBA Approval Date",
+        accessor: "SBAApprovalDate",
         disableFilters: true
       },
       {
@@ -259,13 +257,8 @@ function Loanlist(props) {
         accessor: "SBAStatus"
       },
       {
-        field: "SBALoanNumber",
-        Header: "SBA Loan #",
-        accessor: "SBALoanNumber"
-      },
-      {
         field: "statusIndication",
-        Header: "Status",
+        Header: "Overall Status",
         accessor: "statusIndication"
       });
     }
@@ -357,14 +350,15 @@ function Loanlist(props) {
             amt = new Intl.NumberFormat('en-US',{ style: 'currency', currency: 'USD' }).format(amt);
           }
           return {
-            'ALDLoanApplicationNumberOnly' : data.ALDLoanApplicationNumberOnly,
-            'BusinessName' : data.PrimaryBorrower,
-            'R2_LoanAmount': amt,
+            'ApplicationCreatedDate' : data.ApplicationCreatedDate,
+            'BusinessName' : data.businessName,
+            'LoanApplicationNumber': data.LoanApplicationNumber,
             'MentorAssigned' : data.MentorAssigned,
             'LastModifyDate' : data.LastModifyDate,
-            'SBAStatus' : data.SBAStatus,
             'SBALoanNumber': data.SBALoanNumber,
-            'statusIndication' : data.statusIndication
+            'SBAApprovalDate': data.SBAApprovalDate,
+            'SBAStatus' : data.SBAStatus,
+            'Overall Status' : data.statusIndication
           }
         }
       });
