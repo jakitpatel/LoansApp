@@ -2,6 +2,7 @@ import React from "react";
 import "./LoanDetailForm.css";
 import ReactTooltip from 'react-tooltip';
 import { useSelector } from 'react-redux';
+import TextareaAutosize from 'react-textarea-autosize';
 
 function CustTextInput(props) {
 
@@ -80,6 +81,15 @@ function LoanTextAreaInput(props) {
       <div className="form-group row">
         <label data-for='wireDetailForm' style={{flex: "0 0 11.3%", maxWidth: "11.3%"}} data-tip={labelTooltip} className="col-sm-1 col-form-label">{fieldLabel}</label>
         <div className="col-sm-11" style={{flex: "0 0 86%", maxWidth: "86%"}}>
+        <TextareaAutosize 
+            className={fieldClass}
+            minRows={1}
+            name={fieldName}
+            value={fieldVal}
+            onChange={e => props.inputchange(e)}
+            readOnly={props.readOnlyValue}
+        />
+        {/*
         <textarea 
             className={fieldClass}
             rows="2" 
@@ -88,6 +98,7 @@ function LoanTextAreaInput(props) {
             onChange={e => props.inputchange(e)}
             readOnly={props.readOnlyValue}
         ></textarea>
+        */}
         </div>
       </div>
     </div>
