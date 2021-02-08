@@ -78,8 +78,8 @@ function LoanTextAreaInput(props) {
   return (
     <div className="col-sm-12">
       <div className="form-group row">
-        <label data-for='wireDetailForm' data-tip={labelTooltip} className="col-sm-1 col-form-label">{fieldLabel}</label>
-        <div className="col-sm-11">
+        <label data-for='wireDetailForm' style={{flex: "0 0 11.3%", maxWidth: "11.3%"}} data-tip={labelTooltip} className="col-sm-1 col-form-label">{fieldLabel}</label>
+        <div className="col-sm-11" style={{flex: "0 0 86%", maxWidth: "86%"}}>
         <textarea 
             className={fieldClass}
             rows="2" 
@@ -117,11 +117,11 @@ function LoanDetailForm(props) {
       "MentorAssigned": loanDetailsObj.MentorAssigned,
       "MentorEmail": loanDetailsObj.MentorEmail,
       "MentorPhone": loanDetailsObj.MentorPhone,
+      "statusIndication": loanDetailsObj.statusIndication,
       "StatusAComments": loanDetailsObj.StatusAComments,
       "StatusBComments": loanDetailsObj.StatusBComments,
       "StatusCComments": loanDetailsObj.StatusCComments,
       "StatusDComments": loanDetailsObj.StatusDComments,
-      "statusIndication": loanDetailsObj.statusIndication,
       "businessIndication": loanDetailsObj.businessIndication,
       "personalIndication": loanDetailsObj.personalIndication,
       "ownershipIndication": loanDetailsObj.ownershipIndication,
@@ -250,7 +250,7 @@ function LoanDetailForm(props) {
                       </div>
                     </React.Fragment>
                   )
-                } else if (key==="StatusAComments" || key==="StatusBComments" || key==="StatusCComments" || key==="StatusDComments" || key==="ErrorMessage"){
+                } else if (key==="StatusAComments" || key==="StatusBComments" || key==="StatusCComments" || key==="StatusDComments" || key==="ErrorMessage" || key==="businessIndication" || key==="personalIndication" || key==="ownershipIndication" || key==="documentIndication" || key==="finacialSeachIndication"){
                   return (
                     <React.Fragment key={key}>
                       <LoanTextAreaInput
@@ -297,36 +297,21 @@ function LoanDetailForm(props) {
                   }
                 }
                 if(found === true){
-                  /*
-                  if(key==="statusIndication"){
-                    if(value===null){
-                      value = "";
-                    }
+                  if (key==="StatusAComments" || key==="StatusBComments" || key==="StatusCComments" || key==="StatusDComments" || key==="ErrorMessage" || key==="businessIndication" || key==="personalIndication" || key==="ownershipIndication" || key==="documentIndication" || key==="finacialSeachIndication"){
                     return (
                       <React.Fragment key={key}>
-                        <div className="col-sm-4">
-                          <div className="form-group row">
-                            <label className="col-sm-4 col-form-label">{key}:</label>
-                            <div className="col-sm-7">
-                              <select
-                                className="form-control custom-select"
-                                name={key}
-                                value={value}
-                                onChange={e => props.oncustinputchange(e)}
-                              >
-                                <option value=""></option>
-                                <option value="Untouched">Untouched</option>                
-                                <option value="All OK">All OK</option>
-                                <option value="Identified">Issue Identified</option>
-                                <option value="Resolved">Issue Resolved</option>
-                              </select>
-                            </div>
-                          </div>
-                        </div>
+                        <LoanTextAreaInput
+                          placeholdertext={key}
+                          labelText={labelText}
+                          nameref={key}
+                          inputchange={props.oncustinputchange}
+                          val={value}
+                          wireDtObj={loadDtOrdObj}
+                          readOnlyValue={readOnlyVal}
+                        />
                       </React.Fragment>
                     )
                   } else {
-                  */
                     return (
                       <React.Fragment key={key}>
                         <CustTextInput
@@ -340,7 +325,7 @@ function LoanDetailForm(props) {
                         />
                       </React.Fragment>
                     )
-                 // }
+                  }
                 }
               }
             } else {
