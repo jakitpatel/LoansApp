@@ -19,8 +19,10 @@ function Loanlist(props) {
 
   const listExportLink = useRef(null);
   const listDetailsExportLink = useRef(null);
-
+  const allLoansListExportLink = useRef(null);
+  
   // We'll start our table without any data
+  const [allLoansData, setAllLoansData] = React.useState([]);
   const [loanListData, setLoanListData] = React.useState([]);
   const [loanDetailsData, setLoanDetailsData] = React.useState([]);
   const [filtersarr, setFiltersarr] = React.useState([]);
@@ -29,8 +31,8 @@ function Loanlist(props) {
   const [pageCount, setPageCount] = React.useState(0);
   const fetchIdRef = React.useRef(0);
 
+  const [downloadAllLoans, setDownloadAllLoans] = useState(false);
   const [isRefresh, setIsRefresh] = useState(false);
-  const [wireText, setWireText] = useState("");
   const [selectedRows, setSelectedRows] = useState([]);
 
   const [selWireObj, setSelWireObj] = useState({});
@@ -255,6 +257,16 @@ function Loanlist(props) {
       });
     }
   
+  useEffect(() => {
+    if (downloadAllLoans) {
+      setDownloadAllLoans(false);
+      setTimeout(() => {
+        allLoansListExportLink.current.link.click();
+      }, 1000);
+    }
+  }, [downloadAllLoans, allLoansData]);
+
+  
   function toCurrency(numberString) {
       let number = parseFloat(numberString);
       return number.toLocaleString('USD');
@@ -410,6 +422,38 @@ function Loanlist(props) {
     }
   }, [ dispatch, session_token]);
 
+  //// Start Code for Wire To OFAC Value /////
+  async function onAllLoansExportBtnClick(){
+    const options = {
+      headers: {
+        'X-DreamFactory-API-Key': API_KEY,
+        'X-DreamFactory-Session-Token': session_token
+      }
+    };
+    let url = Loans_Url;
+
+    url += "?include_count=true";
+    if(filters.length>0){
+      console.log("filters");
+      console.log(filters);
+      url += "&filter=";
+      url += buildFilterUrl(filters);
+    }
+    if(sortBy.length>0){
+      console.log(sortBy);
+      url += buildSortByUrl(sortBy);
+    }
+    
+    let res = await axios.get(url, options);
+    //console.log(res.data.resource);
+    let allloandata = res.data.resource;
+    if(allloandata==null){
+      allloandata = [];
+    }
+    setAllLoansData(allloandata);
+    setDownloadAllLoans(true);
+  }
+
   let headerTitle = "Loan List";
 
   console.log("loans", loans);
@@ -451,6 +495,8 @@ function Loanlist(props) {
     );
   let loanFileName = "loanList.csv";
   let loanDetailsFileName = "loanListDetails.csv";
+  let allLoanFileName = "AllloanList.csv";
+  let headerName = ""+{name} - {uid};
   const onLoanListExport = (event, dataType) => {
     console.log("On Loan List Export Button Click");
     if(loans.length > 0){
@@ -467,7 +513,6 @@ function Loanlist(props) {
     }
   }
 
-  let headerName = ""+{name} - {uid};
   return (
     <React.Fragment>
       <div className="container" style={{marginLeft:"0px", width:"100%", maxWidth:"100%"}}>
@@ -476,7 +521,10 @@ function Loanlist(props) {
             <h3 className="title-center">{headerTitle}</h3>
             <div className="btnCls">
             <React.Fragment>
-                <button type="button" style={{ float: "right" }} onClick={(e)=> {onLoanListExport(e,"ListDetails")}} className={`btn btn-primary btn-sm`}>
+                <button type="button" style={{ float: "right" }} onClick={onAllLoansExportBtnClick} className={`btn btn-primary btn-sm`}>
+                Export All Loans
+                </button>
+                <button type="button" style={{ float: "right", marginRight:"5px" }} onClick={(e)=> {onLoanListExport(e,"ListDetails")}} className={`btn btn-primary btn-sm`}>
                   Export List Details
                 </button>
                 <button type="button" style={{ float: "right", marginRight:"5px" }} onClick={(e)=> {onLoanListExport(e,"List")}} className={`btn btn-primary btn-sm`}>
@@ -514,6 +562,16 @@ function Loanlist(props) {
                       }
                     }*/
                     >Export</CSVLink>
+                <CSVLink
+                      data={allLoansData}
+                      //headers={headerName}
+                      uFEFF={false}
+                      ref={allLoansListExportLink}
+                      filename={allLoanFileName}
+                      className={`btn btn-primary btn-sm invisible`}
+                      style={{ float: "right" }}
+                      target="_blank"
+                    ></CSVLink>
               </React.Fragment>
               <div style={{ clear:"both"}}></div>
             </div>
