@@ -43,7 +43,7 @@ function Loanlist(props) {
       }
   });
 
-  const { loans, pageIndex, pageSize, backToList } = useSelector(state => {
+  const { loans, pageIndex, pageSize, sortBy, filters, backToList } = useSelector(state => {
     return {
         ...state.loansReducer
     }
@@ -79,47 +79,44 @@ function Loanlist(props) {
           );
         }
       },{
-        field: "WFtaxID",
-        Header: "WFtaxID",
-        accessor: "WFtaxID",
+        field: "LoanApplicationNumber",
+        Header: "Application #",
+        accessor: "LoanApplicationNumber",
         show: false
       },
       {
-        field: "broker",
-        Header: "broker",
-        accessor: "broker",
+        field: "ReviewerAssigned",
+        Header: "Reviewer Assigned",
+        accessor: "ReviewerAssigned",
         //Filter: SelectColumnFilter,
         //filter: 'includes'
       },
       {
-        name: "businessName",
-        field: "businessName",
-        Header: "businessName",
-        accessor: "businessName"
-      },
-      /*{
-        field: "createDate",
-        Header: "createDate",
-        accessor: "createDate"
-      },*/
-      {
-        field: "ReviewerAssigned",
-        Header: "ReviewerAssigned",
-        accessor: "ReviewerAssigned"
-      },
-      {
         field: "MentorAssigned",
-        Header: "MentorAssigned",
+        Header: "Mentor Assigned",
         accessor: "MentorAssigned"
       },
       {
-        field: "LoanApplicationNumber",
-        Header: "LoanApplicationNumber",
-        accessor: "LoanApplicationNumber"
+        field: "ApplicationCreatedDate",
+        Header: "Start Date",
+        accessor: "ApplicationCreatedDate",
+        disableFilters: true,
+      },
+      {
+        field: "LastModifyDate",
+        Header: "Last Update Date",
+        accessor: "LastModifyDate",
+        disableFilters: true,
+      },
+      {
+        name: "businessName",
+        field: "businessName",
+        Header: "Primary Borrower",
+        accessor: "businessName"
       },
       {
         field: "LoanAmount",
-        Header: "LoanAmount",
+        Header: "Total Request",
         accessor: "LoanAmount",
         disableFilters: true,
         Cell: props => {
@@ -135,49 +132,44 @@ function Loanlist(props) {
         }
       },
       {
-        field: "PrimaryBorrower",
-        Header: "PrimaryBorrower",
-        accessor: "PrimaryBorrower"
+        field: "StatusAComments",
+        Header: "Loan Review Status Comments",
+        accessor: "StatusAComments"
       },
       {
-        field: "TotalRequest",
-        Header: "TotalRequest",
-        accessor: "TotalRequest"
+        field: "statusIndication",
+        Header: "Application Status",
+        accessor: "statusIndication"
       },
       {
-        field: "FileStatusUpdateComments",
-        Header: "FileStatusUpdateComments",
-        accessor: "FileStatusUpdateComments"
+        field: "SBAStatus",
+        Header: "SBA Status",
+        accessor: "SBAStatus"
       },
       {
-        field: "ApplicationStatus",
-        Header: "ApplicationStatus",
-        accessor: "ApplicationStatus"
+        field: "broker",
+        Header: "Broker",
+        accessor: "broker"
       },
       {
-        field: "ImportStatus",
-        Header: "ImportStatus",
-        accessor: "ImportStatus"
+        field: "R2_TaxID",
+        Header: "EIN#",
+        accessor: "R2_TaxID"
+      },
+      {
+        field: "Address1",
+        Header: "Borrower Address",
+        accessor: "Address1"
       },
       {
         field: "DocumentsSent",
-        Header: "DocumentsSent",
+        Header: "Docs Sent",
         accessor: "DocumentsSent"
       },
       {
         field: "DocumentsRequired",
-        Header: "DocumentsRequired",
+        Header: "Docs Required",
         accessor: "DocumentsRequired"
-      },
-      {
-        field: "ASE_Status",
-        Header: "ASE_Status",
-        accessor: "ASE_Status"
-      },
-      {
-        field: "ErrorMessage",
-        Header: "ErrorMessage",
-        accessor: "ErrorMessage"
       });
     } else {
       columnDefs.push({
@@ -328,21 +320,21 @@ function Loanlist(props) {
       let newArray = loanArray.map((data) => {
         if(isInternalUser){
           return {
-            'broker' : data.broker,
-            'businessName' : data.businessName,
+            'LoanApplicationNumber' : data.LoanApplicationNumber,
             'ReviewerAssigned': data.ReviewerAssigned,
             'MentorAssigned' : data.MentorAssigned,
-            'LoanApplicationNumber' : data.LoanApplicationNumber,
-            'LoanAmount': data.LoanAmount,
-            'PrimaryBorrower' : data.PrimaryBorrower,
-            'TotalRequest' : data.TotalRequest,
-            'FileStatusUpdateComments': data.FileStatusUpdateComments,
-            'ApplicationStatus' : data.ApplicationStatus,
-            'ImportStatus' : data.ImportStatus,
+            'ApplicationCreatedDate' : data.ApplicationCreatedDate,
+            'LastModifyDate' : data.LastModifyDate,
+            'Primary Borrower' : data.businessName,
+            'TotalRequest' : data.R2_LoanAmount,
+            'StatusAComments': data.StatusAComments,
+            'ApplicationStatus' : data.statusIndication,
+            'SBAStatus' : data.SBAStatus,
+            'Broker'    : data.broker,
+            'EIN#': data.R2_TaxID,
+            'Borrower Address': data.Address1,
             'DocumentsSent': data.DocumentsSent,
-            'DocumentsRequired' : data.DocumentsRequired,
-            'ASE_Status' : data.ASE_Status,
-            'ErrorMessage': data.ErrorMessage
+            'DocumentsRequired' : data.DocumentsRequired
           }
         } else {
           let amt = data.R2_LoanAmount;
@@ -397,6 +389,8 @@ function Loanlist(props) {
         payload:{
           pageIndex:pageIndex,
           pageSize:pageSize,
+          sortBy : sortBy,
+          filters : filters,
           loans:loanArray
         }
       });
@@ -421,9 +415,10 @@ function Loanlist(props) {
   console.log("loans", loans);
   console.log("isRefresh", isRefresh);
   const initialState = {
-    sortBy : [], //[{ id: "wireID", desc: true }],
+    sortBy : sortBy, //[{ id: "wireID", desc: true }],
     pageSize : 10,
-    pageIndex : 0
+    pageIndex : 0,
+    filters : filters
     //pageSize : pageSize,
     //pageIndex : pageIndex
   };
@@ -487,6 +482,10 @@ function Loanlist(props) {
                 <button type="button" style={{ float: "right", marginRight:"5px" }} onClick={(e)=> {onLoanListExport(e,"List")}} className={`btn btn-primary btn-sm`}>
                   Export List
                 </button>
+                <button type="button" style={{ float: "right", marginRight:"5px" }} onClick={(e)=> {setIsRefresh(!isRefresh);}} className={`btn btn-primary btn-sm`}>
+                  <Icon.RefreshCw />
+                </button>
+                
                 <CSVLink
                       data={loanListData}
                       headers={headerName}

@@ -128,7 +128,12 @@ function Table({
     manualFilters: true,
     manualSortBy: true,
     //filterTypes,
-    initialState: { filters: filtersarr, pageIndex: initialState.pageIndex, pageSize: initialState.pageSize, sortBy: initialState.sortBy },
+    initialState: { 
+      filters: initialState.filters, //filtersarr, 
+      pageIndex: initialState.pageIndex, 
+      pageSize: initialState.pageSize, 
+      sortBy: initialState.sortBy 
+    },
     manualPagination: true, // Tell the usePagination hook that we'll handle our own data fetching
     //autoResetPage: false,
     pageCount: controlledPageCount, // This means we'll also have to provide our own pageCount.
@@ -239,7 +244,13 @@ function Table({
   React.useEffect(() => {
     //fetchData({ pageIndex, pageSize });
     console.log("Page Index :- " +pageIndex);
-    setFiltersarr(filters);
+    //setFiltersarr(filters);
+    dispatch({
+      type:'UPDATELOANLIST',
+      payload:{
+        filters : filters
+      }
+    });
     onFetchDataDebounced({ pageIndex, pageSize, filters, sortBy });
   }, [isRefresh, setIsRefresh, onFetchDataDebounced, pageIndex, pageSize, filters, setFiltersarr, sortBy, location.key]);
   /*
@@ -352,7 +363,7 @@ function Table({
             setPageSize(Number(e.target.value))
           }}
         >
-          {[10, 20, 30, 40, 50,200,1000].map(pageSize => (
+          {[10, 20, 30, 40, 50,200,1000,2000].map(pageSize => (
             <option key={pageSize} value={pageSize}>
               Show {pageSize}
             </option>
