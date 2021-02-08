@@ -123,6 +123,10 @@ function LoanDetails(props) {
           statusIndication : "Resolved",
         };
       }
+      if(loanDetailsObj.ALD_ID === "" || loanDetailsObj.ALD_ID === null){
+        alert("ALD_ID is empty! So, can not able to save the loan.");
+        return false;
+      }
       let ald_id = loanDetailsObj.ALD_ID;
       //tmpLoanObj.LastUpdateUser = uid;
       tmpLoanObj.LastModifyDate = moment().format('YYYY-MM-DD');

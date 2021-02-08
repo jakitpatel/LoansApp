@@ -60,6 +60,40 @@ function CustTextInput(props) {
   );
 }
 
+function LoanTextAreaInput(props) {
+
+  let fieldName = props.nameref;
+  let fieldClass = "form-control";
+  //// Label Tooltip
+  let labelTooltip = "";
+  let fieldLabel = props.labelText+":";
+
+  let fieldVal = props.val;
+  if(fieldVal === null && fieldClass === "form-control"){
+    //return null;
+  }
+  if(fieldVal===null){
+    fieldVal = "";
+  }
+  return (
+    <div className="col-sm-12">
+      <div className="form-group row">
+        <label data-for='wireDetailForm' data-tip={labelTooltip} className="col-sm-1 col-form-label">{fieldLabel}</label>
+        <div className="col-sm-11">
+        <textarea 
+            className={fieldClass}
+            rows="2" 
+            name={fieldName}
+            value={fieldVal}
+            onChange={e => props.inputchange(e)}
+            readOnly={props.readOnlyValue}
+        ></textarea>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function LoanDetailForm(props) {
   const { isInternalUser } = useSelector(state => {
       return {
@@ -214,6 +248,20 @@ function LoanDetailForm(props) {
                           </div>
                         </div>
                       </div>
+                    </React.Fragment>
+                  )
+                } else if (key==="StatusAComments" || key==="StatusBComments" || key==="StatusCComments" || key==="StatusDComments" || key==="ErrorMessage"){
+                  return (
+                    <React.Fragment key={key}>
+                      <LoanTextAreaInput
+                        placeholdertext={key}
+                        labelText={key}
+                        nameref={key}
+                        inputchange={props.oncustinputchange}
+                        val={value}
+                        wireDtObj={loadDtOrdObj}
+                        readOnlyValue={readOnlyVal}
+                      />
                     </React.Fragment>
                   )
                 } else {
