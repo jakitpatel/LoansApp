@@ -248,7 +248,9 @@ function Loanlist(props) {
       {
         field: "SBAStatus",
         Header: "SBA Status",
-        accessor: "SBAStatus"
+        accessor: "SBAStatus",
+        Filter: SelectColumnFilter,
+        filter: 'includes'
       },
       {
         field: "statusIndication",
@@ -443,7 +445,7 @@ function Loanlist(props) {
       console.log(sortBy);
       url += buildSortByUrl(sortBy);
     }
-    
+
     let res = await axios.get(url, options);
     //console.log(res.data.resource);
     let allloandata = res.data.resource;
