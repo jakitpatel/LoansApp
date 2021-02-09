@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux';
 import "./dashboard.css";
 import Loanlist from "./../loans/loanlist/Loanlist.js";
 import LoanDetails from "./../loans/loandetails/LoanDetails.js";
 import NavBar from "./../Navbar/navbar";
 import LeftNavBar from "./../Leftnavbar/leftnavbar";
 import DashboardMain from "./DashboardMain";
-import { useSelector } from 'react-redux';
+
 
 const LoanListWrap = props => {
   //console.log(props);
@@ -49,7 +50,8 @@ function DashboardContainer(props) {
           ...state.userReducer
       }
   });
-
+  const dispatch = useDispatch();
+  
   if (redirectToLogin === true) {
     return <Redirect to={`${process.env.PUBLIC_URL}/login`} />;
   }
@@ -63,6 +65,16 @@ function DashboardContainer(props) {
   //alert("Dashboard Container");
   function handleLogout() {
     console.log("Handle Logout & Redirect to Login");
+    dispatch({
+      type:'UPDATELOANLIST',
+      payload:{
+        pageIndex:0,
+        pageSize:10,
+        sortBy : [],
+        filters : [],
+        loans:[]
+      }
+    });
     setRedirectToLogin(true);
   }
   return (
