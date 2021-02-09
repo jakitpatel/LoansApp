@@ -39,7 +39,7 @@ function Loanlist(props) {
 
   const dispatch = useDispatch();
 
-  const { session_token, uid, name, isInternalUser } = useSelector(state => {
+  const { session_token, teamInt, uid, name, isInternalUser } = useSelector(state => {
       return {
           ...state.userReducer
       }
@@ -80,101 +80,199 @@ function Loanlist(props) {
             </Link>
           );
         }
-      },{
-        field: "ALDLoanApplicationNumberOnly",
-        Header: "Application #",
-        accessor: "ALDLoanApplicationNumberOnly",
-        show: false
-      },
-      {
-        field: "ReviewerAssigned",
-        Header: "Reviewer Assigned",
-        accessor: "ReviewerAssigned",
-        //Filter: SelectColumnFilter,
-        //filter: 'includes'
-      },
-      {
-        field: "MentorAssigned",
-        Header: "Mentor Assigned",
-        accessor: "MentorAssigned"
-      },
-      {
-        field: "ApplicationCreatedDate",
-        Header: "Start Date",
-        accessor: "ApplicationCreatedDate",
-        disableFilters: true,
-      },
-      {
-        field: "LastModifyDate",
-        Header: "Last Update Date",
-        accessor: "LastModifyDate",
-        disableFilters: true,
-      },
-      {
-        name: "businessName",
-        field: "businessName",
-        Header: "Primary Borrower",
-        accessor: "businessName"
-      },
-      {
-        field: "LoanAmount",
-        Header: "Total Request",
-        accessor: "LoanAmount",
-        disableFilters: true,
-        Cell: props => {
-          if(props.value===null) {
-            return null;
-          }
-          return (
-            <div style={{textAlign: "right"}}>
-             {new Intl.NumberFormat('en-US',{ style: 'currency', currency: 'USD' }).format(props.value)}
-            </div>
-          )
-          // '$100.00'
-        }
-      },
-      {
-        field: "StatusAComments",
-        Header: "Loan Review Status Comments",
-        accessor: "StatusAComments"
-      },
-      {
-        field: "statusIndication",
-        Header: "Application Status",
-        accessor: "statusIndication"
-      },
-      {
-        field: "SBAStatus",
-        Header: "SBA Status",
-        accessor: "SBAStatus",
-        Filter: SelectColumnFilter,
-        filter: 'includes'
-      },
-      {
-        field: "broker",
-        Header: "Broker",
-        accessor: "broker"
-      },
-      {
-        field: "R2_TaxID",
-        Header: "EIN#",
-        accessor: "R2_TaxID"
-      },
-      {
-        field: "Address1",
-        Header: "Borrower Address",
-        accessor: "Address1"
-      },
-      {
-        field: "DocumentsSent",
-        Header: "Docs Sent",
-        accessor: "DocumentsSent"
-      },
-      {
-        field: "DocumentsRequired",
-        Header: "Docs Required",
-        accessor: "DocumentsRequired"
       });
+      console.log("Internal Team : "+teamInt);
+      if(teamInt==="teama"){
+        columnDefs.push({
+          field: "ALDLoanApplicationNumberOnly",
+          Header: "Application #",
+          accessor: "ALDLoanApplicationNumberOnly",
+          show: false
+        },
+        {
+          field: "broker",
+          Header: "Broker",
+          accessor: "broker"
+        },
+        {
+          field: "ReviewerAssigned",
+          Header: "Reviewer Assigned",
+          accessor: "ReviewerAssigned",
+          //Filter: SelectColumnFilter,
+          //filter: 'includes'
+        },
+        {
+          field: "MentorAssigned",
+          Header: "Mentor Assigned",
+          accessor: "MentorAssigned"
+        },
+        {
+          field: "ApplicationCreatedDate",
+          Header: "Start Date",
+          accessor: "ApplicationCreatedDate",
+          disableFilters: true,
+        },
+        {
+          field: "LastModifyDate",
+          Header: "Last Update Date",
+          accessor: "LastModifyDate",
+          disableFilters: true,
+        },
+        {
+          name: "businessName",
+          field: "businessName",
+          Header: "Primary Borrower",
+          accessor: "businessName"
+        },
+        {
+          field: "LoanAmount",
+          Header: "Total Request",
+          accessor: "LoanAmount",
+          disableFilters: true,
+          Cell: props => {
+            if(props.value===null) {
+              return null;
+            }
+            return (
+              <div style={{textAlign: "right"}}>
+              {new Intl.NumberFormat('en-US',{ style: 'currency', currency: 'USD' }).format(props.value)}
+              </div>
+            )
+            // '$100.00'
+          }
+        },
+        {
+          field: "StatusAComments",
+          Header: "Loan Review Status Comments",
+          accessor: "StatusAComments"
+        },
+        {
+          field: "statusIndication",
+          Header: "Application Status",
+          accessor: "statusIndication"
+        },
+        {
+          field: "SBAStatus",
+          Header: "SBA Status",
+          accessor: "SBAStatus",
+          Filter: SelectColumnFilter,
+          filter: 'includes'
+        },
+        {
+          field: "R2_TaxID",
+          Header: "EIN#",
+          accessor: "R2_TaxID"
+        },
+        {
+          field: "Address1",
+          Header: "Borrower Address",
+          accessor: "Address1"
+        },
+        {
+          field: "DocumentsSent",
+          Header: "Docs Sent",
+          accessor: "DocumentsSent"
+        },
+        {
+          field: "DocumentsRequired",
+          Header: "Docs Required",
+          accessor: "DocumentsRequired"
+        });
+      } else if(teamInt==="teamb"){
+        columnDefs.push({
+          field: "ReviewerAssigned",
+          Header: "Reviewer Assigned",
+          accessor: "ReviewerAssigned",
+          //Filter: SelectColumnFilter,
+          //filter: 'includes'
+        },
+        {
+          field: "ALDLoanApplicationNumberOnly",
+          Header: "Application #",
+          accessor: "ALDLoanApplicationNumberOnly",
+          show: false
+        },
+        {
+          name: "businessName",
+          field: "businessName",
+          Header: "Primary Borrower",
+          accessor: "businessName"
+        },
+        {
+          field: "SBAStatus",
+          Header: "SBA Status",
+          accessor: "SBAStatus",
+          Filter: SelectColumnFilter,
+          filter: 'includes'
+        },
+        {
+          field: "ErrorMessage",
+          Header: "ErrorMessage",
+          accessor: "ErrorMessage"
+        },
+        {
+          field: "StatusBComments",
+          Header: "StatusBComments",
+          accessor: "StatusBComments"
+        },
+        {
+          field: "MentorAssigned",
+          Header: "Mentor Assigned",
+          accessor: "MentorAssigned"
+        },
+        {
+          field: "StatusAComments",
+          Header: "Loan Review Status Comments",
+          accessor: "StatusAComments"
+        },
+        {
+          field: "statusIndication",
+          Header: "Application Status",
+          accessor: "statusIndication"
+        });
+      } else if(teamInt==="teamc"){
+        columnDefs.push({
+            field: "ReviewerAssigned",
+            Header: "Reviewer Assigned",
+            accessor: "ReviewerAssigned",
+            //Filter: SelectColumnFilter,
+            //filter: 'includes'
+          },
+          {
+            field: "ALDLoanApplicationNumberOnly",
+            Header: "Application #",
+            accessor: "ALDLoanApplicationNumberOnly",
+            show: false
+          },
+          {
+            name: "businessName",
+            field: "businessName",
+            Header: "Primary Borrower",
+            accessor: "businessName"
+          },
+          {
+            field: "SBAStatus",
+            Header: "SBA Status",
+            accessor: "SBAStatus",
+            Filter: SelectColumnFilter,
+            filter: 'includes'
+          },
+          {
+            field: "MentorAssigned",
+            Header: "Mentor Assigned",
+            accessor: "MentorAssigned"
+          },
+          {
+            field: "StatusCComments",
+            Header: "StatusCComments",
+            accessor: "StatusCComments"
+          },
+          {
+            field: "statusIndication",
+            Header: "Application Status",
+            accessor: "statusIndication"
+          });
+      }
     } else {
       columnDefs.push({
         Header: "View",

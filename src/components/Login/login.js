@@ -11,6 +11,7 @@ function Login(props) {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [teamInt, setTeamInt] = useState("teama");
   const [error, setError] = useState("");
   
   const [redirectToDashboard, setRedirectToDashboard] = useState(false);
@@ -124,6 +125,7 @@ function Login(props) {
             id  : res.data.id,
             uid : uid, 
             name: res.data.name,
+            teamInt: teamInt,
             isInternalUser: isInternalUser,
             first_name : res.data.first_name,
             last_name  : res.data.last_name,
@@ -229,6 +231,21 @@ function Login(props) {
                   }}
                 />
               </div>
+              {isInternalUser &&
+                <div className="form-group">
+                  <label>Team</label>
+                  <select
+                    className="form-control custom-select"
+                    name="teamInt"
+                    value={teamInt}
+                    onChange={e => setTeamInt(e.target.value)}
+                  >
+                    <option value="teama">teama</option>
+                    <option value="teamb">teamb</option>
+                    <option value="teamc">teamc</option>
+                  </select>
+                </div>
+              }
 
               <div className="form-group">
                 <button

@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import preval from 'preval.macro';
 
 function DashboardMain(props) {
-    const { name, isInternalUser } = useSelector(state => {
+    const { name, isInternalUser, teamInt } = useSelector(state => {
         return {
             ...state.userReducer
         }
@@ -16,7 +16,7 @@ function DashboardMain(props) {
     return (
         <React.Fragment>
             <div className="container">
-                Hello, {name} ({userType})
+                Hello, {name} ({userType}) {isInternalUser && (teamInt)}
                 <div style={{float:"right"}}>
                     <b>App Name </b> :- {process.env.REACT_APP_NAME} <br />
                     <b>Build Version</b> :- {process.env.REACT_APP_VERSION} <br />
