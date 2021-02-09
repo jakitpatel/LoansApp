@@ -81,9 +81,9 @@ function Loanlist(props) {
           );
         }
       },{
-        field: "LoanApplicationNumber",
+        field: "ALDLoanApplicationNumberOnly",
         Header: "Application #",
-        accessor: "LoanApplicationNumber",
+        accessor: "ALDLoanApplicationNumberOnly",
         show: false
       },
       {
@@ -218,10 +218,27 @@ function Loanlist(props) {
         //filter: 'includes'
       },
       {
-        name: "LoanApplicationNumber",
-        field: "LoanApplicationNumber",
+        name: "ALDLoanApplicationNumberOnly",
+        field: "ALDLoanApplicationNumberOnly",
         Header: "Loan Application #",
-        accessor: "LoanApplicationNumber"
+        accessor: "ALDLoanApplicationNumberOnly"
+      },
+      {
+        field: "R2_LoanAmount",
+        Header: "Total Request",
+        accessor: "R2_LoanAmount",
+        disableFilters: true,
+        Cell: props => {
+          if(props.value===null) {
+            return null;
+          }
+          return (
+            <div style={{textAlign: "right"}}>
+             {new Intl.NumberFormat('en-US',{ style: 'currency', currency: 'USD' }).format(props.value)}
+            </div>
+          )
+          // '$100.00'
+        }
       },
       {
         field: "MentorAssigned",
@@ -334,7 +351,7 @@ function Loanlist(props) {
       let newArray = loanArray.map((data) => {
         if(isInternalUser){
           return {
-            'LoanApplicationNumber' : data.LoanApplicationNumber,
+            'ALDLoanApplicationNumberOnly' : data.ALDLoanApplicationNumberOnly,
             'ReviewerAssigned': data.ReviewerAssigned,
             'MentorAssigned' : data.MentorAssigned,
             'ApplicationCreatedDate' : data.ApplicationCreatedDate,
@@ -358,7 +375,8 @@ function Loanlist(props) {
           return {
             'ApplicationCreatedDate' : data.ApplicationCreatedDate,
             'BusinessName' : data.businessName,
-            'LoanApplicationNumber': data.LoanApplicationNumber,
+            'LoanApplicationNumber': data.ALDLoanApplicationNumberOnly,
+            'TotalRequest' : data.R2_LoanAmount,
             'MentorAssigned' : data.MentorAssigned,
             'LastModifyDate' : data.LastModifyDate,
             'SBALoanNumber': data.SBALoanNumber,
@@ -461,12 +479,12 @@ function Loanlist(props) {
   console.log("loans", loans);
   console.log("isRefresh", isRefresh);
   const initialState = {
-    sortBy : sortBy, //[{ id: "wireID", desc: true }],
-    pageSize : 10,
     pageIndex : 0,
-    filters : filters
-    //pageSize : pageSize,
-    //pageIndex : pageIndex
+    //pageIndex : pageIndex,
+    //pageSize : 10,
+    pageSize : pageSize,
+    sortBy : sortBy, //[{ id: "wireID", desc: true }],
+    filters : filters,
   };
   const pageState = {
     pageSize : pageSize,
