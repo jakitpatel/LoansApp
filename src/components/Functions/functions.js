@@ -22,7 +22,12 @@ const buildSortByUrl = (sortArr) => {
       let selOptionSt = Array.from(filterVal).map(o => { return ("'"+o.value+"'")}).filter(Boolean).join(",");
       filterUrl += " and ("+filterClm+" "+multifilterOpr+" ("+selOptionSt+"))";
     } else {
-      filterUrl += " and ("+filterClm+" "+filterOpr+" %"+filterVal+"%)";
+      if(filterClm==="ALDLoanApplicationNumberOnly"){
+        filterOpr = "=";
+        filterUrl += " and ("+filterClm+" "+filterOpr+" "+filterVal+")";
+      } else {
+        filterUrl += " and ("+filterClm+" "+filterOpr+" %"+filterVal+"%)";
+      }
     }
   });
   if(filterUrl.length>0){
