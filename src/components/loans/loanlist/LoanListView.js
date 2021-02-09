@@ -477,7 +477,7 @@ function Table({
     //console.log("List Table : isRefresh :"+isRefresh);
    return (
     <Styles>
-      <ReactTooltip delayShow={200} id='wireListTtip' place="right" className="tooltipcls" textColor="#000000" backgroundColor="#f4f4f4" effect="float" multiline={true} />
+      {/*<ReactTooltip delayShow={200} id='wireListTtip' place="right" className="tooltipcls" textColor="#000000" backgroundColor="#f4f4f4" effect="float" multiline={true} />*/}
       <Table 
         getTdProps={onRowClick} 
         columns={columns} 

@@ -146,7 +146,9 @@ function Loanlist(props) {
       {
         field: "SBAStatus",
         Header: "SBA Status",
-        accessor: "SBAStatus"
+        accessor: "SBAStatus",
+        Filter: SelectColumnFilter,
+        filter: 'includes'
       },
       {
         field: "broker",

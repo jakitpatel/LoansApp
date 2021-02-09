@@ -17,7 +17,13 @@ const buildSortByUrl = (sortArr) => {
     filterOpr = "like";
     let filterClm = filterObj.id;
     let filterVal = filterObj.value;
-    filterUrl += " and ("+filterClm+" "+filterOpr+" %"+filterVal+"%)";
+    if(Array.isArray(filterVal) && filterVal.length > 0){
+      let multifilterOpr = "IN";
+      let selOptionSt = Array.from(filterVal).map(o => { return ("'"+o.value+"'")}).filter(Boolean).join(",");
+      filterUrl += " and ("+filterClm+" "+multifilterOpr+" ("+selOptionSt+"))";
+    } else {
+      filterUrl += " and ("+filterClm+" "+filterOpr+" %"+filterVal+"%)";
+    }
   });
   if(filterUrl.length>0){
     filterUrl = filterUrl.substring(5);
