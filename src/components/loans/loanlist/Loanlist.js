@@ -12,6 +12,7 @@ import ReactTooltip from 'react-tooltip';
 import {API_KEY, Loans_Url, env} from './../../../const';
 import {buildSortByUrl, buildPageUrl, buildFilterUrl} from './../../Functions/functions.js';
 import SelectColumnFilter from './../../Filter/SelectColumnFilter.js';
+import {SBAOptions, BrokerOptions, StatusOptions} from './../../../commonVar.js';
 
 
 function Loanlist(props) {
@@ -92,7 +93,10 @@ function Loanlist(props) {
         {
           field: "broker",
           Header: "Broker",
-          accessor: "broker"
+          accessor: "broker",
+          Filter: SelectColumnFilter,
+          filter: 'includes',
+          options:BrokerOptions
         },
         {
           field: "ReviewerAssigned",
@@ -147,16 +151,25 @@ function Loanlist(props) {
           accessor: "StatusAComments"
         },
         {
-          field: "statusIndication",
+          field: "R2_ApplicationStatus",
           Header: "Application Status",
-          accessor: "statusIndication"
+          accessor: "R2_ApplicationStatus"
+        },
+        {
+          field: "statusIndication",
+          Header: "statusIndication",
+          accessor: "statusIndication",
+          Filter: SelectColumnFilter,
+          filter: 'includes',
+          options:StatusOptions
         },
         {
           field: "SBAStatus",
           Header: "SBA Status",
           accessor: "SBAStatus",
           Filter: SelectColumnFilter,
-          filter: 'includes'
+          filter: 'includes',
+          options:SBAOptions
         },
         {
           field: "R2_TaxID",
@@ -203,7 +216,8 @@ function Loanlist(props) {
           Header: "SBA Status",
           accessor: "SBAStatus",
           Filter: SelectColumnFilter,
-          filter: 'includes'
+          filter: 'includes',
+          options:SBAOptions
         },
         {
           field: "ErrorMessage",
@@ -226,9 +240,22 @@ function Loanlist(props) {
           accessor: "StatusAComments"
         },
         {
-          field: "statusIndication",
+          field: "R2_ApplicationStatus",
           Header: "Application Status",
-          accessor: "statusIndication"
+          accessor: "R2_ApplicationStatus"
+        },
+        {
+          field: "statusIndication",
+          Header: "statusIndication",
+          accessor: "statusIndication",
+          Filter: SelectColumnFilter,
+          filter: 'includes',
+          options:StatusOptions
+        },
+        {
+          field: "teambmember",
+          Header: "teambmember",
+          accessor: "teambmember"
         });
       } else if(teamInt==="teamc"){
         columnDefs.push({
@@ -255,7 +282,8 @@ function Loanlist(props) {
             Header: "SBA Status",
             accessor: "SBAStatus",
             Filter: SelectColumnFilter,
-            filter: 'includes'
+            filter: 'includes',
+            options:SBAOptions
           },
           {
             field: "MentorAssigned",
@@ -268,9 +296,9 @@ function Loanlist(props) {
             accessor: "StatusCComments"
           },
           {
-            field: "statusIndication",
+            field: "R2_ApplicationStatus",
             Header: "Application Status",
-            accessor: "statusIndication"
+            accessor: "R2_ApplicationStatus"
           });
       }
     } else {
@@ -367,7 +395,8 @@ function Loanlist(props) {
         Header: "SBA Status",
         accessor: "SBAStatus",
         Filter: SelectColumnFilter,
-        filter: 'includes'
+        filter: 'includes',
+        options:SBAOptions
       },
       {
         field: "statusIndication",
@@ -578,6 +607,15 @@ function Loanlist(props) {
 
   console.log("loans", loans);
   console.log("isRefresh", isRefresh);
+  
+  if(isInternalUser && sortBy.length===0){
+    dispatch({
+      type:'UPDATELOANLIST',
+      payload:{
+        sortBy : [{ id: "ALDLoanApplicationNumberOnly", desc: true }]
+      }
+    });
+  }
   const initialState = {
     pageIndex : 0,
     //pageIndex : pageIndex,
