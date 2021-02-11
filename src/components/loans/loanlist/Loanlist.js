@@ -12,7 +12,7 @@ import ReactTooltip from 'react-tooltip';
 import {API_KEY, Loans_Url, env} from './../../../const';
 import {buildSortByUrl, buildPageUrl, buildFilterUrl} from './../../Functions/functions.js';
 import SelectColumnFilter from './../../Filter/SelectColumnFilter.js';
-import {SBAOptions, BrokerOptions, StatusOptions} from './../../../commonVar.js';
+import {SBAOptions, BrokerOptions, StatusOptions, applicationStatusOptions} from './../../../commonVar.js';
 
 
 function Loanlist(props) {
@@ -153,7 +153,10 @@ function Loanlist(props) {
         {
           field: "R2_ApplicationStatus",
           Header: "Application Status",
-          accessor: "R2_ApplicationStatus"
+          accessor: "R2_ApplicationStatus",
+          Filter: SelectColumnFilter,
+          filter: 'includes',
+          options:applicationStatusOptions
         },
         {
           field: "statusIndication",
@@ -242,7 +245,10 @@ function Loanlist(props) {
         {
           field: "R2_ApplicationStatus",
           Header: "Application Status",
-          accessor: "R2_ApplicationStatus"
+          accessor: "R2_ApplicationStatus",
+          Filter: SelectColumnFilter,
+          filter: 'includes',
+          options:applicationStatusOptions
         },
         {
           field: "statusIndication",
@@ -298,7 +304,10 @@ function Loanlist(props) {
           {
             field: "R2_ApplicationStatus",
             Header: "Application Status",
-            accessor: "R2_ApplicationStatus"
+            accessor: "R2_ApplicationStatus",
+            Filter: SelectColumnFilter,
+            filter: 'includes',
+            options:applicationStatusOptions
           });
       }
     } else {

@@ -43,4 +43,16 @@ const StatusOptions = [
     { value: 'Loans with SBA Submission Errors',    label: 'Loans with SBA Submission Errors' }
 ];
 
-export { SBAOptions, BrokerOptions, StatusOptions};
+const applicationStatusOptions = [
+    { value: '',     label: 'All' },
+    { value: 'Withdrawn',     label: 'Withdrawn' },
+    { value: 'New', label: 'New' },
+    { value: 'Approved', label: 'Approved' },
+    { value: 'NULL', label: 'NULL' },
+    { value: 'Profile Complete',  label: 'Profile Complete' },
+    { value: 'Application Complete', label: 'Application Complete' },
+    { value: 'Eligibility In Progress', label: 'Eligibility In Progress' },
+    { value: 'Locked', label: 'Locked' }
+];
+
+export { SBAOptions, BrokerOptions, StatusOptions, applicationStatusOptions};
