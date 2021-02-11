@@ -117,7 +117,7 @@ function LoanDetailForm(props) {
     loadDtOrdObj = {
       "broker": loanDetailsObj.broker,
       "businessName": loanDetailsObj.businessName,
-      "WFtaxID": loanDetailsObj.WFtaxID,
+      "R2_TaxID": loanDetailsObj.R2_TaxID,
       "createDate": loanDetailsObj.createDate,
       "R2_LoanApplicationNumber": loanDetailsObj.R2_LoanApplicationNumber,
       "R2_LoanAmount": loanDetailsObj.R2_LoanAmount,
@@ -129,6 +129,7 @@ function LoanDetailForm(props) {
       "MentorEmail": loanDetailsObj.MentorEmail,
       "MentorPhone": loanDetailsObj.MentorPhone,
       "statusIndication": loanDetailsObj.statusIndication,
+      "LastModifyDate": loanDetailsObj.LastModifyDate,
       "StatusAComments": loanDetailsObj.StatusAComments,
       "StatusBComments": loanDetailsObj.StatusBComments,
       "StatusCComments": loanDetailsObj.StatusCComments,
@@ -184,7 +185,7 @@ function LoanDetailForm(props) {
       "SBALoanNumber": loanDetailsObj.SBALoanNumber,
       "SBAStatus": loanDetailsObj.SBAStatus,
       "State": loanDetailsObj.State,
-      "R2_TaxID": loanDetailsObj.R2_TaxID,
+      "WFtaxID": loanDetailsObj.WFtaxID,
       "UseOfProceedsForSupplierCosts": loanDetailsObj.UseOfProceedsForSupplierCosts,
       "ASE_LoanApplicationNumber": loanDetailsObj.ASE_LoanApplicationNumber,
       "Borrower": loanDetailsObj.Borrower,
@@ -214,7 +215,6 @@ function LoanDetailForm(props) {
       "TaxID": loanDetailsObj.TaxID,
       "ALD_ID": loanDetailsObj.ALD_ID,
       "ALDLoanApplicationNumberOnly": loanDetailsObj.ALDLoanApplicationNumberOnly,
-      "LastModifyDate": loanDetailsObj.LastModifyDate,
       "userName": loanDetailsObj.userName
     };
   }
@@ -229,7 +229,7 @@ function LoanDetailForm(props) {
             let readOnlyVal = true;
             if(!str.includes(key)){
               if(isInternalUser){
-                if(isInternalUser && (key==="ReviewerAssigned" || key==="MentorAssigned" || key==="ALDLoanApplicationNumberOnly" || key==="StatusAComments" || key==="StatusBComments" || key==="StatusCComments" || key==="StatusDComments" || key==="statusIndication" || key==="businessIndication" || key==="personalIndication" || key==="ownershipIndication" || key==="documentIndication" || key==="finacialSeachIndication" || key==="MentorEmail" || key==="MentorPhone")){
+                if(isInternalUser && (key==="ReviewerAssigned" || key==="MentorAssigned" || key==="StatusAComments" || key==="StatusBComments" || key==="StatusCComments" || key==="StatusDComments" || key==="statusIndication" || key==="businessIndication" || key==="personalIndication" || key==="ownershipIndication" || key==="documentIndication" || key==="finacialSeachIndication")){
                   readOnlyVal = false;
                 }
                 if(key==="statusIndication"){

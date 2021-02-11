@@ -123,15 +123,15 @@ function Loanlist(props) {
           disableFilters: true,
         },
         {
-          name: "businessName",
-          field: "businessName",
+          name: "PrimaryBorrowers",
+          field: "PrimaryBorrowers",
           Header: "Primary Borrower",
-          accessor: "businessName"
+          accessor: "PrimaryBorrowers"
         },
         {
-          field: "LoanAmount",
+          field: "R2_LoanAmount",
           Header: "Total Request",
-          accessor: "LoanAmount",
+          accessor: "R2_LoanAmount",
           disableFilters: true,
           Cell: props => {
             if(props.value===null) {
@@ -206,10 +206,10 @@ function Loanlist(props) {
           show: false
         },
         {
-          name: "businessName",
-          field: "businessName",
+          name: "PrimaryBorrowers",
+          field: "PrimaryBorrowers",
           Header: "Primary Borrower",
-          accessor: "businessName"
+          accessor: "PrimaryBorrowers"
         },
         {
           field: "SBAStatus",
@@ -272,10 +272,10 @@ function Loanlist(props) {
             show: false
           },
           {
-            name: "businessName",
-            field: "businessName",
+            name: "PrimaryBorrowers",
+            field: "PrimaryBorrowers",
             Header: "Primary Borrower",
-            accessor: "businessName"
+            accessor: "PrimaryBorrowers"
           },
           {
             field: "SBAStatus",
@@ -485,7 +485,7 @@ function Loanlist(props) {
             'MentorAssigned' : data.MentorAssigned,
             'ApplicationCreatedDate' : data.ApplicationCreatedDate,
             'LastModifyDate' : data.LastModifyDate,
-            'Primary Borrower' : data.businessName,
+            'Primary Borrower' : data.PrimaryBorrowers,
             'TotalRequest' : data.R2_LoanAmount,
             'StatusAComments': data.StatusAComments,
             'ApplicationStatus' : data.statusIndication,
