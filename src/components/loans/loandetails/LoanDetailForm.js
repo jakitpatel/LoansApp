@@ -115,6 +115,7 @@ function LoanDetailForm(props) {
   let loadDtOrdObj = loanDetailsObj;
   if(isInternalUser){
     loadDtOrdObj = {
+      "teambmember":loanDetailsObj.teambmember,
       "broker": loanDetailsObj.broker,
       "businessName": loanDetailsObj.businessName,
       "R2_TaxID": loanDetailsObj.R2_TaxID,
@@ -229,7 +230,7 @@ function LoanDetailForm(props) {
             let readOnlyVal = true;
             if(!str.includes(key)){
               if(isInternalUser){
-                if(isInternalUser && (key==="ReviewerAssigned" || key==="MentorAssigned" || key==="StatusAComments" || key==="StatusBComments" || key==="StatusCComments" || key==="StatusDComments" || key==="statusIndication" || key==="businessIndication" || key==="personalIndication" || key==="ownershipIndication" || key==="documentIndication" || key==="finacialSeachIndication")){
+                if(isInternalUser && (key==="ReviewerAssigned" || key==="MentorAssigned" || key==="StatusAComments" || key==="StatusBComments" || key==="StatusCComments" || key==="StatusDComments" || key==="statusIndication" || key==="businessIndication" || key==="personalIndication" || key==="ownershipIndication" || key==="documentIndication" || key==="finacialSeachIndication" || key==="teambmember")){
                   readOnlyVal = false;
                 }
                 if(key==="statusIndication"){
@@ -294,7 +295,7 @@ function LoanDetailForm(props) {
                 }
               } else {
                 //let fiedls_exist = "ALDLoanApplicationNumberOnly PrimaryBorrowers R2_LoanAmount SBAStatus ErrorMessage MentorAssigned MentorEmail MentorPhone LastModifyDate SBALoanNumber statusIndication businessIndication personalIndication documentIndication finacialSeachIndication";
-                let fiedls_exist = "ApplicationCreatedDate businessName ALDLoanApplicationNumberOnly MentorAssigned MentorPhone MentorEmail LastModifyDate AdobeSigned2483Date LoanStatus FirstDrawLoanAmount FirstDrawSbaLoanNumber IsSecondDrawLoan SBALoanNumber SBAApprovalDate SBAStatus ErrorMessage statusIndication businessIndication personalIndication ownershipIndication documentIndication financialSearchIndication PrimaryContactFirstName PrimaryContactLastName Phone Email";
+                let fiedls_exist = "ApplicationCreatedDate businessName ALDLoanApplicationNumberOnly MentorAssigned MentorPhone MentorEmail LastModifyDate AdobeSigned2483Date LoanStatus FirstDrawLoanAmount FirstDrawSbaLoanNumber IsSecondDrawLoan SBALoanNumber SBAApprovalDate SBAStatus ErrorMessage statusIndication businessIndication personalIndication ownershipIndication documentIndication financialSearchIndication PrimaryContactFirstName PrimaryContactLastName Phone Email StatusAComments StatusBComments StatusCComments";
                 let labelText = key;
                 if(key==="PrimaryBorrowers" && value===null){
                   value = loadDtOrdObj.businessName;
