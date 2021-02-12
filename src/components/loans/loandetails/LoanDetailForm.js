@@ -3,7 +3,7 @@ import "./LoanDetailForm.css";
 import ReactTooltip from 'react-tooltip';
 import { useSelector } from 'react-redux';
 import TextareaAutosize from 'react-textarea-autosize';
-import {StatusOptions} from './../../../commonVar.js';
+import {StatusOptions, brokerOverrideOptions} from './../../../commonVar.js';
 
 function CustTextInput(props) {
 
@@ -118,6 +118,7 @@ function LoanDetailForm(props) {
     loadDtOrdObj = {
       "teambmember":loanDetailsObj.teambmember,
       "broker": loanDetailsObj.broker,
+      "brokerComments":loanDetailsObj.brokerComments,
       "businessName": loanDetailsObj.businessName,
       "R2_TaxID": loanDetailsObj.R2_TaxID,
       "createDate": loanDetailsObj.createDate,
@@ -307,7 +308,7 @@ function LoanDetailForm(props) {
                 }
               } else {
                 //let fiedls_exist = "ALDLoanApplicationNumberOnly PrimaryBorrowers R2_LoanAmount SBAStatus ErrorMessage MentorAssigned MentorEmail MentorPhone LastModifyDate SBALoanNumber statusIndication businessIndication personalIndication documentIndication finacialSeachIndication";
-                let fiedls_exist = "ApplicationCreatedDate businessName ALDLoanApplicationNumberOnly MentorAssigned MentorPhone MentorEmail LastModifyDate AdobeSigned2483Date LoanStatus FirstDrawLoanAmount FirstDrawSbaLoanNumber IsSecondDrawLoan SBALoanNumber SBAApprovalDate SBAStatus ErrorMessage statusIndication businessIndication personalIndication ownershipIndication documentIndication financialSearchIndication PrimaryContactFirstName PrimaryContactLastName Phone Email StatusAComments StatusBComments StatusCComments";
+                let fiedls_exist = "ApplicationCreatedDate businessName ALDLoanApplicationNumberOnly MentorAssigned MentorPhone MentorEmail LastModifyDate AdobeSigned2483Date LoanStatus FirstDrawLoanAmount FirstDrawSbaLoanNumber IsSecondDrawLoan SBALoanNumber SBAApprovalDate SBAStatus ErrorMessage statusIndication businessIndication personalIndication ownershipIndication documentIndication financialSearchIndication PrimaryContactFirstName PrimaryContactLastName Phone Email StatusAComments StatusBComments StatusCComments brokerRep brokerComments";
                 let labelText = key;
                 if(key==="PrimaryBorrowers" && value===null){
                   value = loadDtOrdObj.businessName;

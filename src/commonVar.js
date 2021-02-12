@@ -55,4 +55,19 @@ const applicationStatusOptions = [
     { value: 'Locked', label: 'Locked' }
 ];
 
-export { SBAOptions, BrokerOptions, StatusOptions, applicationStatusOptions};
+const brokerOverrideOptions = [
+    { value: 'Premium Merchant Funding',     label: 'Premium Merchant Funding' },
+    { value: 'PMF', label: 'PMF' },
+    { value: 'Guidance Funding', label: 'Guidance Funding' },
+    { value: 'Lendie Capital', label: 'Lendie Capital' },
+    { value: 'Motor City Funding',  label: 'Motor City Funding' },
+    { value: 'Eastern Union Funding', label: 'Eastern Union Funding' },
+    { value: 'Asset Enhancement Solutions', label: 'Asset Enhancement Solutions' },
+    { value: 'Green Ark Funding', label: 'Green Ark Funding' },
+    { value: 'Donar Consulting', label: 'Donar Consulting' },
+    { value: 'ABC Capital Corp.', label: 'ABC Capital Corp.' },
+    { value: 'Funding Forward', label: 'Funding Forward' },
+    { value: 'Useful Funding', label: 'Useful Funding' }
+];
+
+export { SBAOptions, BrokerOptions, StatusOptions, applicationStatusOptions, brokerOverrideOptions};
