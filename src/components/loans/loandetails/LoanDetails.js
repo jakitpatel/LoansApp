@@ -79,8 +79,10 @@ function LoanDetails(props) {
     history.goBack();
   }
 
-  const saveLoanDetails = async () => {
+  const saveLoanDetails = async (e) => {
     console.log("Save Loan Details");
+    console.log(e);
+    console.log(e.target.innerHTML);
     console.log(loanDetailsObj);
     try {
       const options = {
@@ -119,9 +121,16 @@ function LoanDetails(props) {
           alert("Please select Issue Resolved option to save.");
           return;
         }*/
-        tmpLoanObj = {
-          statusIndication : "Resolved",
-        };
+        if(e.target.innerHTML === "Save"){
+          tmpLoanObj = {
+            brokerRep : loanDetailsObj.brokerRep,
+            brokerComments : loanDetailsObj.brokerComments
+          };
+        } else {
+          tmpLoanObj = {
+            statusIndication : "Resolved",
+          };
+        }
       }
       if(loanDetailsObj.ALD_ID === "" || loanDetailsObj.ALD_ID === null){
         alert("ALD_ID is empty! So, can not able to save the loan.");
@@ -165,11 +174,11 @@ function LoanDetails(props) {
               <button style={{ float: "left" }} type="button" onClick={backToWireList} className="btn btn-primary btn-sm">
                 Back
               </button>
-              {isInternalUser &&
+              {/*isInternalUser &&*/}
               <button type="button" style={{ float: "right" }} onClick={saveLoanDetails} className={`btn btn-primary btn-sm`}>
                   Save
                 </button>
-              }
+              {/*}*/}
               {showResolvedIssueBtn &&
               <button type="button" style={{ float: "right" }} onClick={saveLoanDetails} className={`btn btn-primary btn-sm`}>
                   Resolve Issue

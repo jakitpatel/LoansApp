@@ -323,6 +323,9 @@ function LoanDetailForm(props) {
                     found = true;
                   }
                 }
+                if (key==="brokerRep" || key==="brokerComments"){
+                  readOnlyVal = false;
+                }
                 if(found === true){
                   if (key==="StatusAComments" || key==="StatusBComments" || key==="StatusCComments" || key==="StatusDComments" || key==="ErrorMessage" || key==="businessIndication" || key==="personalIndication" || key==="ownershipIndication" || key==="documentIndication" || key==="finacialSeachIndication"){
                     return (
