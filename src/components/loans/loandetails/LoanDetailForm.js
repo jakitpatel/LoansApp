@@ -3,6 +3,7 @@ import "./LoanDetailForm.css";
 import ReactTooltip from 'react-tooltip';
 import { useSelector } from 'react-redux';
 import TextareaAutosize from 'react-textarea-autosize';
+import {StatusOptions} from './../../../commonVar.js';
 
 function CustTextInput(props) {
 
@@ -250,6 +251,16 @@ function LoanDetailForm(props) {
                               onChange={e => props.oncustinputchange(e)}
                             >
                               <option value=""></option>
+                              {StatusOptions.map((option, i) => {
+                                if(option.label!=="All"){
+                                  return (
+                                    <option key={i} value={option.value}>
+                                      {option.label}
+                                    </option>
+                                  )
+                                }
+                              })}
+                              {/*
                               <option value="Untouched">Untouched</option>
                               <option value="All OK">All OK</option>
                               <option value="Issue Identified">Issue Identified</option>
@@ -257,7 +268,8 @@ function LoanDetailForm(props) {
                               <option value="funded">funded</option>
                               <option value="canceled">canceled</option>
                               <option value="withdrawn">withdrawn</option>
-                              <option value="In Progress">In Progress</option>                
+                              <option value="In Progress">In Progress</option>
+                              */}             
                             </select>
                           </div>
                         </div>
