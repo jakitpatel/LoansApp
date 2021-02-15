@@ -114,11 +114,11 @@ function LoanDetailForm(props) {
   });
   let loanDetailsObj = props.custstate;
   let loadDtOrdObj = loanDetailsObj;
+  var brokerVal = loadDtOrdObj.broker;
   if(isInternalUser){
     loadDtOrdObj = {
-      "teambmember":loanDetailsObj.teambmember,
       "broker": loanDetailsObj.broker,
-      "brokerComments":loanDetailsObj.brokerComments,
+      "brokerOverride":loanDetailsObj.brokerOverride,
       "businessName": loanDetailsObj.businessName,
       "R2_TaxID": loanDetailsObj.R2_TaxID,
       "createDate": loanDetailsObj.createDate,
@@ -133,6 +133,8 @@ function LoanDetailForm(props) {
       "MentorPhone": loanDetailsObj.MentorPhone,
       "statusIndication": loanDetailsObj.statusIndication,
       "LastModifyDate": loanDetailsObj.LastModifyDate,
+      "teambmember":loanDetailsObj.teambmember,
+      "brokerComments":loanDetailsObj.brokerComments,
       "StatusAComments": loanDetailsObj.StatusAComments,
       "StatusBComments": loanDetailsObj.StatusBComments,
       "StatusCComments": loanDetailsObj.StatusCComments,
@@ -226,7 +228,7 @@ function LoanDetailForm(props) {
     <React.Fragment>
       <ReactTooltip delayShow={200} id='wireDetailForm' place="right" className="tooltipcls" textColor="#000000" backgroundColor="#f4f4f4" effect="float" multiline={true} />
       <div className="sm-vert-form form-row">
-        {
+        { 
           Object.entries(loadDtOrdObj).map(([key, value]) => {
             let str = "userName row_num";
             let readOnlyVal = true;
@@ -260,24 +262,50 @@ function LoanDetailForm(props) {
                                     </option>
                                   )
                                 }
-                              })}
-                              {/*
-                              <option value="Untouched">Untouched</option>
-                              <option value="All OK">All OK</option>
-                              <option value="Issue Identified">Issue Identified</option>
-                              <option value="Issue Resolved">Issue Resolved</option>
-                              <option value="funded">funded</option>
-                              <option value="canceled">canceled</option>
-                              <option value="withdrawn">withdrawn</option>
-                              <option value="In Progress">In Progress</option>
-                              */}             
+                              })}           
                             </select>
                           </div>
                         </div>
                       </div>
                     </React.Fragment>
                   )
-                } else if (key==="StatusAComments" || key==="StatusBComments" || key==="StatusCComments" || key==="StatusDComments" || key==="ErrorMessage" || key==="businessIndication" || key==="personalIndication" || key==="ownershipIndication" || key==="documentIndication" || key==="finacialSeachIndication"){
+                } else if(key==="brokerOverride"){
+                  if(value===null){
+                    value = "";
+                  }
+                  if(brokerVal === null || brokerVal === ""){
+                    readOnlyVal = false;
+                  }
+                  return (
+                    <React.Fragment key={key}>
+                      <div className="col-sm-4">
+                        <div className="form-group row">
+                          <label className="col-sm-4 col-form-label">{key}:</label>
+                          <div className="col-sm-7">
+                            <select
+                              className="form-control custom-select"
+                              readOnly={readOnlyVal}
+                              name={key}
+                              value={value}
+                              onChange={e => props.oncustinputchange(e)}
+                            >
+                              <option value=""></option>
+                              {brokerOverrideOptions.map((option, i) => {
+                                if(option.label!=="All"){
+                                  return (
+                                    <option key={i} value={option.value}>
+                                      {option.label}
+                                    </option>
+                                  )
+                                }
+                              })}           
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                    </React.Fragment>
+                  )
+                } else if (key==="StatusAComments" || key==="StatusBComments" || key==="StatusCComments" || key==="StatusDComments" || key==="ErrorMessage" || key==="businessIndication" || key==="personalIndication" || key==="ownershipIndication" || key==="documentIndication" || key==="finacialSeachIndication" || key==="brokerComments"){
                   return (
                     <React.Fragment key={key}>
                       <LoanTextAreaInput
@@ -323,7 +351,7 @@ function LoanDetailForm(props) {
                     found = true;
                   }
                 }
-                if (key==="brokerRep" || key==="brokerComments"){
+                if ((key==="brokerRep" || key==="brokerComments") && (brokerVal!== null && brokerVal!== "")){
                   readOnlyVal = false;
                 }
                 if(found === true){

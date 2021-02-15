@@ -36,11 +36,12 @@ const StatusOptions = [
     { value: 'P/R docs in file, OFAC, SAM OK – move to approval', label: 'P/R docs in file, OFAC, SAM OK – move to approval' },
     { value: 'Prior To Funding docs in file',  label: 'Prior To Funding docs in file' },
     { value: 'Prior to Funding docs Needed', label: 'Prior to Funding docs Needed' },
-    { value: 'Funded', label: 'Funded' },
-    { value: 'Withdrawn', label: 'Withdrawn' },
-    { value: 'Cancelled',    label: 'Cancelled' },
+    { value: 'Funded',            label: 'Funded' },
+    { value: 'Withdrawn',         label: 'Withdrawn' },
+    { value: 'Cancelled',         label: 'Cancelled' },
     { value: 'Duplicate file',    label: 'Duplicate file' },
-    { value: 'Loans with SBA Submission Errors',    label: 'Loans with SBA Submission Errors' }
+    { value: 'Loans with SBA Submission Errors',    label: 'Loans with SBA Submission Errors' },
+    { value: 'Approved by SBA',    label: 'Approved by SBA' }
 ];
 
 const applicationStatusOptions = [

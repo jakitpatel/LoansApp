@@ -113,7 +113,8 @@ function LoanDetails(props) {
           personalIndication  : loanDetailsObj.personalIndication,
           ownershipIndication : loanDetailsObj.ownershipIndication,
           documentIndication  : loanDetailsObj.documentIndication,
-          finacialSeachIndication  : loanDetailsObj.finacialSeachIndication
+          finacialSeachIndication  : loanDetailsObj.finacialSeachIndication,
+          brokerOverride : loanDetailsObj.brokerOverride
         };
       } else {
         /*
@@ -180,7 +181,7 @@ function LoanDetails(props) {
                 </button>
               {/*}*/}
               {showResolvedIssueBtn &&
-              <button type="button" style={{ float: "right" }} onClick={saveLoanDetails} className={`btn btn-primary btn-sm`}>
+              <button type="button" style={{ float: "right", marginRight:"10px" }} onClick={saveLoanDetails} className={`btn btn-primary btn-sm`}>
                   Resolve Issue
                 </button>
               }
