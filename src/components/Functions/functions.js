@@ -19,8 +19,18 @@ const buildSortByUrl = (sortArr) => {
     let filterVal = filterObj.value;
     if(Array.isArray(filterVal) && filterVal.length > 0){
       let multifilterOpr = "IN";
-      let selOptionSt = Array.from(filterVal).map(o => { return ("'"+o.value+"'")}).filter(Boolean).join(",");
+      let isNullFlag = false;
+      let selOptionSt = Array.from(filterVal).map(o => { 
+        if(o.value==="is NULL"){
+          isNullFlag = true;
+        } else {
+          return ("'"+o.value+"'");
+        }
+      }).filter(Boolean).join(",");
       filterUrl += " and ("+filterClm+" "+multifilterOpr+" ("+selOptionSt+"))";
+      if(isNullFlag===true){
+        filterUrl += " or ("+filterClm+" is null)";
+      }
     } else {
       if(filterClm==="ALDLoanApplicationNumberOnly"){
         filterOpr = "=";

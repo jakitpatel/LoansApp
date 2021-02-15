@@ -13,6 +13,7 @@ import {API_KEY, Loans_Url, env} from './../../../const';
 import {buildSortByUrl, buildPageUrl, buildFilterUrl} from './../../Functions/functions.js';
 import SelectColumnFilter from './../../Filter/SelectColumnFilter.js';
 import {SBAOptions, BrokerOptions, StatusOptions, applicationStatusOptions} from './../../../commonVar.js';
+import ExcelExport from './../../ExcelExport/ExcelExport';
 
 
 function Loanlist(props) {
@@ -700,7 +701,9 @@ function Loanlist(props) {
                 <button type="button" style={{ float: "right", marginRight:"5px" }} onClick={(e)=> {setIsRefresh(!isRefresh);}} className={`btn btn-primary btn-sm`}>
                   <Icon.RefreshCw />
                 </button>
-                
+                {/*allLoansData.length>0 && downloadAllLoans &&
+                  <ExcelExport excelFile="AllloanList" sheetName="AllloanList" data={loanListData}></ExcelExport>
+                */}
                 <CSVLink
                       data={loanListData}
                       headers={headerName}
