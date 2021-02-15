@@ -423,7 +423,7 @@ function Loanlist(props) {
       }, 1000);
     }
   }, [downloadAllLoans, allLoansData]);
-
+  
   
   function toCurrency(numberString) {
       let number = parseFloat(numberString);
@@ -611,6 +611,7 @@ function Loanlist(props) {
     }
     setAllLoansData(allloandata);
     setDownloadAllLoans(true);
+    //setDownloadAllLoans(!downloadAllLoans);
   }
 
   let headerTitle = "Loan List";
@@ -692,18 +693,33 @@ function Loanlist(props) {
                 <button type="button" style={{ float: "right" }} onClick={onAllLoansExportBtnClick} className={`btn btn-primary btn-sm`}>
                 Export All Loans
                 </button>
+                {/*downloadAllLoans &&
+                  <ExcelExport hideEl={true} excelFile="AllloanList" sheetName="AllloanList" data={allLoansData}></ExcelExport>
+                }
+                {/*
                 <button type="button" style={{ float: "right", marginRight:"5px" }} onClick={(e)=> {onLoanListExport(e,"ListDetails")}} className={`btn btn-primary btn-sm`}>
                   Export List Details
                 </button>
+                */}
+                <ExcelExport hideEl={false} excelFile="loanListDetails" sheetName="loanListDetails" data={loanDetailsData}>
+                  <button disabled={loanDetailsData.length === 0 ? true : false} type="button" style={{ float: "right", marginRight:"5px" }} className={`btn btn-primary btn-sm`}>
+                    Export List Details
+                  </button>
+                </ExcelExport>
+                <ExcelExport hideEl={false} excelFile="LoanList" sheetName="LoanList" data={loanListData}>
+                  <button disabled={loanListData.length === 0 ? true : false} type="button" style={{ float: "right", marginRight:"5px" }} className={`btn btn-primary btn-sm`}>
+                    Export List
+                  </button>
+                </ExcelExport>
+                {/*
                 <button type="button" style={{ float: "right", marginRight:"5px" }} onClick={(e)=> {onLoanListExport(e,"List")}} className={`btn btn-primary btn-sm`}>
                   Export List
                 </button>
+                */}
                 <button type="button" style={{ float: "right", marginRight:"5px" }} onClick={(e)=> {setIsRefresh(!isRefresh);}} className={`btn btn-primary btn-sm`}>
                   <Icon.RefreshCw />
                 </button>
-                {/*allLoansData.length>0 && downloadAllLoans &&
-                  <ExcelExport excelFile="AllloanList" sheetName="AllloanList" data={loanListData}></ExcelExport>
-                */}
+                {/*
                 <CSVLink
                       data={loanListData}
                       headers={headerName}
@@ -713,10 +729,6 @@ function Loanlist(props) {
                       className={`btn btn-primary btn-sm invisible`}
                       style={{ float: "right" }}
                       target="_blank"
-                      /*onClick={(event, done) => {
-                        return onWireExport(event, done);
-                      }
-                    }*/
                     >Export</CSVLink>
                 <CSVLink
                       data={loanDetailsData}
@@ -727,11 +739,8 @@ function Loanlist(props) {
                       className={`btn btn-primary btn-sm invisible`}
                       style={{ float: "right" }}
                       target="_blank"
-                      /*onClick={(event, done) => {
-                        return onWireExport(event, done);
-                      }
-                    }*/
                     >Export</CSVLink>
+                */}
                 <CSVLink
                       data={allLoansData}
                       //headers={headerName}

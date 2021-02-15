@@ -10,6 +10,9 @@ function ExcelExport(props) {
 
     const filterColumns = (data) => {
         // Get column names
+        if(data===null || data==undefined || data.length===0){
+            return [];
+        }
         const columns = Object.keys(data[0]);
 
         // Remove by key (firstname)
@@ -22,7 +25,7 @@ function ExcelExport(props) {
     };
 
     return (
-        <ExcelFile filename={props.excelFile} hideElement={true}>
+        <ExcelFile filename={props.excelFile} hideElement={props.hideEl} element={props.children}>
             <ExcelSheet data={props.data} name={props.sheetName}>
             {
                 filterColumns(props.data).map((col)=> {
