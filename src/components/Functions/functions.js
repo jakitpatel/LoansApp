@@ -27,9 +27,14 @@ const buildSortByUrl = (sortArr) => {
           return ("'"+o.value+"'");
         }
       }).filter(Boolean).join(",");
-      filterUrl += " and ("+filterClm+" "+multifilterOpr+" ("+selOptionSt+"))";
-      if(isNullFlag===true){
+      if(selOptionSt.length > 0){
+        filterUrl += " and ("+filterClm+" "+multifilterOpr+" ("+selOptionSt+"))";
+      }
+      if(isNullFlag===true && selOptionSt.length > 0){
         filterUrl += " or ("+filterClm+" is null)";
+      }
+      if(isNullFlag===true && selOptionSt.length == 0){
+        filterUrl += " and ("+filterClm+" is null)";
       }
     } else {
       if(filterClm==="ALDLoanApplicationNumberOnly"){
