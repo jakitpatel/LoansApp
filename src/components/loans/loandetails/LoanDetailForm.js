@@ -2,109 +2,10 @@ import React from "react";
 import "./LoanDetailForm.css";
 import ReactTooltip from 'react-tooltip';
 import { useSelector } from 'react-redux';
-import TextareaAutosize from 'react-textarea-autosize';
-import {StatusOptions, brokerOverrideOptions} from './../../../commonVar.js';
-
-function CustTextInput(props) {
-
-  let fieldName = props.nameref;
-  let fieldClass = "form-control";
-  let errorMsg = null;
-  //let errorMsg = props.wireDtObj.derivedErrorMsg;
-  //console.log("errorMsg : "+errorMsg);
-  if(errorMsg !== null){
-    let n = errorMsg.includes(fieldName);
-    if(n === true){
-      fieldClass = fieldClass+" is-invalid";
-    }
-  }
-  let tooltip = "";
-  if(errorMsg !== null){
-    let errArr = errorMsg.split(";");
-    for(let i=0; i<errArr.length; i++){
-      let errLine = errArr[i];
-      let n = errLine.includes(fieldName);
-      if(n === true){
-        tooltip = tooltip+errLine;
-      }
-    }
-  }
-  //// Label Tooltip
-  let labelTooltip = "";
-  let fieldLabel = props.labelText+":";
-
-  let fieldVal = props.val;
-  if(fieldVal === null && fieldClass === "form-control" && tooltip === ""){
-    //return null;
-  }
-  if(fieldVal===null){
-    fieldVal = "";
-  }
-  return (
-    <div className="col-sm-4">
-      <div className="form-group row">
-        <label data-for='wireDetailForm' data-tip={labelTooltip} className="col-sm-4 col-form-label">{fieldLabel}</label>
-        <div className="col-sm-7">
-          <input
-            type="text"
-            data-tip={tooltip}
-            data-for='wireDetailForm'
-            name={fieldName}
-            className={fieldClass}
-            //placeholder={props.placeholdertext}
-            value={fieldVal}
-            onChange={e => props.inputchange(e)}
-            readOnly={props.readOnlyValue}
-          />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function LoanTextAreaInput(props) {
-
-  let fieldName = props.nameref;
-  let fieldClass = "form-control";
-  //// Label Tooltip
-  let labelTooltip = "";
-  let fieldLabel = props.labelText+":";
-
-  let fieldVal = props.val;
-  if(fieldVal === null && fieldClass === "form-control"){
-    //return null;
-  }
-  if(fieldVal===null){
-    fieldVal = "";
-  }
-  return (
-    <div className="col-sm-12">
-      <div className="form-group row">
-        <label data-for='wireDetailForm' style={{flex: "0 0 11.3%", maxWidth: "11.3%"}} data-tip={labelTooltip} className="col-sm-1 col-form-label">{fieldLabel}</label>
-        <div className="col-sm-11" style={{flex: "0 0 86%", maxWidth: "86%"}}>
-        <TextareaAutosize 
-            className={fieldClass}
-            minRows={1}
-            name={fieldName}
-            value={fieldVal}
-            onChange={e => props.inputchange(e)}
-            readOnly={props.readOnlyValue}
-        />
-        {/*
-        <textarea 
-            className={fieldClass}
-            rows="2" 
-            name={fieldName}
-            value={fieldVal}
-            onChange={e => props.inputchange(e)}
-            readOnly={props.readOnlyValue}
-        ></textarea>
-        */}
-        </div>
-      </div>
-    </div>
-  );
-}
+import {StatusOptions, brokerOverrideOptions, MentorAssignedOptions, ReviewerAssignedOptions} from './../../../commonVar.js';
+import SelectInput from './SelectInput';
+import TextAreaInput from './TextAreaInput';
+import TextInput from './TextInput';
 
 function LoanDetailForm(props) {
   const { isInternalUser } = useSelector(state => {
@@ -243,30 +144,16 @@ function LoanDetailForm(props) {
                   }
                   return (
                     <React.Fragment key={key}>
-                      <div className="col-sm-4">
-                        <div className="form-group row">
-                          <label className="col-sm-4 col-form-label">{key}:</label>
-                          <div className="col-sm-7">
-                            <select
-                              className="form-control custom-select"
-                              name={key}
-                              value={value}
-                              onChange={e => props.oncustinputchange(e)}
-                            >
-                              <option value=""></option>
-                              {StatusOptions.map((option, i) => {
-                                if(option.label!=="All"){
-                                  return (
-                                    <option key={i} value={option.value}>
-                                      {option.label}
-                                    </option>
-                                  )
-                                }
-                              })}           
-                            </select>
-                          </div>
-                        </div>
-                      </div>
+                      <SelectInput
+                        placeholdertext={key}
+                        labelText={key}
+                        nameref={key}
+                        inputchange={props.oncustinputchange}
+                        val={value}
+                        wireDtObj={loadDtOrdObj}
+                        readOnlyValue={readOnlyVal}
+                        optionList={StatusOptions}
+                      />
                     </React.Fragment>
                   )
                 } else if(key==="brokerOverride"){
@@ -278,37 +165,43 @@ function LoanDetailForm(props) {
                   }
                   return (
                     <React.Fragment key={key}>
-                      <div className="col-sm-4">
-                        <div className="form-group row">
-                          <label className="col-sm-4 col-form-label">{key}:</label>
-                          <div className="col-sm-7">
-                            <select
-                              className="form-control custom-select"
-                              readOnly={readOnlyVal}
-                              name={key}
-                              value={value}
-                              onChange={e => props.oncustinputchange(e)}
-                            >
-                              <option value=""></option>
-                              {brokerOverrideOptions.map((option, i) => {
-                                if(option.label!=="All"){
-                                  return (
-                                    <option key={i} value={option.value}>
-                                      {option.label}
-                                    </option>
-                                  )
-                                }
-                              })}           
-                            </select>
-                          </div>
-                        </div>
-                      </div>
+                      <SelectInput
+                        placeholdertext={key}
+                        labelText={key}
+                        nameref={key}
+                        inputchange={props.oncustinputchange}
+                        val={value}
+                        wireDtObj={loadDtOrdObj}
+                        readOnlyValue={readOnlyVal}
+                        optionList={brokerOverrideOptions}
+                      />
+                    </React.Fragment>
+                  )
+                } else if(key==="MentorAssigned" || key==="ReviewerAssigned"){
+                  let assignedOptions;
+                  if(key==="MentorAssigned"){
+                    assignedOptions = MentorAssignedOptions;
+                  } else {
+                    assignedOptions = ReviewerAssignedOptions;
+                  }
+                  return (
+                    <React.Fragment key={key}>
+                      <SelectInput
+                        placeholdertext={key}
+                        labelText={key}
+                        nameref={key}
+                        inputchange={props.oncustinputchange}
+                        val={value}
+                        wireDtObj={loadDtOrdObj}
+                        readOnlyValue={readOnlyVal}
+                        optionList={assignedOptions}
+                      />
                     </React.Fragment>
                   )
                 } else if (key==="StatusAComments" || key==="StatusBComments" || key==="StatusCComments" || key==="StatusDComments" || key==="ErrorMessage" || key==="businessIndication" || key==="personalIndication" || key==="ownershipIndication" || key==="documentIndication" || key==="finacialSeachIndication" || key==="brokerComments"){
                   return (
                     <React.Fragment key={key}>
-                      <LoanTextAreaInput
+                      <TextAreaInput
                         placeholdertext={key}
                         labelText={key}
                         nameref={key}
@@ -322,7 +215,7 @@ function LoanDetailForm(props) {
                 } else {
                   return (
                     <React.Fragment key={key}>
-                      <CustTextInput
+                      <TextInput
                         placeholdertext={key}
                         labelText={key}
                         nameref={key}
@@ -358,7 +251,7 @@ function LoanDetailForm(props) {
                   if (key==="StatusAComments" || key==="StatusBComments" || key==="StatusCComments" || key==="StatusDComments" || key==="ErrorMessage" || key==="businessIndication" || key==="personalIndication" || key==="ownershipIndication" || key==="documentIndication" || key==="finacialSeachIndication"){
                     return (
                       <React.Fragment key={key}>
-                        <LoanTextAreaInput
+                        <TextAreaInput
                           placeholdertext={key}
                           labelText={labelText}
                           nameref={key}
@@ -369,10 +262,28 @@ function LoanDetailForm(props) {
                         />
                       </React.Fragment>
                     )
+                  } else if(key==="statusIndication"){
+                    if(value===null){
+                      value = "";
+                    }
+                    return (
+                      <React.Fragment key={key}>
+                        <SelectInput
+                          placeholdertext={key}
+                          labelText={key}
+                          nameref={key}
+                          inputchange={props.oncustinputchange}
+                          val={value}
+                          wireDtObj={loadDtOrdObj}
+                          readOnlyValue={readOnlyVal}
+                          optionList={StatusOptions}
+                        />
+                      </React.Fragment>
+                    )
                   } else {
                     return (
                       <React.Fragment key={key}>
-                        <CustTextInput
+                        <TextInput
                           placeholdertext={key}
                           labelText={labelText}
                           nameref={key}

@@ -71,4 +71,25 @@ const brokerOverrideOptions = [
     { value: 'Useful Funding', label: 'Useful Funding' }
 ];
 
-export { SBAOptions, BrokerOptions, StatusOptions, applicationStatusOptions, brokerOverrideOptions};
+const MentorAssignedOptions = [
+    { value: 'Binyomin Kolodny ADM',     label: 'Binyomin Kolodny ADM' },
+    { value: 'Binyomin Kolodny', label: 'Binyomin Kolodny' },
+    { value: 'IT Master', label: 'IT Master' },
+    { value: 'Chad Dewdat', label: 'Chad Dewdat' },
+    { value: 'Jacob Assaraf',  label: 'Jacob Assaraf' },
+    { value: 'Pinchas Zerbib', label: 'Pinchas Zerbib' },
+    { value: 'Esther Henselmans', label: 'Esther Henselmans' }
+];
+
+const ReviewerAssignedOptions = [
+    { value: 'Binyomin Kolodny ADM',     label: 'Binyomin Kolodny ADM' },
+    { value: 'Binyomin Kolodny', label: 'Binyomin Kolodny' },
+    { value: 'IT Master', label: 'IT Master' },
+    { value: 'Chad Dewdat', label: 'Chad Dewdat' },
+    { value: 'Jacob Assaraf',  label: 'Jacob Assaraf' },
+    { value: 'Pinchas Zerbib', label: 'Pinchas Zerbib' },
+    { value: 'Esther Henselmans', label: 'Esther Henselmans' }
+];
+
+export { SBAOptions, BrokerOptions, StatusOptions, applicationStatusOptions, 
+    brokerOverrideOptions, MentorAssignedOptions, ReviewerAssignedOptions};
