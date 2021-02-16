@@ -7,14 +7,15 @@ import LoanListView from "./LoanListView.js";
 import * as Icon from "react-feather";
 import "./Loanlist.css";
 import axios from 'axios';
+import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
 import ReactTooltip from 'react-tooltip';
-import {API_KEY, Loans_Url, env} from './../../../const';
+import {API_KEY, Loans_Url, env, SetLoans_Url} from './../../../const';
 import {buildSortByUrl, buildPageUrl, buildFilterUrl, buildExternalLoanExportDetailList} from './../../Functions/functions.js';
 import SelectColumnFilter from './../../Filter/SelectColumnFilter.js';
 import {SBAOptions, BrokerOptions, StatusOptions, applicationStatusOptions} from './../../../commonVar.js';
 import ExcelExport from './../../ExcelExport/ExcelExport';
-
+import { MentorAssignedOptions, ReviewerAssignedOptions} from './../../../commonVar.js';
 
 function Loanlist(props) {
   let history = useHistory();
@@ -24,6 +25,7 @@ function Loanlist(props) {
   const allLoansListExportLink = useRef(null);
   
   // We'll start our table without any data
+  const [skipPageReset, setSkipPageReset] = React.useState(false);
   const [allLoansData, setAllLoansData] = React.useState([]);
   const [loanListData, setLoanListData] = React.useState([]);
   const [loanDetailsData, setLoanDetailsData] = React.useState([]);
@@ -103,13 +105,19 @@ function Loanlist(props) {
           field: "ReviewerAssigned",
           Header: "Reviewer Assigned",
           accessor: "ReviewerAssigned",
+          editable:true,
+          columnType:'list',
+          columnOptions:ReviewerAssignedOptions
           //Filter: SelectColumnFilter,
           //filter: 'includes'
         },
         {
           field: "MentorAssigned",
           Header: "Mentor Assigned",
-          accessor: "MentorAssigned"
+          accessor: "MentorAssigned",
+          editable:true,
+          columnType:'list',
+          columnOptions:MentorAssignedOptions
         },
         {
           field: "ApplicationCreatedDate",
@@ -415,6 +423,86 @@ function Loanlist(props) {
       });
     }
   
+  // We need to keep the table from resetting the pageIndex when we
+  // Update data. So we can keep track of that flag with a ref.
+
+  // When our cell renderer calls updateMyData, we'll use
+  // the rowIndex, columnId and new value to update the
+  // original data
+  const updateMyData = (rowIndex, columnId, value) => {
+    // We also turn on the flag to not reset the page
+    setSkipPageReset(true);
+    let oldData = loans;
+    let modifiedRec = null;
+    let newData = oldData.map((row, index) => {
+      if (index === rowIndex) {
+        modifiedRec = {
+          ...oldData[rowIndex],
+          [columnId]: value,
+        };
+        return modifiedRec
+      }
+      return row
+    });
+    saveLoanDetails({
+      [columnId]:value,
+      ALD_ID:modifiedRec.ALD_ID
+    });
+    //setData(newData);
+    dispatch({
+      type:'UPDATELOANLIST',
+      payload:{
+        loans:newData
+      }
+    });
+  }
+
+  const saveLoanDetails = async (obj) => {
+    console.log("Save Loan Details");
+    console.log(obj);
+    try {
+      const options = {
+        headers: {
+          'X-DreamFactory-API-Key': API_KEY,
+          'X-DreamFactory-Session-Token': session_token
+        }
+      };
+      let tmpLoanObj = obj;
+      if(tmpLoanObj.ALD_ID === "" || tmpLoanObj.ALD_ID === null || tmpLoanObj.ALD_ID === undefined){
+        //alert("ALD_ID is empty! So, can not able to save the loan.");
+        console.log("ALD_ID is empty! So, can not able to save the loan.");
+        //return false;
+      } else {
+        let ald_id = tmpLoanObj.ALD_ID;
+        //tmpLoanObj.LastUpdateUser = uid;
+        tmpLoanObj.LastModifyDate = moment().format('YYYY-MM-DD');
+        let res = await axios.put(SetLoans_Url+'/'+ald_id, tmpLoanObj, options);
+        console.log(res);
+        //alert("Data saved successfully!");
+        console.log("Data saved successfully!");
+      }
+    } catch (error) {
+      console.log(error.response);
+      if (401 === error.response.status) {
+          // handle error: inform user, go to login, etc
+          let res = error.response.data;
+          console.log(res.error.message);
+          //alert(res.error.message);
+      } else {
+        console.log(error);
+        //alert(error);
+      }
+      //backToWireList();
+    }
+  }
+
+  // After data chagnes, we turn the flag back off
+  // so that if data actually changes when we're not
+  // editing it, the page is reset
+  React.useEffect(() => {
+    setSkipPageReset(false)
+  }, [loans])
+
   useEffect(() => {
     if (downloadAllLoans) {
       setDownloadAllLoans(!downloadAllLoans);
@@ -591,7 +679,7 @@ function Loanlist(props) {
       allloandata = [];
     }
     if(isInternalUser){
-      
+
     } else {
       allloandata = buildExternalLoanExportDetailList(allloandata);
     }
@@ -646,6 +734,8 @@ function Loanlist(props) {
         pageCount={pageCount}
         isRefresh={isRefresh}
         setIsRefresh={setIsRefresh}
+        updateMyData={updateMyData}
+        skipPageReset={skipPageReset}
       />
     );
   let loanFileName = "loanList.csv";

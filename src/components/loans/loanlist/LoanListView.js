@@ -32,9 +32,21 @@ const Styles = styled.div`
       :last-child {
         border-right: 0;
       }
+
+      input.editor-field {
+        font-size: 1rem;
+        padding: 0;
+        margin: 0;
+        border: 0;
+      }
     }
   }
+
+  .pagination {
+    padding: 0.5rem;
+  }
 `
+
 const IndeterminateCheckbox = React.forwardRef(
   ({ indeterminate, ...rest }, ref) => {
     const defaultRef = React.useRef()
@@ -52,6 +64,62 @@ const IndeterminateCheckbox = React.forwardRef(
   }
 )
 
+// Create an editable cell renderer
+const EditableCell = ({
+  value: initialValue,
+  row: { index },
+  column: { id, editable, columnType,columnOptions },
+  updateMyData, // This is a custom function that we supplied to our table instance
+}) => {
+  // We need to keep and update the state of the cell normally
+  const [value, setValue] = React.useState(initialValue)
+
+  const onChange = e => {
+    setValue(e.target.value)
+    updateMyData(index, id, e.target.value)
+  }
+
+  // We'll only update the external data when the input is blurred
+  const onBlur = () => {
+    //updateMyData(index, id, value)
+  }
+
+  // If the initialValue is changed external, sync it up with our state
+  React.useEffect(() => {
+    setValue(initialValue)
+  }, [initialValue])
+
+  let retObj = null;
+  if(editable && columnType==="list"){
+    //retObj = <input className="editor-field" value={value} onChange={onChange} onBlur={onBlur} />;
+    return ( 
+      <select
+      className="editor-field form-control custom-select"
+      name={id}
+      value={value}
+      onChange={onChange}
+      onBlur={onBlur}
+    >
+        <option value=""></option>
+        {columnOptions.map((option, i) => {
+          if(option.label!=="All"){
+            return (
+              <option key={i} value={option.value}>
+                {option.label}
+              </option>
+            )
+          }
+        })}           
+      </select>
+    )
+  } else {
+    return retObj = <div>{value}</div>;
+    
+  }
+  //return retObj;
+}
+
+// Be sure to pass our updateMyData and the skipPageReset option
 function Table({
   getTbdProps, 
   columns, 
@@ -66,7 +134,9 @@ function Table({
   selectedRowsTb, 
   setSelectedRowsTb,
   isRefresh,
-  setIsRefresh
+  setIsRefresh,
+  updateMyData, 
+  skipPageReset
 }) {
   /*
   const filterTypes = React.useMemo(
@@ -91,6 +161,7 @@ function Table({
     () => ({
       // Let's set up our default Filter UI
       Filter: DefaultColumnFilter,
+      Cell: EditableCell
     }),
     []
   );
@@ -127,6 +198,14 @@ function Table({
     defaultColumn, // Be sure to pass the defaultColumn option
     manualFilters: true,
     manualSortBy: true,
+    // use the skipPageReset option to disable page resetting temporarily
+    autoResetPage: !skipPageReset,
+    // updateMyData isn't part of the API, but
+    // anything we put into these options will
+    // automatically be available on the instance.
+    // That way we can call this function from our
+    // cell renderer!
+    updateMyData,
     //filterTypes,
     initialState: { 
       filters: initialState.filters, //filtersarr, 
@@ -431,7 +510,7 @@ function Table({
  function WireListView(props) {
    //console.log(props.items);
    //const data = React.useMemo(() => props.items, [props.items])
- 
+   const dispatch = useDispatch();
    const columns = React.useMemo(() => props.columnDefs,[props.columnDefs])
    
    //const [selectedRows, setSelectedRows] = useState([]);
@@ -441,7 +520,8 @@ function Table({
     setSelectedRows, filtersarr, 
     setFiltersarr, loading, 
     fetchData, pageCount, 
-    data, isRefresh, setIsRefresh, pageState } = props;
+    data, isRefresh, setIsRefresh, pageState,
+    updateMyData, skipPageReset } = props;
    
    const onRowClick = (state, rowInfo, column, instance) => {
       return {
@@ -471,9 +551,11 @@ function Table({
     }
     console.log(selectedRows);
     
+    /*
     useEffect(() => {
       ReactTooltip.rebuild();
     });
+    */
     //console.log("List Table : isRefresh :"+isRefresh);
    return (
     <Styles>
@@ -493,6 +575,8 @@ function Table({
         setSelectedRowsTb={setSelectedRows}
         isRefresh={isRefresh}
         setIsRefresh={setIsRefresh}
+        updateMyData={updateMyData}
+        skipPageReset={skipPageReset}
         />
     </Styles>
   )
