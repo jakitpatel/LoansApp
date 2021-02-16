@@ -10,7 +10,7 @@ import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import ReactTooltip from 'react-tooltip';
 import {API_KEY, Loans_Url, env} from './../../../const';
-import {buildSortByUrl, buildPageUrl, buildFilterUrl} from './../../Functions/functions.js';
+import {buildSortByUrl, buildPageUrl, buildFilterUrl, buildExternalLoanExportDetailList} from './../../Functions/functions.js';
 import SelectColumnFilter from './../../Filter/SelectColumnFilter.js';
 import {SBAOptions, BrokerOptions, StatusOptions, applicationStatusOptions} from './../../../commonVar.js';
 import ExcelExport from './../../ExcelExport/ExcelExport';
@@ -417,12 +417,14 @@ function Loanlist(props) {
   
   useEffect(() => {
     if (downloadAllLoans) {
-      setDownloadAllLoans(false);
+      setDownloadAllLoans(!downloadAllLoans);
+      /*
       setTimeout(() => {
         allLoansListExportLink.current.link.click();
       }, 1000);
+      */
     }
-  }, [downloadAllLoans, allLoansData]);
+  }, [downloadAllLoans]);
   
   
   function toCurrency(numberString) {
@@ -526,33 +528,12 @@ function Loanlist(props) {
         }
       });
       setLoanListData(newArray);
+      let newDetailArray = [];
       if(isInternalUser){
-        setLoanDetailsData(loanArray);
+        newDetailArray = loanArray;
+        setLoanDetailsData(newDetailArray);
       } else {
-        let newDetailArray = loanArray.map((data) => {
-            let amt = data.R2_LoanAmount;
-            if(amt!==null) {
-              amt = new Intl.NumberFormat('en-US',{ style: 'currency', currency: 'USD' }).format(amt);
-            }
-            return {
-              'ALDLoanApplicationNumberOnly' : data.ALDLoanApplicationNumberOnly,
-              'BusinessName' : data.PrimaryBorrower,
-              'R2_LoanAmount': amt,
-              'SBAStatus' : data.SBAStatus,
-              'ErrorMessage' : data.ErrorMessage,
-              'MentorAssigned' : data.MentorAssigned,
-              'MentorEmail' : data.MentorEmail,
-              'MentorPhone' : data.MentorPhone,
-              'LastModifyDate' : data.LastModifyDate,
-              'SBALoanNumber': data.SBALoanNumber,
-              'statusIndication' : data.statusIndication,
-              'businessIndication' : data.businessIndication,
-              'personalIndication' : data.personalIndication,
-              'ownershipIndication' : data.ownershipIndication,
-              'documentIndication' : data.documentIndication,
-              'finacialSeachIndication' : data.finacialSeachIndication
-            }
-        });
+        newDetailArray = buildExternalLoanExportDetailList(loanArray);
         setLoanDetailsData(newDetailArray);
       }
       dispatch({
@@ -609,9 +590,14 @@ function Loanlist(props) {
     if(allloandata==null){
       allloandata = [];
     }
+    if(isInternalUser){
+      
+    } else {
+      allloandata = buildExternalLoanExportDetailList(allloandata);
+    }
     setAllLoansData(allloandata);
-    setDownloadAllLoans(true);
-    //setDownloadAllLoans(!downloadAllLoans);
+    //setDownloadAllLoans(true);
+    setDownloadAllLoans(!downloadAllLoans);
   }
 
   let headerTitle = "Loan List";
@@ -693,7 +679,7 @@ function Loanlist(props) {
                 <button type="button" style={{ float: "right" }} onClick={onAllLoansExportBtnClick} className={`btn btn-primary btn-sm`}>
                 Export All Loans
                 </button>
-                {/*downloadAllLoans &&
+                {downloadAllLoans &&
                   <ExcelExport hideEl={true} excelFile="AllloanList" sheetName="AllloanList" data={allLoansData}></ExcelExport>
                 }
                 {/*

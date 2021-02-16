@@ -63,4 +63,38 @@ const buildSortByUrl = (sortArr) => {
     return pageUrl;
  }
 
- export { buildSortByUrl, buildPageUrl, buildFilterUrl } ; 
+ const buildExternalLoanExportDetailList = (loanArray) => {
+  let newDetailArray = loanArray.map((data) => {
+      let amt = data.R2_LoanAmount;
+      if(amt!==null) {
+        amt = new Intl.NumberFormat('en-US',{ style: 'currency', currency: 'USD' }).format(amt);
+      }
+      return {
+        'ALDLoanApplicationNumberOnly' : data.ALDLoanApplicationNumberOnly,
+        'BusinessName' : data.PrimaryBorrower,
+        'R2_LoanAmount': amt,
+        'applicationStatus' : data.applicationStatus,
+        'StatusAComments' : data.StatusAComments,
+        'LastModifyDate' : data.LastModifyDate,
+        'AdobeSigned2483':data.AdobeSigned2483,
+        'SBAApprovalDate':data.SBAApprovalDate,
+        'SBALoanNumber': data.SBALoanNumber,
+        'SBAStatus' : data.SBAStatus,
+        'ErrorMessage' : data.ErrorMessage,
+        'AdobeSigned147':data.AdobeSigned147,
+        'FirstDrawLoanAmount':data.FirstDrawLoanAmount,
+        'FirstDrawSbaLoanNumber':data.FirstDrawSbaLoanNumber,
+        'ReviewerAssigned' : data.ReviewerAssigned,
+        'MentorAssigned'   : data.MentorAssigned,
+        'broker'      : data.broker,
+        'R2_LoanOfficer' : data.R2_LoanOfficer,
+        'Phone' : data.Phone,
+        'Email' : data.Email,
+        'brokerRep'      : data.brokerRep,
+        'brokerComments' : data.brokerComments
+      }
+  });
+  return newDetailArray;
+ }
+
+ export { buildSortByUrl, buildPageUrl, buildFilterUrl, buildExternalLoanExportDetailList } ; 
