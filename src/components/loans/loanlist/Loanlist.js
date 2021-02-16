@@ -208,6 +208,9 @@ function Loanlist(props) {
           field: "ReviewerAssigned",
           Header: "Reviewer Assigned",
           accessor: "ReviewerAssigned",
+          editable:true,
+          columnType:'list',
+          columnOptions:ReviewerAssignedOptions
           //Filter: SelectColumnFilter,
           //filter: 'includes'
         },
@@ -244,7 +247,10 @@ function Loanlist(props) {
         {
           field: "MentorAssigned",
           Header: "Mentor Assigned",
-          accessor: "MentorAssigned"
+          accessor: "MentorAssigned",
+          editable:true,
+          columnType:'list',
+          columnOptions:MentorAssignedOptions
         },
         {
           field: "StatusAComments",
@@ -277,6 +283,9 @@ function Loanlist(props) {
             field: "ReviewerAssigned",
             Header: "Reviewer Assigned",
             accessor: "ReviewerAssigned",
+            editable:true,
+            columnType:'list',
+            columnOptions:ReviewerAssignedOptions
             //Filter: SelectColumnFilter,
             //filter: 'includes'
           },
@@ -303,7 +312,10 @@ function Loanlist(props) {
           {
             field: "MentorAssigned",
             Header: "Mentor Assigned",
-            accessor: "MentorAssigned"
+            accessor: "MentorAssigned",
+            editable:true,
+            columnType:'list',
+            columnOptions:MentorAssignedOptions
           },
           {
             field: "StatusCComments",
