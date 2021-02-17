@@ -2,6 +2,7 @@
   "name": "loanapp",
   "homepage": "https://devnycweb01.comfed.local/loanapp",
   "version": "1.0.9",
+  "environment": "PROD",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",

@@ -15,6 +15,10 @@ function DashboardMain(props) {
     if(isInternalUser){
         userType = "Internal User";
     }
+    let colorCode = "RED";
+    if(process.env.REACT_APP_ENVIRONMENT==="DEV" || process.env.REACT_APP_ENVIRONMENT==="dev"){
+        colorCode = "BLUE";
+    }
     return (
         <React.Fragment>
             <div className="container">
@@ -23,7 +27,8 @@ function DashboardMain(props) {
                     <b>App Name </b> :- {process.env.REACT_APP_NAME} <br />
                     <b>App Server </b> :- {API_URL} <br />
                     <b>Build Version</b> :- {process.env.REACT_APP_VERSION} <br />
-                    <b>Build Date</b> :- {preval`module.exports = new Date().toLocaleString();`}.
+                    <b>Build Date</b> :- {preval`module.exports = new Date().toLocaleString();`}.<br />
+                    <b>Environment</b> :- <span style={{color:colorCode}}>{process.env.REACT_APP_ENVIRONMENT}</span> <br />
                 </div>
             </div>
         </React.Fragment>
