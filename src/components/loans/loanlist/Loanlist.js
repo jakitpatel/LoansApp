@@ -138,12 +138,12 @@ function Loanlist(props) {
           accessor: "PrimaryBorrowers"
         },
         {
-          field: "R2_LoanAmount",
+          field: "FirstLoanAmount",
           Header: "Total Request",
-          accessor: "R2_LoanAmount",
+          accessor: "FirstLoanAmount",
           disableFilters: true,
           Cell: props => {
-            if(props.value===null) {
+            if(props.value===null || props.value===undefined) {
               return null;
             }
             return (
@@ -184,9 +184,9 @@ function Loanlist(props) {
           options:SBAOptions
         },
         {
-          field: "R2_TaxID",
+          field: "TaxID",
           Header: "EIN#",
-          accessor: "R2_TaxID"
+          accessor: "TaxID"
         },
         {
           field: "Address1",
@@ -609,12 +609,12 @@ function Loanlist(props) {
             'ApplicationCreatedDate' : data.ApplicationCreatedDate,
             'LastModifyDate' : data.LastModifyDate,
             'Primary Borrower' : data.PrimaryBorrowers,
-            'TotalRequest' : data.R2_LoanAmount,
+            'TotalRequest' : data.FirstLoanAmount,
             'StatusAComments': data.StatusAComments,
             'ApplicationStatus' : data.statusIndication,
             'SBAStatus' : data.SBAStatus,
             'Broker'    : data.broker,
-            'EIN#': data.R2_TaxID,
+            'EIN#': data.TaxID,
             'Borrower Address': data.Address1,
             'DocumentsSent': data.DocumentsSent,
             'DocumentsRequired' : data.DocumentsRequired
