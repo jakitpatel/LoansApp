@@ -9,10 +9,19 @@ function SelectColumnFilter({
   console.log("Getting Option");
   console.log(filterValue);
   
+  const styles = {
+    menu: (css) => ({
+      ...css,
+      width: "250px"
+    })
+  };
+
   // Render a multi-select box
   return (
     <Select
       isMulti
+      styles={styles}
+      //menuIsOpen={true}
       value={filterValue || ''}
       options={options}
       hideSelectedOptions={false}

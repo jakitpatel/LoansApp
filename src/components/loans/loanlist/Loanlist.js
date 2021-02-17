@@ -434,8 +434,9 @@ function Loanlist(props) {
         accessor: "SBAStatus",
         Filter: SelectColumnFilter,
         filter: 'includes',
-        options:SBAOptions
-      },
+        options:SBAOptions,
+        width:190
+      }/*,
       {
         field: "statusIndication",
         Header: "Overall Status",
@@ -443,7 +444,7 @@ function Loanlist(props) {
         Filter: SelectColumnFilter,
         filter: 'includes',
         options:StatusOptions
-      });
+      }*/);
     }
   
   // We need to keep the table from resetting the pageIndex when we
