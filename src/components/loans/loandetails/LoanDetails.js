@@ -114,7 +114,8 @@ function LoanDetails(props) {
           ownershipIndication : loanDetailsObj.ownershipIndication,
           documentIndication  : loanDetailsObj.documentIndication,
           finacialSeachIndication  : loanDetailsObj.finacialSeachIndication,
-          brokerOverride : loanDetailsObj.brokerOverride
+          brokerOverride : loanDetailsObj.brokerOverride,
+          teambmember    : loanDetailsObj.teambmember
         };
       } else {
         /*

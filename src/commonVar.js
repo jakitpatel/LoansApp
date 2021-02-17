@@ -33,7 +33,7 @@ const StatusOptions = [
     { value: 'Not Assigned',     label: 'Not Assigned' },
     { value: 'In Progress', label: 'In Progress' },
     { value: 'P/R docs Needed', label: 'P/R docs Needed' },
-    { value: 'P/R docs in file, OFAC, SAM OK – move to approval', label: 'P/R docs in file, OFAC, SAM OK – move to approval' },
+    { value: 'P/R docs in file OFAC SAM OK – move to approval', label: 'P/R docs in file OFAC SAM OK – move to approval' },
     { value: 'Prior To Funding docs in file',  label: 'Prior To Funding docs in file' },
     { value: 'Prior to Funding docs Needed', label: 'Prior to Funding docs Needed' },
     { value: 'Funded',            label: 'Funded' },
@@ -72,24 +72,52 @@ const brokerOverrideOptions = [
 ];
 
 const MentorAssignedOptions = [
-    { value: 'Binyomin Kolodny ADM',     label: 'Binyomin Kolodny ADM' },
-    { value: 'Binyomin Kolodny', label: 'Binyomin Kolodny' },
-    { value: 'IT Master', label: 'IT Master' },
-    { value: 'Chad Dewdat', label: 'Chad Dewdat' },
-    { value: 'Jacob Assaraf',  label: 'Jacob Assaraf' },
-    { value: 'Pinchas Zerbib', label: 'Pinchas Zerbib' },
-    { value: 'Esther Henselmans', label: 'Esther Henselmans' }
+    { value: 'Andrea Sarwan',     label: 'Andrea Sarwan' },
+    { value: 'Denice Aloi-McConnell', label: 'Denice Aloi-McConnell' },
+    { value: 'Mike Hosephros', label: 'Mike Hosephros' },
+    { value: 'Merick Birkental', label: 'Merick Birkental' },
+    { value: 'Syed Hossain',  label: 'Syed Hossain' },
+    { value: 'Steve Erickson', label: 'Steve Erickson' },
+    { value: 'Larisa Sviridova', label: 'Larisa Sviridova' },
+    { value: 'Igor Khanis ', label: 'Igor Khanis ' },
+    { value: 'Usher Berkowitz', label: 'Usher Berkowitz' }
+];
+
+const TeamBAssignedOptions = [
+    { value: 'Adiv Cederbaum',     label: 'Adiv Cederbaum' },
+    { value: 'Lawrence Allman',     label: 'Lawrence Allman' }    
 ];
 
 const ReviewerAssignedOptions = [
-    { value: 'Binyomin Kolodny ADM',     label: 'Binyomin Kolodny ADM' },
-    { value: 'Binyomin Kolodny', label: 'Binyomin Kolodny' },
-    { value: 'IT Master', label: 'IT Master' },
-    { value: 'Chad Dewdat', label: 'Chad Dewdat' },
-    { value: 'Jacob Assaraf',  label: 'Jacob Assaraf' },
-    { value: 'Pinchas Zerbib', label: 'Pinchas Zerbib' },
-    { value: 'Esther Henselmans', label: 'Esther Henselmans' }
+    { value: 'Abigail Hyman',     label: 'Abigail Hyman' },
+    { value: 'Adiv Cederbaum',     label: 'Adiv Cederbaum' },
+    { value: 'Akiva Fiber',     label: 'Akiva Fiber' },
+    { value: 'Alexa McConnell',     label: 'Alexa McConnell' },
+    { value: 'Deanna McConnell',     label: 'Deanna McConnell' },
+    { value: 'Diane Parotino',     label: 'Diane Parotino' },
+    { value: 'Felicia Himes',     label: 'Felicia Himes' },
+    { value: 'Imran Khan',     label: 'Imran Khan' },
+    { value: 'Jamie Hoy',     label: 'Jamie Hoy' },
+    { value: 'Judah Feinberg',     label: 'Judah Feinberg' },
+    { value: 'Kayla Lovetro',     label: 'Kayla Lovetro' },
+    { value: 'Krista Bhagwandin',     label: 'Krista Bhagwandin' },
+    { value: 'Kylah Harrigan-Brantley',     label: 'Kylah Harrigan-Brantley' },
+    { value: 'Lawrence Allman',     label: 'Lawrence Allman' },
+    { value: 'Maranda Winget',     label: 'Maranda Winget' },
+    { value: 'Mark Sanders',     label: 'Mark Sanders' },
+    { value: 'Matthew Boshra',     label: 'Matthew Boshra' },
+    { value: 'Matthew DiCostanzo',     label: 'Matthew DiCostanzo' },
+    { value: 'Maya Chakravarty',     label: 'Maya Chakravarty' },
+    { value: 'Megan Anderson',     label: 'Megan Anderson' },
+    { value: 'Mohammed Hashim',     label: 'Mohammed Hashim' },
+    { value: 'Nicole Bello',     label: 'Nicole Bello' },
+    { value: 'Rifhaatul Islam',     label: 'Rifhaatul Islam' },
+    { value: 'Rivka Sanders',     label: 'Rivka Sanders' },
+    { value: 'Santino Corelli',     label: 'Santino Corelli' },
+    { value: 'Tara Himes',     label: 'Tara Himes' },
+    { value: 'Yoni Deutsch',     label: 'Yoni Deutsch' }
 ];
 
+
 export { SBAOptions, BrokerOptions, StatusOptions, applicationStatusOptions, 
-    brokerOverrideOptions, MentorAssignedOptions, ReviewerAssignedOptions};
+    brokerOverrideOptions, MentorAssignedOptions, ReviewerAssignedOptions,TeamBAssignedOptions};

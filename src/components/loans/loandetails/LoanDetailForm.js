@@ -2,7 +2,8 @@ import React from "react";
 import "./LoanDetailForm.css";
 import ReactTooltip from 'react-tooltip';
 import { useSelector } from 'react-redux';
-import {StatusOptions, brokerOverrideOptions, MentorAssignedOptions, ReviewerAssignedOptions} from './../../../commonVar.js';
+import {StatusOptions, brokerOverrideOptions, MentorAssignedOptions, 
+  ReviewerAssignedOptions, TeamBAssignedOptions} from './../../../commonVar.js';
 import SelectInput from './SelectInput';
 import TextAreaInput from './TextAreaInput';
 import TextInput from './TextInput';
@@ -177,12 +178,17 @@ function LoanDetailForm(props) {
                       />
                     </React.Fragment>
                   )
-                } else if(key==="MentorAssigned" || key==="ReviewerAssigned"){
+                } else if(key==="MentorAssigned" || key==="ReviewerAssigned" || key==="teambmember"){
+                  if(value===null){
+                    value = "";
+                  }
                   let assignedOptions;
                   if(key==="MentorAssigned"){
                     assignedOptions = MentorAssignedOptions;
-                  } else {
+                  } else if(key==="ReviewerAssigned") {
                     assignedOptions = ReviewerAssignedOptions;
+                  } else if(key==="teambmember") {
+                    assignedOptions = TeamBAssignedOptions;
                   }
                   return (
                     <React.Fragment key={key}>
