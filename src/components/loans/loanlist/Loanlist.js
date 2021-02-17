@@ -221,6 +221,14 @@ function Loanlist(props) {
           show: false
         },
         {
+          field: "broker",
+          Header: "Broker",
+          accessor: "broker",
+          Filter: SelectColumnFilter,
+          filter: 'includes',
+          options:BrokerOptions
+        },
+        {
           name: "PrimaryBorrowers",
           field: "PrimaryBorrowers",
           Header: "Primary Borrower",
@@ -431,7 +439,10 @@ function Loanlist(props) {
       {
         field: "statusIndication",
         Header: "Overall Status",
-        accessor: "statusIndication"
+        accessor: "statusIndication",
+        Filter: SelectColumnFilter,
+        filter: 'includes',
+        options:StatusOptions
       });
     }
   
