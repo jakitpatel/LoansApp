@@ -724,13 +724,33 @@ function Loanlist(props) {
       }
     });
   }
+  let filterStateArr = filters;
+  if(isInternalUser && teamInt==="teamb" && filters.length===0){
+    let sbaStatusFlag = false;
+    for (let i=0; i<filters.length; i++){
+      if(filters[i].id==="SBAStatus"){
+        sbaStatusFlag = true;
+      }
+    }
+    if(!sbaStatusFlag){
+      filterStateArr.push({
+        id: "SBAStatus", 
+        value: [
+          { value: 'Further Research Required', label: 'Further Research Required' },
+          { value: 'Submission Failed', label: 'Submission Failed' },
+          { value: 'Failed Validation',  label: 'Failed Validation' },
+          { value: 'Not Approved by SBA', label: 'Not Approved by SBA' }
+        ]
+      });
+    }
+  }
   const initialState = {
     pageIndex : 0,
     //pageIndex : pageIndex,
     //pageSize : 10,
     pageSize : pageSize,
     sortBy : sortBy, //[{ id: "wireID", desc: true }],
-    filters : filters,
+    filters : filterStateArr,
   };
   const pageState = {
     pageSize : pageSize,

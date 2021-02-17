@@ -7,7 +7,7 @@ function SelectColumnFilter({
 }) {
   // Calculate the options for filtering
   console.log("Getting Option");
-  console.log(options);
+  console.log(filterValue);
   
   // Render a multi-select box
   return (
