@@ -621,22 +621,48 @@ function Loanlist(props) {
       //loanListExpArray.push({});
       let newArray = loanArray.map((data) => {
         if(isInternalUser){
-          return {
-            'ALDLoanApplicationNumberOnly' : data.ALDLoanApplicationNumberOnly,
-            'ReviewerAssigned': data.ReviewerAssigned,
-            'MentorAssigned' : data.MentorAssigned,
-            'ApplicationCreatedDate' : data.ApplicationCreatedDate,
-            'LastModifyDate' : data.LastModifyDate,
-            'Primary Borrower' : data.PrimaryBorrowers,
-            'TotalRequest' : data.FirstLoanAmount,
-            'StatusAComments': data.StatusAComments,
-            'ApplicationStatus' : data.statusIndication,
-            'SBAStatus' : data.SBAStatus,
-            'Broker'    : data.broker,
-            'EIN#': data.TaxID,
-            'Borrower Address': data.Address1,
-            'DocumentsSent': data.DocumentsSent,
-            'DocumentsRequired' : data.DocumentsRequired
+          if(teamInt==="teama"){
+            return {
+              'ALDLoanApplicationNumberOnly' : data.ALDLoanApplicationNumberOnly,
+              'ReviewerAssigned': data.ReviewerAssigned,
+              'MentorAssigned' : data.MentorAssigned,
+              'ApplicationCreatedDate' : data.ApplicationCreatedDate,
+              'LastModifyDate' : data.LastModifyDate,
+              'Primary Borrower' : data.PrimaryBorrowers,
+              'TotalRequest' : data.FirstLoanAmount,
+              'StatusAComments': data.StatusAComments,
+              'ApplicationStatus' : data.statusIndication,
+              'SBAStatus' : data.SBAStatus,
+              'Broker'    : data.broker,
+              'EIN#': data.TaxID,
+              'Borrower Address': data.Address1,
+              'DocumentsSent': data.DocumentsSent,
+              'DocumentsRequired' : data.DocumentsRequired
+            }
+          } else if(teamInt==="teamb"){
+            return {
+              'ReviewerAssigned': data.ReviewerAssigned,
+              'ALDLoanApplicationNumberOnly' : data.ALDLoanApplicationNumberOnly,
+              'Broker'    : data.broker,
+              'Primary Borrower' : data.PrimaryBorrowers,
+              'SBAStatus' : data.SBAStatus,
+              'ErrorMessage' : data.ErrorMessage,
+              'MentorAssigned' : data.MentorAssigned,
+              'StatusAComments': data.StatusAComments,
+              'Application Status"' : data.R2_ApplicationStatus,
+              'statusIndication' : data.statusIndication,
+              'teambmember' : data.teambmember
+            }
+          } else if(teamInt==="teamc"){
+            return {
+              'ReviewerAssigned': data.ReviewerAssigned,
+              'ALDLoanApplicationNumberOnly' : data.ALDLoanApplicationNumberOnly,
+              'Primary Borrower' : data.PrimaryBorrowers,
+              'SBAStatus' : data.SBAStatus,
+              'MentorAssigned' : data.MentorAssigned,
+              'StatusCComments': data.StatusCComments,
+              'Application Status"' : data.R2_ApplicationStatus
+            }
           }
         } else {
           let amt = data.R2_LoanAmount;
