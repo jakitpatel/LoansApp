@@ -732,7 +732,7 @@ function Loanlist(props) {
   }, [ dispatch, session_token]);
 
   //// Start Code for Wire To OFAC Value /////
-  async function onAllLoansExportBtnClick(){
+  const onAllLoansExportBtnClick = async (e,exportType) => {
     const options = {
       headers: {
         'X-DreamFactory-API-Key': API_KEY,
@@ -772,7 +772,10 @@ function Loanlist(props) {
     if(isInternalUser){
 
     } else {
-      allloandata = buildExternalLoanExportDetailList(allloandata);
+      //alert();
+      if(exportType !== "allFields"){
+        allloandata = buildExternalLoanExportDetailList(allloandata);
+      }
     }
     setAllLoansData(allloandata);
     //setDownloadAllLoans(true);
@@ -890,9 +893,15 @@ function Loanlist(props) {
             <h3 className="title-center">{headerTitle}</h3>
             <div className="btnCls">
             <React.Fragment>
-                <button type="button" style={{ float: "right" }} onClick={onAllLoansExportBtnClick} className={`btn btn-primary btn-sm`}>
+                {!isInternalUser &&
+                <button type="button" style={{ float: "right", marginLeft:"10px" }} onClick={(e)=> {onAllLoansExportBtnClick(e,"allFields")}} className={`btn btn-primary btn-sm`}>
+                All Loans Export
+                </button>
+                }
+                <button type="button" style={{ float: "right" }} onClick={(e)=> {onAllLoansExportBtnClick(e,"selectedFields")}} className={`btn btn-primary btn-sm`}>
                 Export All Loans
                 </button>
+                
                 {downloadAllLoans &&
                   <ExcelExport hideEl={true} excelFile="AllloanList" sheetName="AllloanList" data={allLoansData}></ExcelExport>
                 }
