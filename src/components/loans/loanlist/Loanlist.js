@@ -384,6 +384,24 @@ function Loanlist(props) {
         //filter: 'includes'
       },
       {
+        field: "broker",
+        Header: "Broker",
+        accessor: "broker",
+        Filter: SelectColumnFilter,
+        filter: 'includes',
+        options:BrokerOptions
+      },
+      {
+        field: "brokerRep",
+        Header: "brokerRep",
+        accessor: "brokerRep"
+      },
+      {
+        field: "brokerComments",
+        Header: "brokerComments",
+        accessor: "brokerComments"
+      },
+      {
         name: "ALDLoanApplicationNumberOnly",
         field: "ALDLoanApplicationNumberOnly",
         Header: "Loan Application #",
