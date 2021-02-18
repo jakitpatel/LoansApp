@@ -19,6 +19,15 @@ export default function NavBar(props) {
           teamInt: e.target.value
         }
       });
+    dispatch({
+      type:'UPDATELOANLIST',
+      payload:{
+        filtersB : [],
+        filtersA : [],
+        filtersC : [],
+        filters : []
+      }
+    });
   }
 
   return (

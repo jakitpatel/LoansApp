@@ -83,10 +83,12 @@ const MentorAssignedOptions = [
     { value: 'Usher Berkowitz', label: 'Usher Berkowitz' }
 ];
 
-const TeamBAssignedOptions = [
-    { value: 'Adiv Cederbaum',     label: 'Adiv Cederbaum' },
-    { value: 'Lawrence Allman',     label: 'Lawrence Allman' }    
-];
+const TeamBAssignedOptions = [	
+    { value: 'Adiv Cederbaum', label: 'Adiv Cederbaum' },	
+    { value: 'Lawrence Allman', label: 'Lawrence Allman' },	
+    { value: 'Steve Erickson', label: 'Steve Erickson' },	
+    { value: 'Jamie Hoy', label: 'Jamie Hoy' }	
+];	
 
 const ReviewerAssignedOptions = [
     { value: 'Abigail Hyman',     label: 'Abigail Hyman' },

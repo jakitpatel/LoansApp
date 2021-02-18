@@ -43,7 +43,7 @@ const Styles = styled.div`
   }
 
   .pagination {
-    padding: 0.5rem;
+    padding: 0rem;
   }
 `
 
@@ -136,7 +136,9 @@ function Table({
   isRefresh,
   setIsRefresh,
   updateMyData, 
-  skipPageReset
+  skipPageReset,
+  teamInt,
+  totalCount
 }) {
   /*
   const filterTypes = React.useMemo(
@@ -304,6 +306,7 @@ function Table({
     ])
   }*/)
   
+  /*
   useEffect(() => {
     let selWireArr = [];
       for(let i=0; i<selectedFlatRows.length; i++){
@@ -315,7 +318,7 @@ function Table({
     console.log(selectedRowIds);
     
   }, [setSelectedRowsTb, selectedRowIds]);
-
+  */
   // Debounce our onFetchData call for 100ms
   const onFetchDataDebounced = useAsyncDebounce(fetchData, 100);
 
@@ -331,7 +334,7 @@ function Table({
       }
     });
     onFetchDataDebounced({ pageIndex, pageSize, filters, sortBy });
-  }, [isRefresh, setIsRefresh, onFetchDataDebounced, pageIndex, pageSize, filters, setFiltersarr, sortBy, location.key]);
+  }, [ teamInt, isRefresh, setIsRefresh, onFetchDataDebounced, pageIndex, pageSize, filters, setFiltersarr, sortBy, location.key]);
   /*
   useEffect(() => {
     console.log("After Render Wire List View");
@@ -398,7 +401,7 @@ function Table({
     */}
     {/*pageCount>1 &&*/}
     <div className="pagination row">
-      <div className="col-md-3">
+      <div className="col-md-2">
         <button className={`btn btn-primary btn-md`} onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
           {'<<'}
         </button>{' '}
@@ -406,7 +409,7 @@ function Table({
           {'<'}
         </button>{' '}
       </div>
-      <div className="col-md-3">
+      <div className="col-md-2">
         <button className={`btn btn-primary btn-md`} onClick={() => nextPage()} disabled={!canNextPage}>
           {'>'}
         </button>{' '}
@@ -414,7 +417,7 @@ function Table({
           {'>>'}
         </button>{' '}
       </div>
-      <div className="col-md-4">
+      <div className="col-md-3">
         <span>
           Page{' '}
           <strong>
@@ -435,6 +438,19 @@ function Table({
           />
         </span>{' '}
       </div>
+      <div className="col-md-3">
+        <span>
+          Total Records:{' '}
+          <input
+            type="number"
+            className="form-control custom-control-inline"
+            //defaultValue={pageIndex + 1}
+            value={totalCount}
+            readOnly={true}
+            style={{ width: '100px' }}
+          />
+        </span>{' '}
+      </div>
       <div className="col-md-2">
         <select className="form-control"
           value={pageSize}
@@ -451,12 +467,13 @@ function Table({
       </div>
     </div>
     {/*}*/}
-    <table key={isRefresh} {...getTableProps()}>
+    <div className="tableContainer">
+    <table className="stickyHeaderTable" key={isRefresh} {...getTableProps()}>
       <thead>
         {headerGroups.map(headerGroup => (
             <tr {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map(column => (
-              <th width={column.width} {...column.getHeaderProps()}>
+              <th className="stickyHeader" width={column.width} {...column.getHeaderProps()}>
                 <div>
                   <span {...column.getSortByToggleProps()}>
                       {column.render('Header')}
@@ -503,6 +520,7 @@ function Table({
         })}
       </tbody>
     </table>
+    </div>
     </>
   )
 }
@@ -521,7 +539,7 @@ function Table({
     setFiltersarr, loading, 
     fetchData, pageCount, 
     data, isRefresh, setIsRefresh, pageState,
-    updateMyData, skipPageReset } = props;
+    updateMyData, skipPageReset, teamInt, totalCount } = props;
    
    const onRowClick = (state, rowInfo, column, instance) => {
       return {
@@ -577,6 +595,8 @@ function Table({
         setIsRefresh={setIsRefresh}
         updateMyData={updateMyData}
         skipPageReset={skipPageReset}
+        teamInt={teamInt}
+        totalCount={totalCount}
         />
     </Styles>
   )

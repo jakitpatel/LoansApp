@@ -45,7 +45,7 @@ function DashboardContainer(props) {
   const [mainpage, setMainpage] = useState(true);
   const [redirectToLogin, setRedirectToLogin] = useState(false);
   
-  const { session_token } = useSelector(state => {
+  const { session_token,teamInt, isInternalUser } = useSelector(state => {
       return {
           ...state.userReducer
       }
@@ -65,14 +65,48 @@ function DashboardContainer(props) {
   //alert("Dashboard Container");
   function handleLogout() {
     console.log("Handle Logout & Redirect to Login");
+    let filterName = "filters";
+    if(isInternalUser){
+      if(teamInt==="teama"){
+        filterName = "filtersA";
+      } else if(teamInt==="teamb"){
+        filterName = "filtersB";
+      } else if(teamInt==="teamc"){
+        filterName = "filtersC";
+      }
+    }
     dispatch({
       type:'UPDATELOANLIST',
       payload:{
         pageIndex:0,
         pageSize:10,
         sortBy : [],
-        filters : [],
+        //filters : [],
+        [filterName] : [],
         loans:[]
+      }
+    });
+    dispatch({
+      type:'UPDATELOANLIST',
+      payload:{
+        session_token:null,
+        session_id:null, 
+        id:null,
+        uid:null,
+        name:null,
+        teamInt: null,
+        first_name:null, 
+        last_name:null,
+        email:null,
+        is_sys_admin:null,
+        isInternalUser:null,
+        host:null,
+        CUSTOMER_ENABLER: false,
+        CUSTOMER_MODIFY_CREATE : false,
+        LOAN_ENABLER           : false,
+        LOAN_MODIFY_CREATE     : false,
+        WIRE_EXPORT            : false,
+        DEPOSITS_ENABLER       : false
       }
     });
     setRedirectToLogin(true);

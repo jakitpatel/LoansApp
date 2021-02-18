@@ -1,4 +1,4 @@
-const loansReducer = (state = { loans:[], pageIndex:0, pageSize:10, sortBy:[], filters:[], backToList:false }, action) => {
+const loansReducer = (state = { loans:[], pageIndex:0, pageSize:10, totalCount:0, sortBy:[], filters:[], filtersA:[],filtersB:[],filtersC:[], backToList:false }, action) => {
     switch(action.type){
         case "UPDATELOANLIST":
             return {

@@ -49,7 +49,7 @@ function Loanlist(props) {
       }
   });
 
-  const { loans, pageIndex, pageSize, sortBy, filters, backToList } = useSelector(state => {
+  const { loans, pageIndex, pageSize, totalCount, sortBy, filters, filtersA, filtersB, filtersC, backToList } = useSelector(state => {
     return {
         ...state.loansReducer
     }
@@ -648,20 +648,33 @@ function Loanlist(props) {
         newDetailArray = buildExternalLoanExportDetailList(loanArray);
         setLoanDetailsData(newDetailArray);
       }
+      let filterName = "filters";
+      /*if(isInternalUser){
+        if(teamInt==="teama"){
+          filterName = "filtersA";
+        } else if(teamInt==="teamb"){
+          filterName = "filtersB";
+        } else if(teamInt==="teamc"){
+          filterName = "filtersC";
+        }
+      }*/
+      let totalCnt = res.data.meta.count;
+
       dispatch({
         type:'UPDATELOANLIST',
         payload:{
           pageIndex:pageIndex,
           pageSize:pageSize,
+          totalCount:totalCnt,
           sortBy : sortBy,
-          filters : filters,
+          //filters : filters,
+          [filterName] : filters,
           loans:loanArray
         }
       });
       
       // Your server could send back total page count.
       // For now we'll just fake it, too
-      let totalCnt = res.data.meta.count;
       let pageCnt = Math.ceil(totalCnt / pageSize);
       console.log("pageCnt : "+pageCnt);
       setPageCount(Math.ceil(totalCnt / pageSize));
@@ -685,11 +698,21 @@ function Loanlist(props) {
     let url = Loans_Url;
 
     url += "?include_count=true";
-    if(filters.length>0){
+    let filtersTemp = filters;
+    /*if(isInternalUser){
+      if(teamInt==="teama"){
+        filtersTemp = filtersA;
+      } else if(teamInt==="teamb"){
+        filtersTemp = filtersB;
+      } else if(teamInt==="teamc"){
+        filtersTemp = filtersC;
+      }
+    }*/
+    if(filtersTemp.length>0){
       console.log("filters");
-      console.log(filters);
+      console.log(filtersTemp);
       url += "&filter=";
-      url += buildFilterUrl(filters);
+      url += buildFilterUrl(filtersTemp);
     }
     if(sortBy.length>0){
       console.log(sortBy);
@@ -726,10 +749,21 @@ function Loanlist(props) {
     });
   }
   let filterStateArr = filters;
-  if(isInternalUser && teamInt==="teamb" && filters.length===0){
+  /*if(isInternalUser){
+    if(teamInt==="teama"){
+      filterStateArr = filtersA;
+    } else if(teamInt==="teamb"){
+      filterStateArr = filtersB;
+    } else if(teamInt==="teamc"){
+      filterStateArr = filtersC;
+    }
+  }
+  //let filterStateArr = filters;
+  */
+  if(isInternalUser && teamInt==="teamb" && filterStateArr.length===0){
     let sbaStatusFlag = false;
-    for (let i=0; i<filters.length; i++){
-      if(filters[i].id==="SBAStatus"){
+    for (let i=0; i<filterStateArr.length; i++){
+      if(filterStateArr[i].id==="SBAStatus"){
         sbaStatusFlag = true;
       }
     }
@@ -780,6 +814,8 @@ function Loanlist(props) {
         setIsRefresh={setIsRefresh}
         updateMyData={updateMyData}
         skipPageReset={skipPageReset}
+        teamInt={teamInt}
+        totalCount={totalCount}
       />
     );
   let loanFileName = "loanList.csv";
