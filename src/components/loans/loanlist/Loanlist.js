@@ -454,7 +454,7 @@ function Loanlist(props) {
         filter: 'includes',
         options:SBAOptions,
         width:190
-      }/*,
+      },
       {
         field: "statusIndication",
         Header: "Overall Status",
@@ -462,7 +462,7 @@ function Loanlist(props) {
         Filter: SelectColumnFilter,
         filter: 'includes',
         options:StatusOptions
-      }*/);
+      });
     }
   
   // We need to keep the table from resetting the pageIndex when we

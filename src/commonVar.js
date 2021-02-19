@@ -41,7 +41,9 @@ const StatusOptions = [
     { value: 'Cancelled',         label: 'Cancelled' },
     { value: 'Duplicate file',    label: 'Duplicate file' },
     { value: 'Loans with SBA Submission Errors',    label: 'Loans with SBA Submission Errors' },
-    { value: 'Approved by SBA',    label: 'Approved by SBA' }
+    { value: 'Approved by SBA',    label: 'Approved by SBA' },
+    { value: 'Submitted to the SBA',    label: 'Submitted to the SBA' },
+    { value: 'Pending Validation',    label: 'Pending Validation' }
 ];
 
 const applicationStatusOptions = [
