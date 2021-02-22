@@ -47,23 +47,6 @@ const Styles = styled.div`
   }
 `
 
-const IndeterminateCheckbox = React.forwardRef(
-  ({ indeterminate, ...rest }, ref) => {
-    const defaultRef = React.useRef()
-    const resolvedRef = ref || defaultRef
-
-    React.useEffect(() => {
-      resolvedRef.current.indeterminate = indeterminate
-    }, [resolvedRef, indeterminate])
-
-    return (
-      <>
-        <input type="checkbox" ref={resolvedRef} {...rest} />
-      </>
-    )
-  }
-)
-
 // Create an editable cell renderer
 const EditableCell = ({
   value: initialValue,
@@ -192,6 +175,7 @@ function Table({
     nextPage,
     previousPage,
     setPageSize,
+    setAllFilters,
     state: { filters, pageIndex, pageSize, sortBy, selectedRowIds } // Get the state from the instance
   } = useTable({
     getTbdProps,
@@ -259,66 +243,25 @@ function Table({
   useFilters, // useFilters!
   useSortBy,
   usePagination,
-  useRowSelect/*,
-  hooks => {
-    hooks.visibleColumns.push(columns => [
-      // Let's make a column for selection
-      {
-        id: 'selection',
-        disableFilters: true,
-        show : true,
-        minWidth: 45,
-        width: 45,
-        maxWidth: 45,
-        // The header can use the table's getToggleAllRowsSelectedProps method
-        // to render a checkbox
-        Header: ({ getToggleAllRowsSelectedProps }) => (
-          <div>
-            <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />
-          </div>
-        ),
-        // The cell can use the individual row's getToggleRowSelectedProps method
-        // to the render a checkbox
-        Cell: ({ row }) => {
-          //console.log("Cell Render");
-          //console.log(row);
-          if (row.original.status !== "DONE" && (row.original.errorMsg == null || row.original.errorMsg === "")) {
-            return (
-              <div>
-                <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
-              </div>
-            );
-          } else {
-            row.isSelected = false;
-            return (
-              <div>
-                <IndeterminateCheckbox
-                  checked={false}
-                  readOnly
-                  style={row.getToggleRowSelectedProps().style}
-                />
-              </div>
-            );
-          }
-        }
-      },
-      ...columns,
-    ])
-  }*/)
+  useRowSelect)
   
-  /*
   useEffect(() => {
-    let selWireArr = [];
-      for(let i=0; i<selectedFlatRows.length; i++){
-        if(selectedFlatRows[i].isSelected)
-        selWireArr.push(selectedFlatRows[i].original);
-      }
-    setSelectedRowsTb(selWireArr);
-    //setSelectedRows(selectedFlatRows);
-    console.log(selectedRowIds);
-    
-  }, [setSelectedRowsTb, selectedRowIds]);
-  */
+    if(teamInt==="teamb"){
+      setAllFilters([{
+        id: "SBAStatus", 
+        value: [
+          { value: 'Further Research Required', label: 'Further Research Required' },
+          { value: 'Submission Failed', label: 'Submission Failed' },
+          { value: 'Failed Validation',  label: 'Failed Validation' },
+          { value: 'Not Approved by SBA', label: 'Not Approved by SBA' }
+        ]
+      }]);
+    } else if(teamInt==="teama" || teamInt==="teamc") {
+      //alert("Reset All Filters");
+      setAllFilters([]);
+    }
+  }, [teamInt]);
+  
   // Debounce our onFetchData call for 100ms
   const onFetchDataDebounced = useAsyncDebounce(fetchData, 100);
 
@@ -326,13 +269,13 @@ function Table({
   React.useEffect(() => {
     //fetchData({ pageIndex, pageSize });
     console.log("Page Index :- " +pageIndex);
-    //setFiltersarr(filters);
-    dispatch({
+    setFiltersarr(filters);
+    /*dispatch({
       type:'UPDATELOANLIST',
       payload:{
         filters : filters
       }
-    });
+    });*/
     onFetchDataDebounced({ pageIndex, pageSize, filters, sortBy });
   }, [ teamInt, isRefresh, setIsRefresh, onFetchDataDebounced, pageIndex, pageSize, filters, setFiltersarr, sortBy, location.key]);
   /*

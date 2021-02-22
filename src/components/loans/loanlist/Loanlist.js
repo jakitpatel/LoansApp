@@ -556,7 +556,6 @@ function Loanlist(props) {
     }
   }, [downloadAllLoans]);
   
-  
   function toCurrency(numberString) {
       let number = parseFloat(numberString);
       return number.toLocaleString('USD');
@@ -806,8 +805,8 @@ function Loanlist(props) {
     }
   }
   //let filterStateArr = filters;
-  */
-  if(isInternalUser && teamInt==="teamb" && filterStateArr.length===0){
+  
+  if(isInternalUser && teamInt==="teamb"){
     let sbaStatusFlag = false;
     for (let i=0; i<filterStateArr.length; i++){
       if(filterStateArr[i].id==="SBAStatus"){
@@ -825,7 +824,8 @@ function Loanlist(props) {
         ]
       });
     }
-  }
+  }*/
+  
   const initialState = {
     pageIndex : 0,
     //pageIndex : pageIndex,
