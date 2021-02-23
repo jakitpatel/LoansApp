@@ -961,7 +961,7 @@ function Loanlist(props) {
       tmpLoanObj.ProposedLoanId = selLoanObj.proposedLoanId;
       tmpLoanObj.associationCustomerId = selLoanObj.customerId;
       tmpLoanObj.content        = base64;
-      let res = await axios.post(Loan_Upload_Doc_Url, tmpLoanObj, options);
+      let res = await axios.post(Loan_Upload_Doc_Url, tmpLoanObj);
       console.log(res);
       //alert("Data saved successfully!");
       console.log("File Uploaded successfully!");
