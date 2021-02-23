@@ -122,6 +122,31 @@ const ReviewerAssignedOptions = [
     { value: 'Yoni Deutsch',     label: 'Yoni Deutsch' }
 ];
 
+const ContribDocTypeOptions = [
+    { value: 'Business Quarterly Financials',     label: 'Business Quarterly Financials' },
+    { value: 'Business Tax Return',     label: 'Business Tax Return' },
+    { value: 'Business Yr End Financials',     label: 'Business Yr End Financials' },
+    { value: 'Financial Statement',     label: 'Financial Statement' },
+    { value: 'Form 1040',     label: 'Form 1040' },
+    { value: 'Form 1040C',     label: 'Form 1040C' },
+    { value: 'Form 1040F',     label: 'Form 1040F' },
+    { value: 'Form 1065',     label: 'Form 1065' },
+    { value: 'Form 1120',     label: 'Form 1120' },
+    { value: 'Form 1120S',     label: 'Form 1120S' },
+    { value: 'Form 8825',     label: 'Form 8825' },
+    { value: 'Personal Tax Return',     label: 'Personal Tax Return' },
+    { value: 'Qualifying Payroll Documentation',     label: 'Qualifying Payroll Documentation' },
+    { value: 'Quarterly Tax Reporting / Payroll Processor Report',     label: 'Quarterly Tax Reporting / Payroll Processor Report' },
+    { value: 'Supporting Revenue Reduction Documentation',     label: 'Supporting Revenue Reduction Documentation' },
+    { value: 'Voided check reflecting the business borrower name and address as noted in the application',     label: 'Voided check reflecting the business borrower name and address as noted in the application' },
+    { value: 'One (1) piece of current, unexpired identification, for each owner, with an address with a copy of the FRONT AND BACK',     label: 'One (1) piece of current, unexpired identification, for each owner, with an address with a copy of the FRONT AND BACK' },
+    { value: 'Screenshot of the Secretary of State Good Standing Certificate',     label: 'Screenshot of the Secretary of State Good Standing Certificate' },
+    { value: 'Nov 2020 Bank Statement',     label: 'Nov 2020 Bank Statement' },
+    { value: 'Dec 2020 Bank Statement',     label: 'Dec 2020 Bank Statement' },
+    { value: 'Jan 2021 Bank Statement',     label: 'Jan 2021 Bank Statement' },
+    { value: 'Back of ID’s',     label: 'Back of ID’s' }
+];
 
 export { SBAOptions, BrokerOptions, StatusOptions, applicationStatusOptions, 
-    brokerOverrideOptions, MentorAssignedOptions, ReviewerAssignedOptions,TeamBAssignedOptions};
+    brokerOverrideOptions, MentorAssignedOptions, ReviewerAssignedOptions,TeamBAssignedOptions,
+    ContribDocTypeOptions};

@@ -10,12 +10,14 @@ import axios from 'axios';
 import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
 import ReactTooltip from 'react-tooltip';
-import {API_KEY, Loans_Url, env, SetLoans_Url} from './../../../const';
+import {API_KEY, Loans_Url, env, SetLoans_Url, Loan_Upload_Doc_Url} from './../../../const';
 import {buildSortByUrl, buildPageUrl, buildFilterUrl, buildExternalLoanExportDetailList} from './../../Functions/functions.js';
 import SelectColumnFilter from './../../Filter/SelectColumnFilter.js';
 import {SBAOptions, BrokerOptions, StatusOptions, applicationStatusOptions} from './../../../commonVar.js';
 import ExcelExport from './../../ExcelExport/ExcelExport';
-import { MentorAssignedOptions, ReviewerAssignedOptions} from './../../../commonVar.js';
+import { MentorAssignedOptions, ReviewerAssignedOptions, ContribDocTypeOptions} from './../../../commonVar.js';
+import LoanFileUpload from './LoanFileUpload';
+import Modal from "react-bootstrap/Modal";
 
 function Loanlist(props) {
   let history = useHistory();
@@ -38,8 +40,10 @@ function Loanlist(props) {
   const [downloadAllLoans, setDownloadAllLoans] = useState(false);
   const [isRefresh, setIsRefresh] = useState(false);
   const [selectedRows, setSelectedRows] = useState([]);
-
-  const [selWireObj, setSelWireObj] = useState({});
+  const [isOpen, setIsOpen] = React.useState(false);
+  const [selectedFile, setSelectedFile] = React.useState(null);
+  const [docTypeVal, setDocTypeVal] = React.useState("");
+  const [selLoanObj, setSelLoanObj] = useState({});
 
   const dispatch = useDispatch();
 
@@ -60,9 +64,34 @@ function Loanlist(props) {
   let { batchRec } = props;
   console.log("backToList : "+backToList);
 
+  const onLoanContribBtnClick = (e,obj) =>{
+    console.log("onLoanContribBtnClick");
+    setSelLoanObj(obj);
+    setIsOpen(true);
+  }
+
+  let contribBtn = {
+    Header: "Contrib",
+    show : true, 
+    width: 55,
+    //id: 'colViewWireDetail',
+    accessor: row => row.attrbuiteName,
+    disableFilters: true,
+    //filterable: false, // Overrides the table option
+    Cell: obj => {
+      //console.log(obj.row);
+      let loanObj = obj.row.original;
+      return (
+        <button type="button" onClick={(e)=>{onLoanContribBtnClick(e, loanObj)}} className={`btn btn-link btn-sm`}>
+          <Icon.Upload />
+        </button>
+      );
+    }
+  };
+
   let columnDefs = [];
     if(isInternalUser){
-      columnDefs.push({
+      columnDefs.push(contribBtn,{
         Header: "View",
         show : true, 
         width: 55,
@@ -340,7 +369,7 @@ function Loanlist(props) {
           });
       }
     } else {
-      columnDefs.push({
+      columnDefs.push(contribBtn,{
         Header: "View",
         show : true, 
         width: 55,
@@ -362,7 +391,8 @@ function Loanlist(props) {
             </Link>
           );
         }
-      },{
+      },
+      {
         field: "ApplicationCreatedDate",
         Header: "Application Created on",
         accessor: "ApplicationCreatedDate"
@@ -885,8 +915,115 @@ function Loanlist(props) {
     }
   }
 
+  const showModal = () => {
+      setIsOpen(true);
+  };
+
+  const hideModal = () => {
+      setIsOpen(false);
+  };
+
+  // On file select (from the pop up)
+  const onFileChange = (event) => {
+    // Update the state
+    setSelectedFile(event.target.files[0]);  
+  };
+
+  const convertBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      }
+      fileReader.onerror = (error) => {
+        reject(error);
+      }
+    })
+  }
+
+  const onLoanFileUpload = async () => {
+  
+    // Details of the uploaded file
+    console.log(selectedFile);
+    const base64 = await convertBase64(selectedFile);
+    console.log(base64);
+    try {
+      const options = {
+        headers: {
+          'X-DreamFactory-API-Key': API_KEY,
+          'X-DreamFactory-Session-Token': session_token
+        }
+      };
+      let tmpLoanObj = {};
+      tmpLoanObj.description    = docTypeVal;
+      tmpLoanObj.name           = selectedFile.name;
+      tmpLoanObj.ProposedLoanId = selLoanObj.proposedLoanId;
+      tmpLoanObj.associationCustomerId = selLoanObj.customerId;
+      tmpLoanObj.content        = base64;
+      let res = await axios.post(Loan_Upload_Doc_Url, tmpLoanObj, options);
+      console.log(res);
+      //alert("Data saved successfully!");
+      console.log("File Uploaded successfully!");
+    } catch (error) {
+      console.log(error.response);
+      if (401 === error.response.status) {
+          // handle error: inform user, go to login, etc
+          let res = error.response.data;
+          console.log(res.error.message);
+          //alert(res.error.message);
+      } else {
+        console.log(error);
+        //alert(error);
+      }
+    }
+  };
+
+  const handleDocTypeChange = (e) =>{
+    setDocTypeVal(e.target.value);
+  }
+
   return (
     <React.Fragment>
+      <Modal show={isOpen} onHide={hideModal}>
+        <Modal.Header>
+          <Modal.Title>File Upload</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+        <div className="form-group row">
+          <label data-for='' className="col-sm-3 col-form-label">Doc Type</label>
+          <div className="col-sm-9">
+            <select
+              className="form-control custom-select"
+              name="docType"
+              value={docTypeVal}
+              onChange={handleDocTypeChange}
+            >
+              <option value=""></option>
+              {ContribDocTypeOptions.map((option, i) => {
+                if(option.label!=="All"){
+                  return (
+                    <option key={i} value={option.value}>
+                      {option.label}
+                    </option>
+                  )
+                }
+              })}           
+            </select>
+          </div>
+        </div>
+        <div className="form-group row">
+          <label data-for='' className="col-sm-3 col-form-label">Select File</label>
+          <div className="col-sm-9">
+              <input type="file" onChange={onFileChange} />
+          </div>
+        </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <button style={{ width:"70px" }} className="btn btn-primary btn-sm" onClick={onLoanFileUpload}>Upload</button>
+          <button style={{ width:"70px" }} className="btn btn-primary btn-sm" onClick={hideModal}>Cancel</button>
+        </Modal.Footer>
+      </Modal>
       <div className="container" style={{marginLeft:"0px", width:"100%", maxWidth:"100%"}}>
         <div className="row">
           <div className="col-sm-12 col-md-offset-3">
