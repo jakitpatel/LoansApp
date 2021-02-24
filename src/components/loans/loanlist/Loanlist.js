@@ -44,6 +44,8 @@ function Loanlist(props) {
   const [selectedFile, setSelectedFile] = React.useState(null);
   const [docTypeVal, setDocTypeVal] = React.useState("");
   const [selLoanObj, setSelLoanObj] = useState({});
+  const [isOpenDocRet, setIsOpenDocRet] = React.useState(false);
+  const [docData, setDocData] = React.useState([]);
 
   const dispatch = useDispatch();
 
@@ -81,8 +83,12 @@ function Loanlist(props) {
     Cell: obj => {
       //console.log(obj.row);
       let loanObj = obj.row.original;
+      let enableVal = true;
+      if(loanObj.proposedLoanId==null || loanObj.proposedLoanId===0 || loanObj.customerId==null || loanObj.customerId===0){
+        enableVal = false;
+      }
       return (
-        <button type="button" onClick={(e)=>{onLoanContribBtnClick(e, loanObj)}} className={`btn btn-link btn-sm`}>
+        <button type="button" onClick={(e)=>{onLoanContribBtnClick(e, loanObj)}} className={`btn btn-link btn-sm ${enableVal ? "" : "disabled"}`}>
           <Icon.Upload />
         </button>
       );
@@ -946,6 +952,10 @@ function Loanlist(props) {
   
     // Details of the uploaded file
     console.log(selectedFile);
+    if(selectedFile===null){
+      alert("Please upload file.");
+      return false;
+    }
     const base64 = await convertBase64(selectedFile);
     console.log(base64);
     try {
@@ -965,16 +975,28 @@ function Loanlist(props) {
       console.log(res);
       //alert("Data saved successfully!");
       console.log("File Uploaded successfully!");
+      hideModal();
+      let docDataInfo = res.data; //res.data.resource;
+      console.log(docDataInfo);
+      let tmpArr = [];
+      tmpArr.push(docDataInfo);
+      setDocData(tmpArr);
+      showDocRetModal();
     } catch (error) {
-      console.log(error.response);
-      if (401 === error.response.status) {
-          // handle error: inform user, go to login, etc
-          let res = error.response.data;
-          console.log(res.error.message);
-          //alert(res.error.message);
+      if(error.response){
+        console.log(error.response);
+        if (401 === error.response.status) {
+            // handle error: inform user, go to login, etc
+            let res = error.response.data;
+            console.log(res.error.message);
+            alert(res.error.message);
+        } else {
+          console.log(error);
+          alert(error);
+        }
       } else {
         console.log(error);
-        //alert(error);
+        alert(error);
       }
     }
   };
@@ -983,8 +1005,17 @@ function Loanlist(props) {
     setDocTypeVal(e.target.value);
   }
 
+  const showDocRetModal = () => {
+      setIsOpenDocRet(true);
+  };
+
+  const hideDocRetModal = () => {
+      setIsOpenDocRet(false);
+  };
+
   return (
     <React.Fragment>
+      <LoanFileUpload isOpenRet={isOpenDocRet} docRetData={docData} hideRetModal={hideDocRetModal} />
       <Modal show={isOpen} onHide={hideModal}>
         <Modal.Header>
           <Modal.Title>File Upload</Modal.Title>
