@@ -16,9 +16,11 @@ export default function NavBar(props) {
     dispatch({
         type:'UPDATEUSER',
         payload:{
-          teamInt: e.target.value
+          teamInt: e.target.value,
+          teamChangeFlag: true
         }
       });
+    /*
     dispatch({
       type:'UPDATELOANLIST',
       payload:{
@@ -28,6 +30,7 @@ export default function NavBar(props) {
         filters : []
       }
     });
+    */
   }
 
   return (

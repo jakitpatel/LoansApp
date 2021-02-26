@@ -120,6 +120,7 @@ function Table({
   updateMyData, 
   skipPageReset,
   teamInt,
+  teamChangeFlag,
   isInternalUser,
   totalCount
 }) {
@@ -237,10 +238,17 @@ function Table({
   useSortBy,
   usePagination,
   useRowSelect)
-  /*
+  
   // Changes related to reset the filter on change of Team
   useEffect(() => {
-    if(isInternalUser){
+    //console.log("Team "+teamInt);
+    if(isInternalUser && teamChangeFlag===true){
+      dispatch({
+        type:'UPDATEUSER',
+        payload:{
+          teamChangeFlag: false
+        }
+      });
       if(teamInt==="teamb"){
         setAllFilters([{
           id: "SBAStatus", 
@@ -252,13 +260,13 @@ function Table({
           ]
         }]);
       } else if(teamInt==="teama" || teamInt==="teamc") {
-        alert(teamInt);
-        alert("Reset All Filters");
+        //alert(teamInt);
+        //alert("Reset All Filters");
         setAllFilters([]);
       }
     }
   }, [teamInt]);
-  */
+  
 
   // Debounce our onFetchData call for 100ms
   const onFetchDataDebounced = useAsyncDebounce(fetchData, 100);
@@ -506,7 +514,7 @@ function Table({
     setFiltersarr, loading, 
     fetchData, pageCount, 
     data, isRefresh, setIsRefresh, pageState,
-    updateMyData, skipPageReset, teamInt, isInternalUser, totalCount } = props;
+    updateMyData, skipPageReset, teamInt, isInternalUser,teamChangeFlag, totalCount } = props;
    
    const onRowClick = (state, rowInfo, column, instance) => {
       return {
@@ -563,6 +571,7 @@ function Table({
         updateMyData={updateMyData}
         skipPageReset={skipPageReset}
         teamInt={teamInt}
+        teamChangeFlag={teamChangeFlag}
         isInternalUser={isInternalUser}
         totalCount={totalCount}
         />

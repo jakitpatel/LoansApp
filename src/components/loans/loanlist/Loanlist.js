@@ -49,7 +49,7 @@ function Loanlist(props) {
 
   const dispatch = useDispatch();
 
-  const { session_token, teamInt, uid, name, isInternalUser } = useSelector(state => {
+  const { session_token, teamInt,teamChangeFlag, uid, name, isInternalUser } = useSelector(state => {
       return {
           ...state.userReducer
       }
@@ -898,6 +898,7 @@ function Loanlist(props) {
         updateMyData={updateMyData}
         skipPageReset={skipPageReset}
         teamInt={teamInt}
+        teamChangeFlag={teamChangeFlag}
         isInternalUser={isInternalUser}
         totalCount={totalCount}
       />
