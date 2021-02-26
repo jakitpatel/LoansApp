@@ -430,12 +430,16 @@ function Loanlist(props) {
       {
         field: "brokerRep",
         Header: "brokerRep",
-        accessor: "brokerRep"
+        accessor: "brokerRep",
+        editable:true,
+        columnType:'text'
       },
       {
         field: "brokerComments",
         Header: "brokerComments",
-        accessor: "brokerComments"
+        accessor: "brokerComments",
+        editable:true,
+        columnType:'text'
       },
       {
         name: "ALDLoanApplicationNumberOnly",
