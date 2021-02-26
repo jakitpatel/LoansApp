@@ -28,6 +28,7 @@ const BrokerOptions = [
     { value: 'Premium Merchant Funding',    label: 'Premium Merchant Funding' }
 ];
 
+
 const StatusOptions = [
     { value: '',     label: 'All' },
     { value: 'Not Assigned',     label: 'Not Assigned' },
@@ -43,8 +44,10 @@ const StatusOptions = [
     { value: 'Loans with SBA Submission Errors',    label: 'Loans with SBA Submission Errors' },
     { value: 'Approved by SBA',    label: 'Approved by SBA' },
     { value: 'Submitted to the SBA',    label: 'Submitted to the SBA' },
+    { value: 'Ready for sba submission - on hold',    label: 'Ready for sba submission - on hold' },
     { value: 'Pending Validation',    label: 'Pending Validation' }
 ];
+ 
 
 const applicationStatusOptions = [
     { value: '',     label: 'All' },
@@ -59,18 +62,19 @@ const applicationStatusOptions = [
 ];
 
 const brokerOverrideOptions = [
-    { value: 'Premium Merchant Funding',     label: 'Premium Merchant Funding' },
-    { value: 'PMF', label: 'PMF' },
-    { value: 'Guidance Funding', label: 'Guidance Funding' },
-    { value: 'Lendie Capital', label: 'Lendie Capital' },
-    { value: 'Motor City Funding',  label: 'Motor City Funding' },
-    { value: 'Eastern Union Funding', label: 'Eastern Union Funding' },
-    { value: 'Asset Enhancement Solutions', label: 'Asset Enhancement Solutions' },
-    { value: 'Green Ark Funding', label: 'Green Ark Funding' },
-    { value: 'Donar Consulting', label: 'Donar Consulting' },
-    { value: 'ABC Capital Corp.', label: 'ABC Capital Corp.' },
-    { value: 'Funding Forward', label: 'Funding Forward' },
-    { value: 'Useful Funding', label: 'Useful Funding' }
+{ value: 'Premium Merchant Funding',     label: 'Premium Merchant Funding' },
+{ value: 'PMF', label: 'PMF' },
+{ value: 'Guidance Funding', label: 'Guidance Funding' },
+{ value: 'Lendie Capital', label: 'Lendie Capital' },
+{ value: 'Motor City Funding',  label: 'Motor City Funding' },
+{ value: 'Eastern Union Funding', label: 'Eastern Union Funding' },
+{ value: 'Asset Enhancement Solutions', label: 'Asset Enhancement Solutions' },
+{ value: 'Green Ark Funding', label: 'Green Ark Funding' },
+{ value: 'Donar Consulting', label: 'Donar Consulting' },
+{ value: 'ABC Capital Corp.', label: 'ABC Capital Corp.' },
+{ value: 'Funding Forward', label: 'Funding Forward' },
+{ value: 'Park Place Financial Group', label: 'Park Place Financial Group' },
+{ value: 'Useful Funding', label: 'Useful Funding' }
 ];
 
 const MentorAssignedOptions = [
@@ -85,12 +89,13 @@ const MentorAssignedOptions = [
     { value: 'Usher Berkowitz', label: 'Usher Berkowitz' }
 ];
 
-const TeamBAssignedOptions = [	
-    { value: 'Adiv Cederbaum', label: 'Adiv Cederbaum' },	
-    { value: 'Lawrence Allman', label: 'Lawrence Allman' },	
-    { value: 'Steve Erickson', label: 'Steve Erickson' },	
-    { value: 'Jamie Hoy', label: 'Jamie Hoy' }	
-];	
+const TeamBAssignedOptions = [
+{ value: 'Adiv Cederbaum', label: 'Adiv Cederbaum' },
+{ value: 'Lawrence Allman', label: 'Lawrence Allman' },
+{ value: 'Steve Erickson', label: 'Steve Erickson' },
+{ value: 'Cate Doss', label: 'Cate Doss' },
+{ value: 'Jamie Hoy', label: 'Jamie Hoy' }
+];
 
 const ReviewerAssignedOptions = [
     { value: 'Abigail Hyman',     label: 'Abigail Hyman' },

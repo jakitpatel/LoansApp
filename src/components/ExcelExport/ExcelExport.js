@@ -6,11 +6,10 @@ const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
 const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
 
 function ExcelExport(props) {
-    let {data} = props;
 
     const filterColumns = (data) => {
         // Get column names
-        if(data===null || data==undefined || data.length===0){
+        if(data===null || data===undefined || data.length===0){
             return [];
         }
         const columns = Object.keys(data[0]);
