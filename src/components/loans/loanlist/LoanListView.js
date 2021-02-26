@@ -244,7 +244,7 @@ function Table({
   useSortBy,
   usePagination,
   useRowSelect)
-  
+  /*
   useEffect(() => {
     if(teamInt==="teamb"){
       setAllFilters([{
@@ -257,11 +257,13 @@ function Table({
         ]
       }]);
     } else if(teamInt==="teama" || teamInt==="teamc") {
-      //alert("Reset All Filters");
+      alert(teamInt);
+      alert("Reset All Filters");
       setAllFilters([]);
     }
   }, [teamInt]);
-  
+  */
+ 
   // Debounce our onFetchData call for 100ms
   const onFetchDataDebounced = useAsyncDebounce(fetchData, 100);
 
