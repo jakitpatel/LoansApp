@@ -863,8 +863,8 @@ function Loanlist(props) {
   }*/
   
   const initialState = {
-    pageIndex : 0,
-    //pageIndex : pageIndex,
+    //pageIndex : 0,
+    pageIndex : pageIndex,
     //pageSize : 10,
     pageSize : pageSize,
     sortBy : sortBy, //[{ id: "wireID", desc: true }],
