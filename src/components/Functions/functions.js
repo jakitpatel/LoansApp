@@ -33,7 +33,7 @@ const buildSortByUrl = (sortArr) => {
       if(isNullFlag===true && selOptionSt.length > 0){
         filterUrl += " or ("+filterClm+" is null)";
       }
-      if(isNullFlag===true && selOptionSt.length == 0){
+      if(isNullFlag===true && selOptionSt.length === 0){
         filterUrl += " and ("+filterClm+" is null)";
       }
     } else {

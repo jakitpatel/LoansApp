@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Select from 'react-select';
 // This is a custom filter UI for selecting
 // a unique option from a list
@@ -47,21 +47,6 @@ function SelectColumnFilter({
       }}
     />
     )
-    {/*<select
-      value={filterValue}
-      onChange={e => {
-        setFilter(e.target.value || undefined)
-      }}
-    >
-      <option value="">All</option>
-      {options.map((option, i) => (
-        <option key={i} value={option}>
-          {option}
-        </option>
-      ))}
-    </select>
-      */}
-
 }
 
 export default SelectColumnFilter;

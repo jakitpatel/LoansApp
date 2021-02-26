@@ -301,6 +301,8 @@ function LoanDetailForm(props) {
                       </React.Fragment>
                     )
                   }
+                } else {
+                  return null;
                 }
               }
             } else {

@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import preval from 'preval.macro';
 import {API_URL} from './../../const.js';
 
@@ -9,7 +9,6 @@ function DashboardMain(props) {
             ...state.userReducer
         }
     });
-    const dispatch = useDispatch();
     console.log("name : "+name);
     let userType = "External User";
     if(isInternalUser){

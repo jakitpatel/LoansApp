@@ -4,14 +4,11 @@ import LoanDetailForm from "./LoanDetailForm";
 import axios from 'axios';
 import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
-import {API_KEY, SetLoans_Url, Wire_tbl_Url, WireDetails_Url, env} from './../../../const';
+import {API_KEY, SetLoans_Url} from './../../../const';
 
 function LoanDetails(props) {
   let history = useHistory();
-
-  const [loading, setLoading] = useState(true);
-  const [wireText, setWireText] = useState("");
-  const [isOpen, setIsOpen] = React.useState(false);
+  
   const [modWireDtObj, setModWireDtObj] = useState({});
   const dispatch = useDispatch();
 
@@ -68,10 +65,10 @@ function LoanDetails(props) {
     }
   }
 
-  const backToWireList = () => {
+  const backToLoanList = () => {
     console.log("Back To Wire List Button Click");
     dispatch({
-      type:'UPDATEWIRELIST',
+      type:'UPDATELOANLIST',
       payload:{
         backToList:true
       }
@@ -144,7 +141,7 @@ function LoanDetails(props) {
       let res = await axios.put(SetLoans_Url+'/'+ald_id, tmpLoanObj, options);
       console.log(res);
       alert("Data saved successfully!");
-      backToWireList();
+      backToLoanList();
       //setToCustomer(true);
     } catch (error) {
       console.log(error.response);
@@ -155,7 +152,7 @@ function LoanDetails(props) {
       } else {
         alert(error);
       }
-      //backToWireList();
+      //backToLoanList();
     }
   }
   let showResolvedIssueBtn = true;
@@ -173,7 +170,7 @@ function LoanDetails(props) {
           <div className="col-sm-12 col-md-offset-3">
             <h3 className="text-center">{getTitle()} - Loan {ALDLoanApplicationNumberOnly}</h3>
             <div className="btnCls">
-              <button style={{ float: "left" }} type="button" onClick={backToWireList} className="btn btn-primary btn-sm">
+              <button style={{ float: "left" }} type="button" onClick={backToLoanList} className="btn btn-primary btn-sm">
                 Back
               </button>
               {/*isInternalUser &&*/}

@@ -3,7 +3,6 @@ import { useTable, useSortBy, useFilters, usePagination, useRowSelect, useAsyncD
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import ReactTooltip from 'react-tooltip';
 import './LoanListView.css';
 import DefaultColumnFilter from './../../Filter/DefaultColumnFilter';
 
@@ -121,27 +120,10 @@ function Table({
   updateMyData, 
   skipPageReset,
   teamInt,
+  isInternalUser,
   totalCount
 }) {
-  /*
-  const filterTypes = React.useMemo(
-    () => ({
-      // Or, override the default text filter to use
-      // "startWith"
-      text: (rows, id, filterValue) => {
-        return rows.filter(row => {
-          const rowValue = row.values[id]
-          return rowValue !== undefined
-            ? String(rowValue)
-                .toLowerCase()
-                .startsWith(String(filterValue).toLowerCase())
-            : true
-        })
-      },
-    }),
-    []
-  )
-  */
+  
   const defaultColumn = React.useMemo(
     () => ({
       // Let's set up our default Filter UI
@@ -205,7 +187,18 @@ function Table({
     /*,state: {
       selectedRowIds: selectedRowsTb
     }*/
-    
+      /*
+      useControlledState: state => {
+        return React.useMemo(
+          () => ({
+            ...state,
+            pageIndex: pageState.pageIndex,
+          }),
+          [state, pageState.pageIndex]
+        )
+      },
+      */
+    /*
     useControlledState: state => {
       return React.useMemo(
         () => {
@@ -219,7 +212,7 @@ function Table({
             setTimeout(() => {
             console.log("pageIndex State : "+pageIndex);
               dispatch({
-                type:'UPDATEWIRELIST',
+                type:'UPDATELOANLIST',
                 payload:{
                   backToList:false
                 }
@@ -238,32 +231,35 @@ function Table({
         },
         [state]
       )
-    }
+    }*/
   },
   useFilters, // useFilters!
   useSortBy,
   usePagination,
   useRowSelect)
   /*
+  // Changes related to reset the filter on change of Team
   useEffect(() => {
-    if(teamInt==="teamb"){
-      setAllFilters([{
-        id: "SBAStatus", 
-        value: [
-          { value: 'Further Research Required', label: 'Further Research Required' },
-          { value: 'Submission Failed', label: 'Submission Failed' },
-          { value: 'Failed Validation',  label: 'Failed Validation' },
-          { value: 'Not Approved by SBA', label: 'Not Approved by SBA' }
-        ]
-      }]);
-    } else if(teamInt==="teama" || teamInt==="teamc") {
-      alert(teamInt);
-      alert("Reset All Filters");
-      setAllFilters([]);
+    if(isInternalUser){
+      if(teamInt==="teamb"){
+        setAllFilters([{
+          id: "SBAStatus", 
+          value: [
+            { value: 'Further Research Required', label: 'Further Research Required' },
+            { value: 'Submission Failed', label: 'Submission Failed' },
+            { value: 'Failed Validation',  label: 'Failed Validation' },
+            { value: 'Not Approved by SBA', label: 'Not Approved by SBA' }
+          ]
+        }]);
+      } else if(teamInt==="teama" || teamInt==="teamc") {
+        alert(teamInt);
+        alert("Reset All Filters");
+        setAllFilters([]);
+      }
     }
   }, [teamInt]);
   */
- 
+
   // Debounce our onFetchData call for 100ms
   const onFetchDataDebounced = useAsyncDebounce(fetchData, 100);
 
@@ -280,16 +276,34 @@ function Table({
     });*/
     onFetchDataDebounced({ pageIndex, pageSize, filters, sortBy });
   }, [ teamInt, isRefresh, setIsRefresh, onFetchDataDebounced, pageIndex, pageSize, filters, setFiltersarr, sortBy, location.key]);
+  
+  React.useEffect(() => {
+    //setFiltersarr(filters);
+    if(!pageState.backToList){
+      /*onFetchDataDebounced({ pageIndex:0, pageSize, filters, sortBy });*/
+      gotoPage(0);
+    } else {
+      dispatch({
+        type:'UPDATELOANLIST',
+        payload:{
+          backToList:false
+        }
+      });
+    }
+  }, [ filters, setFiltersarr, sortBy]);
+
   /*
   useEffect(() => {
     console.log("After Render Wire List View");
     if(pageState.backToList){
-      //gotoPage(pageState.pageIndex);
+      alert("Go To Page No : "+pageState.pageIndex);
+      gotoPage(pageState.pageIndex);
       console.log("pageIndex State : "+pageIndex);
+      
       setTimeout(() => {
         console.log("pageIndex State : "+pageIndex);
-        /*dispatch({
-          type:'UPDATEWIRELIST',
+        dispatch({
+          type:'UPDATELOANLIST',
           payload:{
             backToList:false
           }
@@ -355,7 +369,15 @@ function Table({
         </button>{' '}
       </div>
       <div className="col-md-2">
-        <button className={`btn btn-primary btn-md`} onClick={() => nextPage()} disabled={!canNextPage}>
+        <button className={`btn btn-primary btn-md`} onClick={() => {
+          /*dispatch({
+            type:'UPDATELOANLIST',
+            payload:{
+              pageIndex:pageIndex+1
+            }
+          });*/
+          nextPage()
+      }} disabled={!canNextPage}>
           {'>'}
         </button>{' '}
         <button className={`btn btn-primary btn-md`} onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
@@ -470,7 +492,7 @@ function Table({
   )
 }
 
- function WireListView(props) {
+ function LoanListView(props) {
    //console.log(props.items);
    //const data = React.useMemo(() => props.items, [props.items])
    const dispatch = useDispatch();
@@ -484,7 +506,7 @@ function Table({
     setFiltersarr, loading, 
     fetchData, pageCount, 
     data, isRefresh, setIsRefresh, pageState,
-    updateMyData, skipPageReset, teamInt, totalCount } = props;
+    updateMyData, skipPageReset, teamInt, isInternalUser, totalCount } = props;
    
    const onRowClick = (state, rowInfo, column, instance) => {
       return {
@@ -541,10 +563,11 @@ function Table({
         updateMyData={updateMyData}
         skipPageReset={skipPageReset}
         teamInt={teamInt}
+        isInternalUser={isInternalUser}
         totalCount={totalCount}
         />
     </Styles>
   )
  }
 
- export default WireListView;
+ export default LoanListView;
