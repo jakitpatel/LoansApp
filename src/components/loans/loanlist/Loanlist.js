@@ -345,6 +345,23 @@ function Loanlist(props) {
             accessor: "PrimaryBorrowers"
           },
           {
+            field: "FirstLoanAmount",
+            Header: "Total Request",
+            accessor: "FirstLoanAmount",
+            disableFilters: true,
+            Cell: props => {
+              if(props.value===null || props.value===undefined) {
+                return null;
+              }
+              return (
+                <div style={{textAlign: "right"}}>
+                {new Intl.NumberFormat('en-US',{ style: 'currency', currency: 'USD' }).format(props.value)}
+                </div>
+              )
+              // '$100.00'
+            }
+          },
+          {
             field: "SBAStatus",
             Header: "SBA Status",
             accessor: "SBAStatus",
@@ -697,6 +714,7 @@ function Loanlist(props) {
               'ReviewerAssigned': data.ReviewerAssigned,
               'ALDLoanApplicationNumberOnly' : data.ALDLoanApplicationNumberOnly,
               'Primary Borrower' : data.PrimaryBorrowers,
+              'TotalRequest' : data.FirstLoanAmount,
               'SBAStatus' : data.SBAStatus,
               'MentorAssigned' : data.MentorAssigned,
               'StatusCComments': data.StatusCComments,
