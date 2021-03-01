@@ -16,6 +16,7 @@
     "preval.macro": "^5.0.0",
     "react": "^16.13.1",
     "react-bootstrap": "^1.4.0",
+    "react-clear-cache": "^1.4.12",
     "react-csv": "^2.0.3",
     "react-data-export": "^0.6.0",
     "react-dom": "^16.13.1",
