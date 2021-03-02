@@ -1,10 +1,19 @@
-//let env = "DEV";
-let env = "PROD";
-let API_URL = "http://localhost:3001/";  // For Local Env, Don't Modify
-let API_CONTRIB_URL = "http://localhost:3001/";  // For Local Env, Don't Modify
-if (env === 'PROD') {
+//let env = "DEVLOCAL";
+let env = "DEV";
+//let env = "PROD";
+
+let API_URL = "";
+let API_CONTRIB_URL = "";
+
+if (env === 'DEV') {
     API_URL   = "https://3gl57cxtbj.execute-api.us-east-1.amazonaws.com/cfsb_ppp1/";  // For Production Env via aws GW
     API_CONTRIB_URL = "https://8ty30aj3ki.execute-api.us-east-1.amazonaws.com/cfsb_contrib/";
+} else if(env === 'PROD'){
+    API_URL   = "https://gqqfj8a5u7.execute-api.us-east-1.amazonaws.com/cfsb-ppp-prod/";  // For Production Env via aws GW
+    API_CONTRIB_URL = "https://8ty30aj3ki.execute-api.us-east-1.amazonaws.com/cfsb_contrib/";
+} else if(env === 'DEVLOCAL'){
+    API_URL = "http://localhost:3001/";  // For Local Env, Don't Modify
+    API_CONTRIB_URL = "http://localhost:3001/";  // For Local Env, Don't Modify
 }
 
 window.constVar = {
