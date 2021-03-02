@@ -4,8 +4,8 @@ import LoanDetailForm from "./LoanDetailForm";
 import axios from 'axios';
 import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
-import {API_KEY, SetLoans_Url} from './../../../const';
-//const {API_KEY, SetLoans_Url} = window.constVar;
+//import {API_KEY, SetLoans_Url} from './../../../const';
+const {API_KEY, SetLoans_Url} = window.constVar;
 
 function LoanDetails(props) {
   let history = useHistory();

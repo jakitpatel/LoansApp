@@ -22,7 +22,7 @@ window.constVar = {
     API_KEY   : "1171aab5665fc0afdb0a9e580e6fba236e9ed45e6944d63dc1aaa67e3e3f8bf9",
     Login_Url : API_URL+"brokersession",
     Internal_Login_Url : API_URL+"internalsession",
-    Loans_Url    : API_URL+"getPPP",
+    Loans_Url    : API_URL+"getppp",
     SetLoans_Url : API_URL+"setloanstatus",
     Loan_Upload_Doc_Url  : API_CONTRIB_URL+"contrib",
     LoanDetails_Url      : API_URL+"getLoanDetails?filter=",  

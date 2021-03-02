@@ -17,7 +17,7 @@ let API_CONTRIB_URL = "http://localhost:3001/";  // For Local Env
 let Login_Url = API_URL+"login"; // For Local Env
 let Internal_Login_Url = API_URL+"login";  // For Production Env
 //let Loans_Url = API_URL+"v_fullReport";  // For Local Env
-let Loans_Url = API_URL+"getPPP";  // For Local Env
+let Loans_Url = API_URL+"getppp";  // For Local Env
 let SetLoans_Url = API_URL+"setloanstatus";
 
 let LoanDetails_Url     = API_URL+"getLoanDetails";  // For Local Env

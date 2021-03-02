@@ -15,8 +15,8 @@ import ExcelExport from './../../ExcelExport/ExcelExport';
 import { MentorAssignedOptions, ReviewerAssignedOptions, ContribDocTypeOptions} from './../../../commonVar.js';
 import LoanFileUpload from './LoanFileUpload';
 import Modal from "react-bootstrap/Modal";
-import {API_KEY, Loans_Url, env, SetLoans_Url, Loan_Upload_Doc_Url} from './../../../const';
-//const {API_KEY, Loans_Url, env, SetLoans_Url, Loan_Upload_Doc_Url} = window.constVar;
+//import {API_KEY, Loans_Url, env, SetLoans_Url, Loan_Upload_Doc_Url} from './../../../const';
+const {API_KEY, Loans_Url, env, SetLoans_Url, Loan_Upload_Doc_Url} = window.constVar;
 
 function Loanlist(props) {
   let history = useHistory();
