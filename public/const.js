@@ -1,5 +1,5 @@
-let env = "DEV";
-//let env = "PROD";
+//let env = "DEV";
+let env = "PROD";
 let API_URL = "http://localhost:3001/";  // For Local Env, Don't Modify
 let API_CONTRIB_URL = "http://localhost:3001/";  // For Local Env, Don't Modify
 if (env === 'PROD') {
@@ -9,6 +9,7 @@ if (env === 'PROD') {
 
 window.constVar = {
     env       : env,
+    API_URL   : API_URL,
     API_KEY   : "1171aab5665fc0afdb0a9e580e6fba236e9ed45e6944d63dc1aaa67e3e3f8bf9",
     Login_Url : API_URL+"brokersession",
     Internal_Login_Url : API_URL+"internalsession",

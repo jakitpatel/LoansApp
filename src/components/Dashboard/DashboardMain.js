@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from 'react-redux';
 import preval from 'preval.macro';
 //import {API_URL} from './../../const.js';
-const {API_URL} = window.constVar;
+const {API_URL, env} = window.constVar;
 
 function DashboardMain(props) {
     const { name, isInternalUser, teamInt } = useSelector(state => {
@@ -16,7 +16,8 @@ function DashboardMain(props) {
         userType = "Internal User";
     }
     let colorCode = "RED";
-    if(process.env.REACT_APP_ENVIRONMENT==="DEV" || process.env.REACT_APP_ENVIRONMENT==="dev"){
+    //if(process.env.REACT_APP_ENVIRONMENT==="DEV" || process.env.REACT_APP_ENVIRONMENT==="dev"){
+    if(env==="DEV" || env==="dev"){
         colorCode = "BLUE";
     }
     return (
@@ -28,7 +29,7 @@ function DashboardMain(props) {
                     <b>App Server </b> :- {API_URL} <br />
                     <b>Build Version</b> :- {process.env.REACT_APP_VERSION} <br />
                     <b>Build Date</b> :- {preval`module.exports = new Date().toLocaleString();`}.<br />
-                    <b>Environment</b> :- <span style={{color:colorCode}}>{process.env.REACT_APP_ENVIRONMENT}</span> <br />
+                    <b>Environment</b> :- <span style={{color:colorCode}}>{env}</span> <br />
                 </div>
             </div>
         </React.Fragment>
