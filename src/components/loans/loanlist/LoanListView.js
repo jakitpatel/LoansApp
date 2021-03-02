@@ -53,12 +53,21 @@ const EditableCell = ({
   column: { id, editable, columnType,columnOptions },
   updateMyData, // This is a custom function that we supplied to our table instance
 }) => {
+  if(editable && columnType==="list"){
+    if(initialValue===null){
+      initialValue = "";
+    }
+  }
   // We need to keep and update the state of the cell normally
   const [value, setValue] = React.useState(initialValue)
 
   const onChange = e => {
-    setValue(e.target.value)
-    updateMyData(index, id, e.target.value)
+    let val = e.target.value;
+    if(val===null){
+      val = "";
+    }
+    setValue(val)
+    updateMyData(index, id, val)
   }
 
   const onChangeInput = e => {
@@ -82,7 +91,7 @@ const EditableCell = ({
     return ( 
       <select
       className="editor-field form-control custom-select"
-      name={id}
+      //name={id}
       value={value}
       onChange={onChange}
       onBlur={onBlur}
