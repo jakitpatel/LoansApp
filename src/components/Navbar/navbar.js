@@ -20,17 +20,6 @@ export default function NavBar(props) {
           teamChangeFlag: true
         }
       });
-    /*
-    dispatch({
-      type:'UPDATELOANLIST',
-      payload:{
-        filtersB : [],
-        filtersA : [],
-        filtersC : [],
-        filters : []
-      }
-    });
-    */
   }
 
   return (

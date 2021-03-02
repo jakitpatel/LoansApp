@@ -1,0 +1,22 @@
+let env = "DEV";
+//let env = "PROD";
+let API_URL = "http://localhost:3001/";  // For Local Env, Don't Modify
+let API_CONTRIB_URL = "http://localhost:3001/";  // For Local Env, Don't Modify
+if (env === 'PROD') {
+    API_URL   = "https://3gl57cxtbj.execute-api.us-east-1.amazonaws.com/cfsb_ppp1/";  // For Production Env via aws GW
+    API_CONTRIB_URL = "https://8ty30aj3ki.execute-api.us-east-1.amazonaws.com/cfsb_contrib/";
+}
+
+window.constVar = {
+    env       : env,
+    API_KEY   : "1171aab5665fc0afdb0a9e580e6fba236e9ed45e6944d63dc1aaa67e3e3f8bf9",
+    Login_Url : API_URL+"brokersession",
+    Internal_Login_Url : API_URL+"internalsession",
+    Loans_Url    : API_URL+"getPPP",
+    SetLoans_Url : API_URL+"setloanstatus",
+    Loan_Upload_Doc_Url  : API_CONTRIB_URL+"contrib",
+    LoanDetails_Url      : API_URL+"getLoanDetails?filter=",  
+    Usr_Permission_Url   : API_URL+"ppploans/permission?filter=",
+    LoanDetails_Url_DEV      : API_URL+"getLoanDetails",  // For Local Env, Don't Modify
+    Usr_Permission_Url_DEV   : API_URL+"wireAppPermission",  // For Local Env, Don't Modify
+}

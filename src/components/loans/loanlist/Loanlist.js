@@ -1,16 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Redirect, useParams, useHistory, useLocation } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { CSVLink } from "react-csv";
-//import Listview from "./../../Listview/Listview";
 import LoanListView from "./LoanListView.js";
 import * as Icon from "react-feather";
 import "./Loanlist.css";
 import axios from 'axios';
 import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
-import ReactTooltip from 'react-tooltip';
-import {API_KEY, Loans_Url, env, SetLoans_Url, Loan_Upload_Doc_Url} from './../../../const';
 import {buildSortByUrl, buildPageUrl, buildFilterUrl, buildExternalLoanExportDetailList} from './../../Functions/functions.js';
 import SelectColumnFilter from './../../Filter/SelectColumnFilter.js';
 import {SBAOptions, BrokerOptions, StatusOptions, applicationStatusOptions} from './../../../commonVar.js';
@@ -18,6 +15,8 @@ import ExcelExport from './../../ExcelExport/ExcelExport';
 import { MentorAssignedOptions, ReviewerAssignedOptions, ContribDocTypeOptions} from './../../../commonVar.js';
 import LoanFileUpload from './LoanFileUpload';
 import Modal from "react-bootstrap/Modal";
+//import {API_KEY, Loans_Url, env, SetLoans_Url, Loan_Upload_Doc_Url} from './../../../const';
+const {API_KEY, Loans_Url, env, SetLoans_Url, Loan_Upload_Doc_Url} = window.constVar;
 
 function Loanlist(props) {
   let history = useHistory();

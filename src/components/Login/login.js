@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
-//import * as Icon from "react-feather";
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import {Login_Url, Internal_Login_Url, API_KEY, Usr_Permission_Url, env} from './../../const';
-
 import "./login.css";
+//import {Login_Url, Internal_Login_Url, API_KEY, Usr_Permission_Url, env} from './../../const';
+const {Login_Url, Internal_Login_Url,API_KEY, Usr_Permission_Url, env} = window.constVar;
+
 function Login(props) {
   const [isInternalUser, setIsInternalUser] = useState(false);
   const [email, setEmail] = useState("");
@@ -38,7 +38,6 @@ function Login(props) {
         url = Internal_Login_Url;
         uid = username;
       }
-
       res = await axios.post(url, userCred);
       console.log(res.data);
       if(res.data.error){

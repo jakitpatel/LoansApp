@@ -1,7 +1,8 @@
 import React from "react";
 import { useSelector } from 'react-redux';
 import preval from 'preval.macro';
-import {API_URL} from './../../const.js';
+//import {API_URL} from './../../const.js';
+const {API_URL} = window.constVar;
 
 function DashboardMain(props) {
     const { name, isInternalUser, teamInt } = useSelector(state => {
