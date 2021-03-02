@@ -3,8 +3,8 @@ import { Redirect } from "react-router-dom";
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import "./login.css";
-//import {Login_Url, Internal_Login_Url, API_KEY, Usr_Permission_Url, env} from './../../const';
-const {Login_Url, Internal_Login_Url,API_KEY, Usr_Permission_Url, env} = window.constVar;
+import {Login_Url, Internal_Login_Url, API_KEY, Usr_Permission_Url, env} from './../../const';
+//const {Login_Url, Internal_Login_Url,API_KEY, Usr_Permission_Url, env} = window.constVar;
 
 function Login(props) {
   const [isInternalUser, setIsInternalUser] = useState(false);
