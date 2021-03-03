@@ -331,6 +331,21 @@ function Table({
   }, [ teamInt, isRefresh, setIsRefresh, onFetchDataDebounced, pageIndex, pageSize, filters, setFiltersarr, sortBy, location.key]);
   
   React.useEffect(() => {
+    //document.getElementsByClassName('rt-tbody')[1].scrollTo(0,0);
+    /*if(document.getElementsByClassName('rt-tbody')[1]){
+      console.log("PageIndex Changed. Scroll to Top");
+      alert("Change scroll to top");
+      document.getElementsByClassName('rt-tbody')[1].scrollTo(0,0);
+    }*/
+    if(document.getElementsByClassName('rt-tbody')[0]){
+      console.log("PageIndex Changed. Scroll to Top");
+      //alert("Change scroll to top");
+      document.getElementsByClassName('rt-tbody')[0].scrollTop = 0;
+      document.getElementsByClassName('rt-tbody')[0].scrollTo(0,0);
+    }
+  }, [ pageIndex]);
+
+  React.useEffect(() => {
     //setFiltersarr(filters);
     if(!pageState.backToList){
       /*onFetchDataDebounced({ pageIndex:0, pageSize, filters, sortBy });*/
@@ -525,7 +540,7 @@ function Table({
           </tr>
         ))}
       </thead>
-      <tbody {...getTableBodyProps()}>
+      <tbody className="rt-tbody"  {...getTableBodyProps()}>
         {page.map((row, i) => {
           prepareRow(row)
           return (
