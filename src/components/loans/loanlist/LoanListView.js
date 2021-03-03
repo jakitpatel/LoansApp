@@ -285,7 +285,26 @@ function Table({
             { value: 'Not Approved by SBA', label: 'Not Approved by SBA' }
           ]
         }]);
-      } else if(teamInt==="teama" || teamInt==="teamc") {
+      } else if(teamInt==="teama"){
+        setAllFilters([{
+          id: "SBAStatus", 
+          value: [
+            { value: 'is NULL', label: 'NULL' },
+            { value: 'Further Research Required', label: 'Further Research Required' }
+          ]
+        },{
+          id: "statusIndication", 
+          value: [
+            { value: 'Not Assigned',     label: 'Not Assigned' },
+            { value: 'In Progress', label: 'In Progress' },
+            { value: 'P/R docs Needed', label: 'P/R docs Needed' },
+            { value: 'P/R docs in file OFAC SAM OK – move to approval', label: 'P/R docs in file OFAC SAM OK – move to approval' },
+            { value: 'Prior To Funding docs in file',  label: 'Prior To Funding docs in file' },
+            { value: 'Prior to Funding docs Needed', label: 'Prior to Funding docs Needed' },
+            { value: 'Loans with SBA Submission Errors',    label: 'Loans with SBA Submission Errors' }
+          ]
+        }]);
+      } else if(teamInt==="teamc") {
         //alert(teamInt);
         //alert("Reset All Filters");
         setAllFilters([]);
