@@ -421,9 +421,9 @@ function Loanlist(props) {
         //Filter: SelectColumnFilter,
         //filter: 'includes'
       },{
-        field: "businessName",
+        field: "PrimaryBorrower",
         Header: "Business Name",
-        accessor: "businessName"/*,
+        accessor: "PrimaryBorrower"/*,
         Cell: props => {
           let loanObj = props.row.original;
           if(props.value===null) {
@@ -480,11 +480,11 @@ function Loanlist(props) {
           // '$100.00'
         }
       },
-      {
+      /*{
         field: "MentorAssigned",
         Header: "Bank Contact",
         accessor: "MentorAssigned"
-      },
+      },*/
       {
         field: "LastModifyDate",
         Header: "Last Modified",
@@ -727,10 +727,9 @@ function Loanlist(props) {
           }
           return {
             'ApplicationCreatedDate' : data.ApplicationCreatedDate,
-            'BusinessName' : data.businessName,
+            'BusinessName' : data.PrimaryBorrower,
             'LoanApplicationNumber': data.ALDLoanApplicationNumberOnly,
             'TotalRequest' : data.R2_LoanAmount,
-            'MentorAssigned' : data.MentorAssigned,
             'LastModifyDate' : data.LastModifyDate,
             'SBALoanNumber': data.SBALoanNumber,
             'SBAApprovalDate': data.SBAApprovalDate,
