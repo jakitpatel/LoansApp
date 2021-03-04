@@ -31,6 +31,7 @@ const BrokerOptions = [
 
 const StatusOptions = [
     { value: '',     label: 'All' },
+    { value: 'is NULL', label: 'NULL' },
     { value: 'Not Assigned',     label: 'Not Assigned' },
     { value: 'In Progress', label: 'In Progress' },
     { value: 'P/R docs Needed', label: 'P/R docs Needed' },

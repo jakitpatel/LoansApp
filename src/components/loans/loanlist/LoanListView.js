@@ -289,8 +289,8 @@ function Table({
         setAllFilters([{
           id: "SBAStatus", 
           value: [
-            { value: 'is NULL', label: 'NULL' },
-            { value: 'Further Research Required', label: 'Further Research Required' }
+            { value: 'is NULL', label: 'NULL' }/*,
+            { value: 'Further Research Required', label: 'Further Research Required' }*/
           ]
         },{
           id: "statusIndication", 
