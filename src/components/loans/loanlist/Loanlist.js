@@ -191,7 +191,9 @@ function Loanlist(props) {
         {
           field: "StatusAComments",
           Header: "Loan Review Status Comments",
-          accessor: "StatusAComments"
+          accessor: "StatusAComments",
+          editable:true,
+          columnType:'text'
         },
         {
           field: "R2_ApplicationStatus",
@@ -207,7 +209,10 @@ function Loanlist(props) {
           accessor: "statusIndication",
           Filter: SelectColumnFilter,
           filter: 'includes',
-          options:StatusOptions
+          options:StatusOptions,
+          editable:true,
+          columnType:'list',
+          columnOptions:StatusOptions
         },
         {
           field: "SBAStatus",
@@ -297,7 +302,9 @@ function Loanlist(props) {
         {
           field: "StatusAComments",
           Header: "Loan Review Status Comments",
-          accessor: "StatusAComments"
+          accessor: "StatusAComments",
+          editable:true,
+          columnType:'text'
         },
         {
           field: "R2_ApplicationStatus",
@@ -313,7 +320,10 @@ function Loanlist(props) {
           accessor: "statusIndication",
           Filter: SelectColumnFilter,
           filter: 'includes',
-          options:StatusOptions
+          options:StatusOptions,
+          editable:true,
+          columnType:'list',
+          columnOptions:StatusOptions
         },
         {
           field: "teambmember",
@@ -1080,79 +1090,82 @@ function Loanlist(props) {
       <div className="container" style={{marginLeft:"0px", width:"100%", maxWidth:"100%"}}>
         <div className="row">
           <div className="col-sm-12 col-md-offset-3">
-            <h3 className="title-center">{headerTitle}</h3>
-            <div className="btnCls">
-            <React.Fragment>
-                {!isInternalUser &&
-                <button type="button" style={{ float: "right", marginLeft:"10px" }} onClick={(e)=> {onAllLoansExportBtnClick(e,"allFields")}} className={`btn btn-primary btn-sm`}>
-                All Loans Export
-                </button>
-                }
-                <button type="button" style={{ float: "right" }} onClick={(e)=> {onAllLoansExportBtnClick(e,"selectedFields")}} className={`btn btn-primary btn-sm`}>
-                Export All Loans
-                </button>
-                
-                {downloadAllLoans &&
-                  <ExcelExport hideEl={true} excelFile="AllloanList" sheetName="AllloanList" data={allLoansData}></ExcelExport>
-                }
-                {/*
-                <button type="button" style={{ float: "right", marginRight:"5px" }} onClick={(e)=> {onLoanListExport(e,"ListDetails")}} className={`btn btn-primary btn-sm`}>
-                  Export List Details
-                </button>
-                */}
-                <ExcelExport hideEl={false} excelFile="loanListDetails" sheetName="loanListDetails" data={loanDetailsData}>
-                  <button disabled={loanDetailsData.length === 0 ? true : false} type="button" style={{ float: "right", marginRight:"5px" }} className={`btn btn-primary btn-sm`}>
-                    Export List Details
-                  </button>
-                </ExcelExport>
-                <ExcelExport hideEl={false} excelFile="LoanList" sheetName="LoanList" data={loanListData}>
-                  <button disabled={loanListData.length === 0 ? true : false} type="button" style={{ float: "right", marginRight:"5px" }} className={`btn btn-primary btn-sm`}>
-                    Export List
-                  </button>
-                </ExcelExport>
-                {/*
-                <button type="button" style={{ float: "right", marginRight:"5px" }} onClick={(e)=> {onLoanListExport(e,"List")}} className={`btn btn-primary btn-sm`}>
-                  Export List
-                </button>
-                */}
-                <button type="button" style={{ float: "right", marginRight:"5px" }} onClick={(e)=> {setIsRefresh(!isRefresh);}} className={`btn btn-primary btn-sm`}>
-                  <Icon.RefreshCw />
-                </button>
-                {/*
-                <CSVLink
-                      data={loanListData}
-                      headers={headerName}
-                      uFEFF={false}
-                      ref={listExportLink}
-                      filename={loanFileName}
-                      className={`btn btn-primary btn-sm invisible`}
-                      style={{ float: "right" }}
-                      target="_blank"
-                    >Export</CSVLink>
-                <CSVLink
-                      data={loanDetailsData}
-                      headers={headerName}
-                      uFEFF={false}
-                      ref={listDetailsExportLink}
-                      filename={loanDetailsFileName}
-                      className={`btn btn-primary btn-sm invisible`}
-                      style={{ float: "right" }}
-                      target="_blank"
-                    >Export</CSVLink>
-                */}
-                <CSVLink
-                      data={allLoansData}
-                      //headers={headerName}
-                      uFEFF={false}
-                      ref={allLoansListExportLink}
-                      filename={allLoanFileName}
-                      className={`btn btn-primary btn-sm invisible`}
-                      style={{ float: "right" }}
-                      target="_blank"
-                    ></CSVLink>
-              </React.Fragment>
-              <div style={{ clear:"both"}}></div>
-            </div>
+            <div>
+                <h3 style={{float:"left"}} className="title-center">{headerTitle}</h3>
+                <div style={{float:"right"}} className="btnCls">
+                <React.Fragment>
+                    {!isInternalUser &&
+                    <button type="button" style={{ float: "right", marginLeft:"10px" }} onClick={(e)=> {onAllLoansExportBtnClick(e,"allFields")}} className={`btn btn-primary btn-sm`}>
+                    All Loans Export
+                    </button>
+                    }
+                    <button type="button" style={{ float: "right" }} onClick={(e)=> {onAllLoansExportBtnClick(e,"selectedFields")}} className={`btn btn-primary btn-sm`}>
+                    Export All Loans
+                    </button>
+                    
+                    {downloadAllLoans &&
+                      <ExcelExport hideEl={true} excelFile="AllloanList" sheetName="AllloanList" data={allLoansData}></ExcelExport>
+                    }
+                    {/*
+                    <button type="button" style={{ float: "right", marginRight:"5px" }} onClick={(e)=> {onLoanListExport(e,"ListDetails")}} className={`btn btn-primary btn-sm`}>
+                      Export List Details
+                    </button>
+                    */}
+                    <ExcelExport hideEl={false} excelFile="loanListDetails" sheetName="loanListDetails" data={loanDetailsData}>
+                      <button disabled={loanDetailsData.length === 0 ? true : false} type="button" style={{ float: "right", marginRight:"5px" }} className={`btn btn-primary btn-sm`}>
+                        Export List Details
+                      </button>
+                    </ExcelExport>
+                    <ExcelExport hideEl={false} excelFile="LoanList" sheetName="LoanList" data={loanListData}>
+                      <button disabled={loanListData.length === 0 ? true : false} type="button" style={{ float: "right", marginRight:"5px" }} className={`btn btn-primary btn-sm`}>
+                        Export List
+                      </button>
+                    </ExcelExport>
+                    {/*
+                    <button type="button" style={{ float: "right", marginRight:"5px" }} onClick={(e)=> {onLoanListExport(e,"List")}} className={`btn btn-primary btn-sm`}>
+                      Export List
+                    </button>
+                    */}
+                    <button type="button" style={{ float: "right", marginRight:"5px" }} onClick={(e)=> {setIsRefresh(!isRefresh);}} className={`btn btn-primary btn-sm`}>
+                      <Icon.RefreshCw />
+                    </button>
+                    {/*
+                    <CSVLink
+                          data={loanListData}
+                          headers={headerName}
+                          uFEFF={false}
+                          ref={listExportLink}
+                          filename={loanFileName}
+                          className={`btn btn-primary btn-sm invisible`}
+                          style={{ float: "right" }}
+                          target="_blank"
+                        >Export</CSVLink>
+                    <CSVLink
+                          data={loanDetailsData}
+                          headers={headerName}
+                          uFEFF={false}
+                          ref={listDetailsExportLink}
+                          filename={loanDetailsFileName}
+                          className={`btn btn-primary btn-sm invisible`}
+                          style={{ float: "right" }}
+                          target="_blank"
+                        >Export</CSVLink>
+                    */}
+                    <CSVLink
+                          data={allLoansData}
+                          //headers={headerName}
+                          uFEFF={false}
+                          ref={allLoansListExportLink}
+                          filename={allLoanFileName}
+                          className={`btn btn-primary btn-sm invisible`}
+                          style={{ float: "right" }}
+                          target="_blank"
+                        ></CSVLink>
+                  </React.Fragment>
+                  <div style={{ clear:"both"}}></div>
+                </div>
+                <div style={{ clear:"both"}}></div>
+              </div>
             {disCmp}
           </div>
         </div>
