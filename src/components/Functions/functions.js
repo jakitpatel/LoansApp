@@ -27,12 +27,15 @@ const buildSortByUrl = (sortArr) => {
           return ("'"+o.value+"'");
         }
       }).filter(Boolean).join(",");
-      if(selOptionSt.length > 0){
+      if(selOptionSt.length > 0 && isNullFlag===false){
         filterUrl += " and ("+filterClm+" "+multifilterOpr+" ("+selOptionSt+"))";
       }
-      if(isNullFlag===true && selOptionSt.length > 0){
-        filterUrl += " or ("+filterClm+" is null)";
+      ///
+      if(selOptionSt.length > 0 && isNullFlag===true){
+        filterUrl += " and (("+filterClm+" "+multifilterOpr+" ("+selOptionSt+"))";
+        filterUrl += " or ("+filterClm+" is null))";
       }
+      ////
       if(isNullFlag===true && selOptionSt.length === 0){
         filterUrl += " and ("+filterClm+" is null)";
       }
