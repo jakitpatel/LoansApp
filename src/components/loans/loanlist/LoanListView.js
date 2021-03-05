@@ -79,7 +79,7 @@ const EditableCell = ({
   // We'll only update the external data when the input is blurred
   const onBlur = () => {
     console.log("On Blur");
-    //updateMyData(index, id, value)
+    updateMyData(index, id, value)
   }
 
   // If the initialValue is changed external, sync it up with our state
@@ -119,7 +119,8 @@ const EditableCell = ({
         //console.log("keyCode : "+e.keyCode);
         if (e.keyCode === 13 || e.which===13 || e.charCode===13) {
           //onBlur();
-          console.log("On keyCode");
+          //console.log("On keyCode");
+          onBlur();
           e.target.blur(); 
         }
       }} />;
