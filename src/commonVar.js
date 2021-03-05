@@ -154,6 +154,22 @@ const ContribDocTypeOptions = [
     { value: 'Back of ID’s',     label: 'Back of ID’s' }
 ];
 
+const BroketTeamOptions = [
+    { value: 'City Boys',     label: 'City Boys' },
+    { value: 'Nacho', label: 'Nacho' },
+    { value: 'Slim Jim', label: 'Slim Jim' },
+    { value: 'Motor City', label: 'Motor City' },
+    { value: 'TMAC',  label: 'TMAC' },
+    { value: 'Dandrew', label: 'Dandrew' },
+    { value: 'Holyland', label: 'Holyland' },
+    { value: 'NY ', label: 'NY ' },
+    { value: 'LACM', label: 'LACM' },
+    { value: 'LABD', label: 'LABD' },
+    { value: 'LAJS ', label: 'LAJS' },
+    { value: 'LAKK', label: 'LAKK' },
+    { value: 'LAAA', label: 'LAAA' }
+];
+
 export { SBAOptions, BrokerOptions, StatusOptions, applicationStatusOptions, 
     brokerOverrideOptions, MentorAssignedOptions, ReviewerAssignedOptions,TeamBAssignedOptions,
-    ContribDocTypeOptions};
+    ContribDocTypeOptions, BroketTeamOptions};

@@ -10,7 +10,7 @@ import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
 import {buildSortByUrl, buildPageUrl, buildFilterUrl, buildExternalLoanExportDetailList} from './../../Functions/functions.js';
 import SelectColumnFilter from './../../Filter/SelectColumnFilter.js';
-import {SBAOptions, BrokerOptions, StatusOptions, applicationStatusOptions} from './../../../commonVar.js';
+import {SBAOptions, BrokerOptions, StatusOptions, applicationStatusOptions, BroketTeamOptions} from './../../../commonVar.js';
 import ExcelExport from './../../ExcelExport/ExcelExport';
 import { MentorAssignedOptions, ReviewerAssignedOptions, ContribDocTypeOptions} from './../../../commonVar.js';
 import LoanFileUpload from './LoanFileUpload';
@@ -69,6 +69,11 @@ function Loanlist(props) {
     console.log("onLoanContribBtnClick");
     setSelLoanObj(obj);
     setIsOpen(true);
+  }
+ 
+  let brokerTeamEditable = false;
+  if(!isInternalUser && uid==="akay@pmfus.com"){
+    brokerTeamEditable = true;
   }
 
   let contribBtn = {
@@ -454,6 +459,14 @@ function Loanlist(props) {
         options:BrokerOptions
       },
       {
+        field: "brokerTeam",
+        Header: "brokerTeam",
+        accessor: "brokerTeam",
+        editable:brokerTeamEditable,
+        columnType:'list',
+        columnOptions:BroketTeamOptions
+      },
+      {
         field: "brokerRep",
         Header: "brokerRep",
         accessor: "brokerRep",
@@ -464,13 +477,6 @@ function Loanlist(props) {
         field: "brokerComments",
         Header: "brokerComments",
         accessor: "brokerComments",
-        editable:true,
-        columnType:'text'
-      },
-      {
-        field: "brokerTeam",
-        Header: "brokerTeam",
-        accessor: "brokerTeam",
         editable:true,
         columnType:'text'
       },
