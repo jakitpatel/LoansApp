@@ -70,11 +70,6 @@ function Loanlist(props) {
     setSelLoanObj(obj);
     setIsOpen(true);
   }
- 
-  let brokerTeamEditable = false;
-  if(!isInternalUser && uid==="akay@pmfus.com"){
-    brokerTeamEditable = true;
-  }
 
   let contribBtn = {
     Header: "Contrib",
@@ -457,16 +452,21 @@ function Loanlist(props) {
         Filter: SelectColumnFilter,
         filter: 'includes',
         options:BrokerOptions
-      },
-      {
-        field: "brokerTeam",
-        Header: "brokerTeam",
-        accessor: "brokerTeam",
-        editable:brokerTeamEditable,
-        columnType:'list',
-        columnOptions:BroketTeamOptions
-      },
-      {
+      });
+
+      //let brokerTeamEditable = false;
+      if(!isInternalUser && uid==="akay@pmfus.com"){
+        //brokerTeamEditable = true;
+        columnDefs.push({
+            field: "brokerTeam",
+            Header: "brokerTeam",
+            accessor: "brokerTeam",
+            editable:true,
+            columnType:'list',
+            columnOptions:BroketTeamOptions
+        });
+      }
+      columnDefs.push({
         field: "brokerRep",
         Header: "brokerRep",
         accessor: "brokerRep",
