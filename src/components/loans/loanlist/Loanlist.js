@@ -193,7 +193,7 @@ function Loanlist(props) {
           Header: "Loan Review Status Comments",
           accessor: "StatusAComments",
           editable:true,
-          columnType:'text'
+          columnType:'textarea'
         },
         {
           field: "R2_ApplicationStatus",

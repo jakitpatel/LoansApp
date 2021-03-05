@@ -10,3 +10,9 @@
 .sm-vert-form .form-group {
     margin-bottom: 0.5rem;
 }
+table td textarea.editor-field {
+    font-size: 1rem;
+    padding: 0;
+    margin: 0;
+    border: 0;
+}

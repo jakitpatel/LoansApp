@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import './LoanListView.css';
 import DefaultColumnFilter from './../../Filter/DefaultColumnFilter';
+import TextareaAutosize from 'react-textarea-autosize';
 
 const Styles = styled.div`
   padding: 1rem;
@@ -124,6 +125,22 @@ const EditableCell = ({
           e.target.blur(); 
         }
       }} />;
+  } else if(editable && columnType==="textarea"){
+    return retObj = <TextareaAutosize
+          className="editor-field"
+          minRows={1}
+          value={value}
+          onChange={onChangeInput}
+          onKeyPress={e => {
+            //console.log("keyCode : "+e.keyCode);
+            if (e.keyCode === 13 || e.which===13 || e.charCode===13) {
+              //onBlur();
+              //console.log("On keyCode");
+              onBlur();
+              e.target.blur(); 
+            }
+          }}
+      />
   } else {
     return retObj = <div>{value}</div>;
     
