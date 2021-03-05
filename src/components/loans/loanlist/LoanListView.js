@@ -71,13 +71,15 @@ const EditableCell = ({
   }
 
   const onChangeInput = e => {
+    console.log("On Change Input");
     setValue(e.target.value)
     //updateMyData(index, id, e.target.value)
   }
 
   // We'll only update the external data when the input is blurred
   const onBlur = () => {
-    updateMyData(index, id, value)
+    console.log("On Blur");
+    //updateMyData(index, id, value)
   }
 
   // If the initialValue is changed external, sync it up with our state
@@ -94,7 +96,7 @@ const EditableCell = ({
       //name={id}
       value={value}
       onChange={onChange}
-      onBlur={onBlur}
+      //onBlur={onBlur}
     >
         <option value=""></option>
         {columnOptions.map((option, i) => {
@@ -112,11 +114,12 @@ const EditableCell = ({
     return retObj = <input className="editor-field" 
       value={value} 
       onChange={onChangeInput} 
-      onBlur={onBlur} 
+      //onBlur={onBlur} 
       onKeyPress={e => {
         //console.log("keyCode : "+e.keyCode);
         if (e.keyCode === 13 || e.which===13 || e.charCode===13) {
           //onBlur();
+          console.log("On keyCode");
           e.target.blur(); 
         }
       }} />;
