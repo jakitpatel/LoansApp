@@ -468,6 +468,13 @@ function Loanlist(props) {
         columnType:'text'
       },
       {
+        field: "brokerTeam",
+        Header: "brokerTeam",
+        accessor: "brokerTeam",
+        editable:true,
+        columnType:'text'
+      },
+      {
         name: "ALDLoanApplicationNumberOnly",
         field: "ALDLoanApplicationNumberOnly",
         Header: "Loan Application #",
