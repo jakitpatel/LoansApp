@@ -192,7 +192,7 @@ function Loanlist(props) {
           field: "StatusAComments",
           Header: "Loan Review Status Comments",
           accessor: "StatusAComments",
-          editable:true,
+          //editable:true,
           columnType:'textarea'
         },
         {
@@ -690,14 +690,13 @@ function Loanlist(props) {
         //url = Wires_Url;
       //}
       let res = await axios.get(url, options);
-      /*
+      //console.log(res.data);
       console.log(res.data.resource);
       let loanArray = res.data.resource;
       //console.log(wireArray);
       //setData(wireArray);
       //let loanListExpArray = [];
       //loanListExpArray.push({});
-      
       let newArray = loanArray.map((data) => {
         if(isInternalUser){
           if(teamInt==="teama"){
@@ -772,15 +771,7 @@ function Loanlist(props) {
         setLoanDetailsData(newDetailArray);
       }
       let filterName = "filters";
-      /*if(isInternalUser){
-        if(teamInt==="teama"){
-          filterName = "filtersA";
-        } else if(teamInt==="teamb"){
-          filterName = "filtersB";
-        } else if(teamInt==="teamc"){
-          filterName = "filtersC";
-        }
-      }*/
+      
       let totalCnt = res.data.meta.count;
 
       dispatch({
@@ -791,8 +782,8 @@ function Loanlist(props) {
           totalCount:totalCnt,
           sortBy : sortBy,
           //filters : filters,
-          //[filterName] : filters,
-          loans:res.data.resource //loanArray
+          [filterName] : filters,
+          loans:loanArray
         }
       });
       
@@ -1120,22 +1111,21 @@ function Loanlist(props) {
                     {downloadAllLoans &&
                       <ExcelExport hideEl={true} excelFile="AllloanList" sheetName="AllloanList" data={allLoansData}></ExcelExport>
                     }
-                   
+                    {/*
+                    <button type="button" style={{ float: "right", marginRight:"5px" }} onClick={(e)=> {onLoanListExport(e,"ListDetails")}} className={`btn btn-primary btn-sm`}>
+                      Export List Details
+                    </button>
+                    */}
                     <ExcelExport hideEl={false} excelFile="loanListDetails" sheetName="loanListDetails" data={loanDetailsData}>
-                      <button disabled={loans.length === 0 ? true : false} type="button" style={{ float: "right", marginRight:"5px" }} className={`btn btn-primary btn-sm`}>
+                      <button disabled={loanDetailsData.length === 0 ? true : false} type="button" style={{ float: "right", marginRight:"5px" }} className={`btn btn-primary btn-sm`}>
                         Export List Details
                       </button>
                     </ExcelExport>
                     <ExcelExport hideEl={false} excelFile="LoanList" sheetName="LoanList" data={loanListData}>
-                      <button disabled={loans.length === 0 ? true : false} type="button" style={{ float: "right", marginRight:"5px" }} className={`btn btn-primary btn-sm`}>
+                      <button disabled={loanListData.length === 0 ? true : false} type="button" style={{ float: "right", marginRight:"5px" }} className={`btn btn-primary btn-sm`}>
                         Export List
                       </button>
                     </ExcelExport>
-                    {/*
-                    {downloadLoanListDetail &&
-                      <ExcelExport hideEl={true} excelFile="AllloanList" sheetName="AllloanList" data={allLoansData}></ExcelExport>
-                    }
-                  */}
                     {/*
                     <button type="button" style={{ float: "right", marginRight:"5px" }} onClick={(e)=> {onLoanListExport(e,"List")}} className={`btn btn-primary btn-sm`}>
                       Export List
@@ -1144,7 +1134,6 @@ function Loanlist(props) {
                     <button type="button" style={{ float: "right", marginRight:"5px" }} onClick={(e)=> {setIsRefresh(!isRefresh);}} className={`btn btn-primary btn-sm`}>
                       <Icon.RefreshCw />
                     </button>
-                    
                     <CSVLink
                           data={allLoansData}
                           //headers={headerName}

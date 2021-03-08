@@ -6,8 +6,8 @@ function SelectColumnFilter({
   column: { filterValue, setFilter, preFilteredRows, id, options },
 }) {
   // Calculate the options for filtering
-  console.log("Getting Option");
-  console.log(filterValue);
+  //console.log("Getting Option");
+  //console.log(filterValue);
   
   const styles = {
     menu: (css) => ({
@@ -28,7 +28,7 @@ function SelectColumnFilter({
       className="basic-multi-select"
       classNamePrefix="select"
       onChange={selectedOption => {
-        console.log(selectedOption);
+        //console.log(selectedOption);
         let allFound = false;
         let allArr = null;
         for (var j = 0; j < selectedOption.length; j++){
@@ -41,7 +41,7 @@ function SelectColumnFilter({
         if(allFound === true){
           allValues = allArr;
         }
-        console.log(allValues);
+        //console.log(allValues);
         //setFilter(allValues && allValues .length ? allValues : undefined);
         setFilter(allValues);
       }}
