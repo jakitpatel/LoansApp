@@ -167,7 +167,9 @@ const BroketTeamOptions = [
     { value: 'LABD', label: 'LABD' },
     { value: 'LAJS ', label: 'LAJS' },
     { value: 'LAKK', label: 'LAKK' },
-    { value: 'LAAA', label: 'LAAA' }
+    { value: 'LAAA', label: 'LAAA' },
+    { value: 'Unassigned', label: 'Unassigned' },
+    { value: 'LA', label: 'LA' }
 ];
 
 export { SBAOptions, BrokerOptions, StatusOptions, applicationStatusOptions, 
