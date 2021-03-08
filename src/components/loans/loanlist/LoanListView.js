@@ -88,6 +88,7 @@ const EditableCell = ({
     setValue(initialValue)
   }, [initialValue])
 
+  
   let retObj = null;
   if(editable && columnType==="list"){
     //retObj = <input className="editor-field" value={value} onChange={onChange} onBlur={onBlur} />;
