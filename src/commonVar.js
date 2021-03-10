@@ -25,7 +25,8 @@ const BrokerOptions = [
     { value: 'Lendie Capital',    label: 'Lendie Capital' },
     { value: 'Three Brothers',    label: 'Three Brothers' },
     { value: 'Funding Forward',    label: 'Funding Forward' },
-    { value: 'Premium Merchant Funding',    label: 'Premium Merchant Funding' }
+    { value: 'Premium Merchant Funding',    label: 'Premium Merchant Funding' },
+    { value: 'Park Place Financial Group', label: 'Park Place Financial Group' },
 ];
 
 

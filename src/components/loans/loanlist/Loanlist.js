@@ -847,7 +847,7 @@ function Loanlist(props) {
     url += "&limit="+tmpPageSize;
     url += "&offset=0";
     while(parseInt(totalRetRecCount) < parseInt(totalRecCount)){
-      console.log("At Start");
+      //console.log("At Start");
       console.log("totalRetRecCount : "+totalRetRecCount);
       console.log("totalRecCount : "+totalRecCount);
       let res = await axios.get(url, options);
@@ -870,12 +870,8 @@ function Loanlist(props) {
         console.log("Continue with one more request offset: "+offset);
       } else {
         console.log("Done Break out of loop");
+        //break;
       }
-      /*
-      if(offset>6000){
-        break;
-      }
-      */
     }
     if(allloandata==null){
       allloandata = [];
