@@ -871,9 +871,11 @@ function Loanlist(props) {
       } else {
         console.log("Done Break out of loop");
       }
+      /*
       if(offset>6000){
         break;
       }
+      */
     }
     if(allloandata==null){
       allloandata = [];
