@@ -95,6 +95,12 @@ function LoanDetails(props) {
         if(statusVal===""){
           statusVal = null;
         }
+        if(loanDetailsObj.StatusCComments !== "" && loanDetailsObj.StatusCComments !== null){
+          let resSt = loanDetailsObj.StatusCComments.toLowerCase();
+          if(resSt === "funded"){
+            statusVal = "Funded";
+          }
+        }
         tmpLoanObj = {
           //ALDLoanApplicationNumberOnly : loanDetailsObj.ALDLoanApplicationNumberOnly,
           ReviewerAssigned : loanDetailsObj.ReviewerAssigned,
