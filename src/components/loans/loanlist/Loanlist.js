@@ -846,21 +846,31 @@ function Loanlist(props) {
     let allloandata = [];
     url += "&limit="+tmpPageSize;
     url += "&offset=0";
-    while(totalRetRecCount < totalRecCount){
+    while(parseInt(totalRetRecCount) < parseInt(totalRecCount)){
+      console.log("At Start");
+      console.log("totalRetRecCount : "+totalRetRecCount);
+      console.log("totalRecCount : "+totalRecCount);
       let res = await axios.get(url, options);
       //console.log(res.data.resource);
       let loanArrData = res.data.resource;
       totalRetRecCount +=  loanArrData.length;
       //allloandata = loanArrData; ///merge array
       allloandata = allloandata.concat(loanArrData);
-      totalRecCount = res.data.meta.count;
+      totalRecCount = parseInt(res.data.meta.count);
       tmpPageIndex++;
 
       let offset = tmpPageSize * tmpPageIndex;
       url = url.substr(0, url.lastIndexOf("=") + 1);
       url += offset;
+      console.log("At End While");
       console.log("totalRetRecCount : "+totalRetRecCount);
       console.log("totalRecCount : "+totalRecCount);
+      console.log("totalRetRecCount < totalRecCount");
+      if(totalRetRecCount < totalRecCount){
+        console.log("Continue with one more request offset: "+offset);
+      } else {
+        console.log("Done Break out of loop");
+      }
       if(offset>6000){
         break;
       }
