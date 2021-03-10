@@ -54,7 +54,7 @@ const EditableCell = ({
   column: { id, editable, columnType,columnOptions },
   updateMyData, // This is a custom function that we supplied to our table instance
 }) => {
-  if(editable && columnType==="list"){
+  if(editable && (columnType==="list" || columnType==="textarea")){
     if(initialValue===null){
       initialValue = "";
     }
@@ -82,6 +82,17 @@ const EditableCell = ({
     console.log("On Blur");
     updateMyData(index, id, value)
   }
+  /*
+  const onChangeInputTextArea = e => {
+    console.log("On Change Input");
+    let val = e.target.value;
+    if(val===null){
+      val = "";
+    }
+    setValue(e.target.value)
+    //updateMyData(index, id, e.target.value)
+  }
+  */
 
   // If the initialValue is changed external, sync it up with our state
   React.useEffect(() => {
@@ -334,7 +345,7 @@ function Table({
       }
     }
   }, [teamInt]);
-  
+
 
   // Debounce our onFetchData call for 100ms
   const onFetchDataDebounced = useAsyncDebounce(fetchData, 100);
