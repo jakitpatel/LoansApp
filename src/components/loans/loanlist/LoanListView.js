@@ -160,8 +160,12 @@ const EditableCell = ({
   //return retObj;
 }
 
+// Create a default prop getter
+const defaultPropGetter = () => ({})
+
 // Be sure to pass our updateMyData and the skipPageReset option
 function Table({
+  getRowProps = defaultPropGetter,
   getTbdProps, 
   columns, 
   data, 
@@ -573,7 +577,7 @@ function Table({
         {page.map((row, i) => {
           prepareRow(row)
           return (
-            <tr {...row.getRowProps()}>
+            <tr {...row.getRowProps(getRowProps(row))}>
               {row.cells.map(cell => {
                 return <td {...cell.getCellProps({
                   className: cell.column.className
@@ -663,6 +667,12 @@ function Table({
         teamChangeFlag={teamChangeFlag}
         isInternalUser={isInternalUser}
         totalCount={totalCount}
+        getRowProps={row => ({
+          style: {
+            background: row.original.possibleDup === true ? 'pink' : 'white',
+            //background: row.index % 2 === 0 ? 'rgba(0,0,0,.1)' : 'white',
+          },
+        })}
         />
     </Styles>
   )
