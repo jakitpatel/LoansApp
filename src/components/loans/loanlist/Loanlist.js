@@ -859,6 +859,11 @@ function Loanlist(props) {
       let offset = tmpPageSize * tmpPageIndex;
       url = url.substr(0, url.lastIndexOf("=") + 1);
       url += offset;
+      console.log("totalRetRecCount : "+totalRetRecCount);
+      console.log("totalRecCount : "+totalRecCount);
+      if(offset>6000){
+        break;
+      }
     }
     if(allloandata==null){
       allloandata = [];
