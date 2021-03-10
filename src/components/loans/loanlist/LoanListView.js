@@ -526,7 +526,7 @@ function Table({
             setPageSize(Number(e.target.value))
           }}
         >
-          {[10, 20, 30, 40, 50,200,1000,2000,3000].map(pageSize => (
+          {[10, 20, 30, 40, 50,200,1000,2000].map(pageSize => (
             <option key={pageSize} value={pageSize}>
               Show {pageSize}
             </option>
@@ -669,7 +669,7 @@ function Table({
         totalCount={totalCount}
         getRowProps={row => ({
           style: {
-            background: row.original.possibleDup === true ? 'pink' : 'white',
+            background: row.original.possibleDup === 'true' ? 'pink' : 'white',
             //background: row.index % 2 === 0 ? 'rgba(0,0,0,.1)' : 'white',
           },
         })}
