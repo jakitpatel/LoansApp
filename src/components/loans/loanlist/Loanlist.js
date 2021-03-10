@@ -94,6 +94,11 @@ function Loanlist(props) {
     }
   };
 
+  let editableContent = false;
+  if(pageSize<=100){
+    editableContent = true;
+  }
+
   let columnDefs = [];
     if(isInternalUser){
       columnDefs.push(contribBtn,{
@@ -192,7 +197,7 @@ function Loanlist(props) {
           field: "StatusAComments",
           Header: "Loan Review Status Comments",
           accessor: "StatusAComments",
-          //editable:true,
+          editable: editableContent,
           columnType:'textarea'
         },
         {
@@ -833,9 +838,28 @@ function Loanlist(props) {
       url += buildSortByUrl(sortBy);
     }
 
-    let res = await axios.get(url, options);
-    //console.log(res.data.resource);
-    let allloandata = res.data.resource;
+    let tmpPageSize = 2000;
+    let tmpPageIndex = 0;
+    let totalRetRecCount = 0;
+    let totalRecCount = 2000;
+  
+    let allloandata = [];
+    url += "&limit="+tmpPageSize;
+    url += "&offset=0";
+    while(totalRetRecCount < totalRecCount){
+      let res = await axios.get(url, options);
+      //console.log(res.data.resource);
+      let loanArrData = res.data.resource;
+      totalRetRecCount +=  loanArrData.length;
+      //allloandata = loanArrData; ///merge array
+      allloandata = allloandata.concat(loanArrData);
+      totalRecCount = res.data.meta.count;
+      tmpPageIndex++;
+
+      let offset = tmpPageSize * tmpPageIndex;
+      url = url.substr(0, url.lastIndexOf("=") + 1);
+      url += offset;
+    }
     if(allloandata==null){
       allloandata = [];
     }
