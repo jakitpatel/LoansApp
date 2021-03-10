@@ -95,7 +95,7 @@ function Loanlist(props) {
   };
 
   let editableContent = false;
-  if(pageSize<=100){
+  if(pageSize<1000){
     editableContent = true;
   }
 
