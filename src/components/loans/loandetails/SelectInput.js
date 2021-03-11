@@ -36,6 +36,8 @@ function SelectInput(props) {
                       {option.label}
                     </option>
                   )
+                } else {
+                  return null;
                 }
               })}           
             </select>

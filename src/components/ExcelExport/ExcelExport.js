@@ -19,7 +19,7 @@ function ExcelExport(props) {
 
         // OR use the below line instead of the above if you want to filter by index
         // columns.shift()
-        console.log(columns);
+        //console.log(columns);
         return columns // OR return columns
     };
 
@@ -27,8 +27,8 @@ function ExcelExport(props) {
         <ExcelFile filename={props.excelFile} hideElement={props.hideEl} element={props.children}>
             <ExcelSheet data={props.data} name={props.sheetName}>
             {
-                filterColumns(props.data).map((col)=> {
-                    return <ExcelColumn label={col} value={col}/>
+                filterColumns(props.data).map((col, index)=> {
+                    return <ExcelColumn key={index} label={col} value={col}/>
                 })
             }
             </ExcelSheet>

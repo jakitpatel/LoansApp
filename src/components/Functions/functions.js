@@ -1,3 +1,7 @@
+const toCurrency = (val) => {
+  return new Intl.NumberFormat('en-US',{ style: 'currency', currency: 'USD' }).format(val);
+}
+
 const buildSortByUrl = (sortArr) => {
     let sortUrl = "";
     sortArr.forEach(function(sortObj) {
@@ -100,4 +104,4 @@ const buildSortByUrl = (sortArr) => {
   return newDetailArray;
  }
 
- export { buildSortByUrl, buildPageUrl, buildFilterUrl, buildExternalLoanExportDetailList } ; 
+ export { buildSortByUrl, buildPageUrl, buildFilterUrl, buildExternalLoanExportDetailList, toCurrency } ; 

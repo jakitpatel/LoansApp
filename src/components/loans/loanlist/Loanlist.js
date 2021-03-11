@@ -1,14 +1,13 @@
-import React, { useState, useEffect, useRef } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { CSVLink } from "react-csv";
 import LoanListView from "./LoanListView.js";
 import * as Icon from "react-feather";
 import "./Loanlist.css";
 import axios from 'axios';
 import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
-import {buildSortByUrl, buildPageUrl, buildFilterUrl, buildExternalLoanExportDetailList} from './../../Functions/functions.js';
+import {buildSortByUrl, buildPageUrl, buildFilterUrl, buildExternalLoanExportDetailList, toCurrency} from './../../Functions/functions.js';
 import SelectColumnFilter from './../../Filter/SelectColumnFilter.js';
 import {SBAOptions, BrokerOptions, StatusOptions, applicationStatusOptions, BroketTeamOptions} from './../../../commonVar.js';
 import ExcelExport from './../../ExcelExport/ExcelExport';
@@ -16,29 +15,27 @@ import { MentorAssignedOptions, ReviewerAssignedOptions, ContribDocTypeOptions} 
 import LoanFileUpload from './LoanFileUpload';
 import Modal from "react-bootstrap/Modal";
 //import {API_KEY, Loans_Url, env, SetLoans_Url, Loan_Upload_Doc_Url} from './../../../const';
-const {API_KEY, Loans_Url, env, SetLoans_Url, Loan_Upload_Doc_Url} = window.constVar;
+const {API_KEY, Loans_Url, SetLoans_Url, Loan_Upload_Doc_Url} = window.constVar;
 
 function Loanlist(props) {
-  let history = useHistory();
-
-  const listExportLink = useRef(null);
-  const listDetailsExportLink = useRef(null);
-  const allLoansListExportLink = useRef(null);
   
   // We'll start our table without any data
   const [skipPageReset, setSkipPageReset] = React.useState(false);
   const [allLoansData, setAllLoansData] = React.useState([]);
-  const [loanListData, setLoanListData] = React.useState([]);
-  const [loanDetailsData, setLoanDetailsData] = React.useState([]);
+  const [storeLoansData, setStoreLoansData] = React.useState([]);
+  //const [loanListData, setLoanListData] = React.useState([]);
+  //const [loanDetailsData, setLoanDetailsData] = React.useState([]);
   const [filtersarr, setFiltersarr] = React.useState([]);
-  const [data, setData] = React.useState([]);
+  //const [data, setData] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
   const [pageCount, setPageCount] = React.useState(0);
   const fetchIdRef = React.useRef(0);
 
   const [downloadAllLoans, setDownloadAllLoans] = useState(false);
+  const [downloadStoreLoans, setDownloadStoreLoans] = useState(false);
+  const [exportFileName, setExportFileName] = React.useState("");
   const [isRefresh, setIsRefresh] = useState(false);
-  const [selectedRows, setSelectedRows] = useState([]);
+  //const [selectedRows, setSelectedRows] = useState([]);
   const [isOpen, setIsOpen] = React.useState(false);
   const [selectedFile, setSelectedFile] = React.useState(null);
   const [docTypeVal, setDocTypeVal] = React.useState("");
@@ -48,21 +45,21 @@ function Loanlist(props) {
 
   const dispatch = useDispatch();
 
-  const { session_token, teamInt,teamChangeFlag, uid, name, isInternalUser } = useSelector(state => {
+  const { session_token, teamInt,teamChangeFlag, uid, isInternalUser } = useSelector(state => {
       return {
           ...state.userReducer
       }
   });
 
-  const { loans, pageIndex, pageSize, totalCount, sortBy, filters, filtersA, filtersB, filtersC, backToList } = useSelector(state => {
+  const { loans, pageIndex, pageSize, totalCount, sortBy, filters, backToList } = useSelector(state => {
     return {
         ...state.loansReducer
     }
   });
 
-  let { batchId } = useParams();
-  console.log("batchId : "+batchId);
-  let { batchRec } = props;
+  //let { batchId } = useParams();
+  //console.log("batchId : "+batchId);
+  //let { batchRec } = props;
   console.log("backToList : "+backToList);
 
   const onLoanContribBtnClick = (e,obj) =>{
@@ -187,10 +184,9 @@ function Loanlist(props) {
             }
             return (
               <div style={{textAlign: "right"}}>
-              {new Intl.NumberFormat('en-US',{ style: 'currency', currency: 'USD' }).format(props.value)}
+                {toCurrency(props.value)}
               </div>
             )
-            // '$100.00'
           }
         },
         {
@@ -369,10 +365,9 @@ function Loanlist(props) {
               }
               return (
                 <div style={{textAlign: "right"}}>
-                {new Intl.NumberFormat('en-US',{ style: 'currency', currency: 'USD' }).format(props.value)}
+                  {toCurrency(props.value)}
                 </div>
               )
-              // '$100.00'
             }
           },
           {
@@ -502,10 +497,9 @@ function Loanlist(props) {
           }
           return (
             <div style={{textAlign: "right"}}>
-             {new Intl.NumberFormat('en-US',{ style: 'currency', currency: 'USD' }).format(props.value)}
+              {toCurrency(props.value)}
             </div>
           )
-          // '$100.00'
         }
       },
       /*{
@@ -632,18 +626,15 @@ function Loanlist(props) {
   useEffect(() => {
     if (downloadAllLoans) {
       setDownloadAllLoans(!downloadAllLoans);
-      /*
-      setTimeout(() => {
-        allLoansListExportLink.current.link.click();
-      }, 1000);
-      */
     }
   }, [downloadAllLoans]);
+
+  useEffect(() => {
+    if (downloadStoreLoans) {
+      setDownloadStoreLoans(!downloadStoreLoans);
+    }
+  }, [downloadStoreLoans]);
   
-  function toCurrency(numberString) {
-      let number = parseFloat(numberString);
-      return number.toLocaleString('USD');
-  }
   const fetchData = React.useCallback(({ pageSize, pageIndex, filters, sortBy }) => {
     // This will get called when the table needs new data
     // You could fetch your data from literally anywhere,
@@ -678,11 +669,11 @@ function Loanlist(props) {
       if(filters.length>0){
         console.log("filters");
         console.log(filters);
-        if(batchRec){
+        /*if(batchRec){
           url += " and ";
-        } else {
+        } else {*/
           url += "&filter=";
-        }
+        //}
         url += buildFilterUrl(filters);
       }
       if(sortBy.length>0){
@@ -696,87 +687,7 @@ function Loanlist(props) {
       //}
       let res = await axios.get(url, options);
       //console.log(res.data);
-      console.log(res.data.resource);
-      let loanArray = res.data.resource;
-      //console.log(wireArray);
-      //setData(wireArray);
-      //let loanListExpArray = [];
-      //loanListExpArray.push({});
-      let newArray = loanArray.map((data) => {
-        if(isInternalUser){
-          if(teamInt==="teama"){
-            return {
-              'ALDLoanApplicationNumberOnly' : data.ALDLoanApplicationNumberOnly,
-              'ReviewerAssigned': data.ReviewerAssigned,
-              'MentorAssigned' : data.MentorAssigned,
-              'ApplicationCreatedDate' : data.ApplicationCreatedDate,
-              'LastModifyDate' : data.LastModifyDate,
-              'Primary Borrower' : data.PrimaryBorrowers,
-              'TotalRequest' : data.FirstLoanAmount,
-              'StatusAComments': data.StatusAComments,
-              'ApplicationStatus' : data.statusIndication,
-              'SBAStatus' : data.SBAStatus,
-              'Broker'    : data.broker,
-              'EIN#': data.TaxID,
-              'Borrower Address': data.Address1,
-              'DocumentsSent': data.DocumentsSent,
-              'DocumentsRequired' : data.DocumentsRequired
-            }
-          } else if(teamInt==="teamb"){
-            return {
-              'ReviewerAssigned': data.ReviewerAssigned,
-              'ALDLoanApplicationNumberOnly' : data.ALDLoanApplicationNumberOnly,
-              'Broker'    : data.broker,
-              'Primary Borrower' : data.PrimaryBorrowers,
-              'SBAStatus' : data.SBAStatus,
-              'ErrorMessage' : data.ErrorMessage,
-              'MentorAssigned' : data.MentorAssigned,
-              'StatusAComments': data.StatusAComments,
-              'Application Status"' : data.R2_ApplicationStatus,
-              'statusIndication' : data.statusIndication,
-              'teambmember' : data.teambmember
-            }
-          } else if(teamInt==="teamc"){
-            return {
-              'ReviewerAssigned': data.ReviewerAssigned,
-              'ALDLoanApplicationNumberOnly' : data.ALDLoanApplicationNumberOnly,
-              'Primary Borrower' : data.PrimaryBorrowers,
-              'TotalRequest' : data.FirstLoanAmount,
-              'SBAStatus' : data.SBAStatus,
-              'MentorAssigned' : data.MentorAssigned,
-              'StatusCComments': data.StatusCComments,
-              'Application Status"' : data.R2_ApplicationStatus
-            }
-          }
-        } else {
-          let amt = data.R2_LoanAmount;
-          if(amt!==null) {
-            amt = new Intl.NumberFormat('en-US',{ style: 'currency', currency: 'USD' }).format(amt);
-          }
-          return {
-            'ApplicationCreatedDate' : data.ApplicationCreatedDate,
-            'BusinessName' : data.PrimaryBorrower,
-            'LoanApplicationNumber': data.ALDLoanApplicationNumberOnly,
-            'TotalRequest' : data.R2_LoanAmount,
-            'LastModifyDate' : data.LastModifyDate,
-            'SBALoanNumber': data.SBALoanNumber,
-            'SBAApprovalDate': data.SBAApprovalDate,
-            'SBAStatus' : data.SBAStatus,
-            'Overall Status' : data.statusIndication
-          }
-        }
-      });
-      setLoanListData(newArray);
-      let newDetailArray = [];
-      if(isInternalUser){
-        newDetailArray = loanArray;
-        setLoanDetailsData(newDetailArray);
-      } else {
-        newDetailArray = buildExternalLoanExportDetailList(loanArray);
-        setLoanDetailsData(newDetailArray);
-      }
-      let filterName = "filters";
-      
+      //console.log(res.data.resource);
       let totalCnt = res.data.meta.count;
 
       dispatch({
@@ -786,9 +697,8 @@ function Loanlist(props) {
           pageSize:pageSize,
           totalCount:totalCnt,
           sortBy : sortBy,
-          //filters : filters,
-          [filterName] : filters,
-          loans:loanArray
+          filters : filters,
+          loans:res.data.resource
         }
       });
       
@@ -818,15 +728,6 @@ function Loanlist(props) {
 
     url += "?include_count=true";
     let filtersTemp = filters;
-    /*if(isInternalUser){
-      if(teamInt==="teama"){
-        filtersTemp = filtersA;
-      } else if(teamInt==="teamb"){
-        filtersTemp = filtersB;
-      } else if(teamInt==="teamc"){
-        filtersTemp = filtersC;
-      }
-    }*/
     if(filtersTemp.length>0){
       console.log("filters");
       console.log(filtersTemp);
@@ -876,16 +777,12 @@ function Loanlist(props) {
     if(allloandata==null){
       allloandata = [];
     }
-    if(isInternalUser){
-
-    } else {
-      //alert();
+    if(!isInternalUser) {
       if(exportType !== "allFields"){
         allloandata = buildExternalLoanExportDetailList(allloandata);
       }
     }
     setAllLoansData(allloandata);
-    //setDownloadAllLoans(true);
     setDownloadAllLoans(!downloadAllLoans);
   }
 
@@ -902,37 +799,8 @@ function Loanlist(props) {
       }
     });
   }
+
   let filterStateArr = filters;
-  /*if(isInternalUser){
-    if(teamInt==="teama"){
-      filterStateArr = filtersA;
-    } else if(teamInt==="teamb"){
-      filterStateArr = filtersB;
-    } else if(teamInt==="teamc"){
-      filterStateArr = filtersC;
-    }
-  }
-  //let filterStateArr = filters;
-  
-  if(isInternalUser && teamInt==="teamb"){
-    let sbaStatusFlag = false;
-    for (let i=0; i<filterStateArr.length; i++){
-      if(filterStateArr[i].id==="SBAStatus"){
-        sbaStatusFlag = true;
-      }
-    }
-    if(!sbaStatusFlag){
-      filterStateArr.push({
-        id: "SBAStatus", 
-        value: [
-          { value: 'Further Research Required', label: 'Further Research Required' },
-          { value: 'Submission Failed', label: 'Submission Failed' },
-          { value: 'Failed Validation',  label: 'Failed Validation' },
-          { value: 'Not Approved by SBA', label: 'Not Approved by SBA' }
-        ]
-      });
-    }
-  }*/
   
   const initialState = {
     //pageIndex : 0,
@@ -953,16 +821,12 @@ function Loanlist(props) {
     ) :*/ (
       <LoanListView
         data={loans}
-        //data={data}
         columnDefs={columnDefs}
         initialState={initialState}
         pageState={pageState}
-        selectedRows={selectedRows}
-        setSelectedRows={setSelectedRows}
         filtersarr={filtersarr}
         setFiltersarr={setFiltersarr}
         fetchData={fetchData}
-        batchRec={batchRec}
         loading={loading}
         pageCount={pageCount}
         isRefresh={isRefresh}
@@ -975,19 +839,91 @@ function Loanlist(props) {
         totalCount={totalCount}
       />
     );
-  let loanFileName = "loanList.csv";
-  let loanDetailsFileName = "loanListDetails.csv";
-  let allLoanFileName = "AllloanList.csv";
-  let headerName = ""+{name} - {uid};
+
   const onLoanListExport = (event, dataType) => {
     console.log("On Loan List Export Button Click");
     if(loans.length > 0){
       console.log(dataType);
+      let newArray = [],exportFileNameVal="";
       if(dataType==="List"){
-        listExportLink.current.link.click();
+        exportFileNameVal = "LoanList";
+        newArray = loans.map((data) => {
+          if(isInternalUser){
+            if(teamInt==="teama"){
+              return {
+                'ALDLoanApplicationNumberOnly' : data.ALDLoanApplicationNumberOnly,
+                'ReviewerAssigned': data.ReviewerAssigned,
+                'MentorAssigned' : data.MentorAssigned,
+                'ApplicationCreatedDate' : data.ApplicationCreatedDate,
+                'LastModifyDate' : data.LastModifyDate,
+                'Primary Borrower' : data.PrimaryBorrowers,
+                'TotalRequest' : data.FirstLoanAmount,
+                'StatusAComments': data.StatusAComments,
+                'ApplicationStatus' : data.statusIndication,
+                'SBAStatus' : data.SBAStatus,
+                'Broker'    : data.broker,
+                'EIN#': data.TaxID,
+                'Borrower Address': data.Address1,
+                'DocumentsSent': data.DocumentsSent,
+                'DocumentsRequired' : data.DocumentsRequired
+              }
+            } else if(teamInt==="teamb"){
+              return {
+                'ReviewerAssigned': data.ReviewerAssigned,
+                'ALDLoanApplicationNumberOnly' : data.ALDLoanApplicationNumberOnly,
+                'Broker'    : data.broker,
+                'Primary Borrower' : data.PrimaryBorrowers,
+                'SBAStatus' : data.SBAStatus,
+                'ErrorMessage' : data.ErrorMessage,
+                'MentorAssigned' : data.MentorAssigned,
+                'StatusAComments': data.StatusAComments,
+                'Application Status"' : data.R2_ApplicationStatus,
+                'statusIndication' : data.statusIndication,
+                'teambmember' : data.teambmember
+              }
+            } else if(teamInt==="teamc"){
+              return {
+                'ReviewerAssigned': data.ReviewerAssigned,
+                'ALDLoanApplicationNumberOnly' : data.ALDLoanApplicationNumberOnly,
+                'Primary Borrower' : data.PrimaryBorrowers,
+                'TotalRequest' : data.FirstLoanAmount,
+                'SBAStatus' : data.SBAStatus,
+                'MentorAssigned' : data.MentorAssigned,
+                'StatusCComments': data.StatusCComments,
+                'Application Status"' : data.R2_ApplicationStatus
+              }
+            } else {
+              return null;
+            }
+          } else {
+            let amt = data.R2_LoanAmount;
+            if(amt!==null) {
+              amt = toCurrency(amt);
+            }
+            return {
+              'ApplicationCreatedDate' : data.ApplicationCreatedDate,
+              'BusinessName' : data.PrimaryBorrower,
+              'LoanApplicationNumber': data.ALDLoanApplicationNumberOnly,
+              'TotalRequest' : data.R2_LoanAmount,
+              'LastModifyDate' : data.LastModifyDate,
+              'SBALoanNumber': data.SBALoanNumber,
+              'SBAApprovalDate': data.SBAApprovalDate,
+              'SBAStatus' : data.SBAStatus,
+              'Overall Status' : data.statusIndication
+            }
+          }
+        });
       } else {
-        listDetailsExportLink.current.link.click();
+        exportFileNameVal = "LoanListDetails";
+        if(isInternalUser){
+          newArray = loans;
+        } else {
+          newArray = buildExternalLoanExportDetailList(loans);
+        }
       }
+      setStoreLoansData(newArray);
+      setExportFileName(exportFileNameVal);
+      setDownloadStoreLoans(!downloadStoreLoans);
     } else {
       console.log("Return From Loans Export");
       alert("No Loan is present");
@@ -1148,11 +1084,16 @@ function Loanlist(props) {
                     {downloadAllLoans &&
                       <ExcelExport hideEl={true} excelFile="AllloanList" sheetName="AllloanList" data={allLoansData}></ExcelExport>
                     }
-                    {/*
-                    <button type="button" style={{ float: "right", marginRight:"5px" }} onClick={(e)=> {onLoanListExport(e,"ListDetails")}} className={`btn btn-primary btn-sm`}>
-                      Export List Details
+                    <button onClick={(e)=> {onLoanListExport(e,"ListDetails")}} disabled={loans.length === 0 ? true : false} type="button" style={{ float: "right", marginRight:"5px" }} className={`btn btn-primary btn-sm`}>
+                        Export List Details
                     </button>
-                    */}
+                    <button onClick={(e)=> {onLoanListExport(e,"List")}} disabled={loans.length === 0 ? true : false} type="button" style={{ float: "right", marginRight:"5px" }} className={`btn btn-primary btn-sm`}>
+                        Export List
+                      </button>
+                    {downloadStoreLoans &&
+                      <ExcelExport hideEl={true} excelFile={exportFileName} sheetName={exportFileName} data={storeLoansData}></ExcelExport>
+                    }
+                    {/*
                     <ExcelExport hideEl={false} excelFile="loanListDetails" sheetName="loanListDetails" data={loanDetailsData}>
                       <button disabled={loanDetailsData.length === 0 ? true : false} type="button" style={{ float: "right", marginRight:"5px" }} className={`btn btn-primary btn-sm`}>
                         Export List Details
@@ -1163,24 +1104,10 @@ function Loanlist(props) {
                         Export List
                       </button>
                     </ExcelExport>
-                    {/*
-                    <button type="button" style={{ float: "right", marginRight:"5px" }} onClick={(e)=> {onLoanListExport(e,"List")}} className={`btn btn-primary btn-sm`}>
-                      Export List
-                    </button>
                     */}
                     <button type="button" style={{ float: "right", marginRight:"5px" }} onClick={(e)=> {setIsRefresh(!isRefresh);}} className={`btn btn-primary btn-sm`}>
                       <Icon.RefreshCw />
                     </button>
-                    <CSVLink
-                          data={allLoansData}
-                          //headers={headerName}
-                          uFEFF={false}
-                          ref={allLoansListExportLink}
-                          filename={allLoanFileName}
-                          className={`btn btn-primary btn-sm invisible`}
-                          style={{ float: "right" }}
-                          target="_blank"
-                        ></CSVLink>
                   </React.Fragment>
                   <div style={{ clear:"both"}}></div>
                 </div>

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { useAsyncDebounce } from 'react-table';
+import React from "react";
+//import { useAsyncDebounce } from 'react-table';
 
 // Define a default UI for filtering
 function DefaultColumnFilter({
@@ -30,7 +30,6 @@ function DefaultColumnFilter({
           setValue(e.target.value);
           //setFilter(e.target.value || undefined) // Set undefined to remove the filter entirely
         }}
-        //placeholder={`Search ${count} records...`}
       />
     )
   }

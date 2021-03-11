@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 // Stateless Function Component
 export default function NavBar(props) {
 
-  const { name, isInternalUser, teamInt } = useSelector(state => {
+  const { isInternalUser, teamInt } = useSelector(state => {
     return {
         ...state.userReducer
     }

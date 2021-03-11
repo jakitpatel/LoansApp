@@ -175,9 +175,7 @@ function Table({
   pageState,
   fetchData,
   loading,
-  pageCount: controlledPageCount, 
-  selectedRowsTb, 
-  setSelectedRowsTb,
+  pageCount: controlledPageCount,
   isRefresh,
   setIsRefresh,
   updateMyData, 
@@ -208,10 +206,8 @@ function Table({
     headerGroups,
     // rows, -> we change 'rows' to 'page'
     page,
-    getTdProps,
     prepareRow,
     setHiddenColumns,
-    selectedFlatRows,
     // below new props related to 'usePagination' hook
     canPreviousPage,
     canNextPage,
@@ -222,7 +218,7 @@ function Table({
     previousPage,
     setPageSize,
     setAllFilters,
-    state: { filters, pageIndex, pageSize, sortBy, selectedRowIds } // Get the state from the instance
+    state: { filters, pageIndex, pageSize, sortBy } // Get the state from the instance
   } = useTable({
     getTbdProps,
     columns,
@@ -602,52 +598,19 @@ function Table({
    //const [selectedRows, setSelectedRows] = useState([]);
 
    //const dispatch = useDispatch();
-   let { initialState, selectedRows, 
-    setSelectedRows, filtersarr, 
+   let { initialState, filtersarr, 
     setFiltersarr, loading, 
     fetchData, pageCount, 
     data, isRefresh, setIsRefresh, pageState,
     updateMyData, skipPageReset, teamInt, isInternalUser,teamChangeFlag, totalCount } = props;
    
-   const onRowClick = (state, rowInfo, column, instance) => {
-      return {
-        onClick: (e, handleOriginal) => {
-          //console.log("A Td Element was clicked!");
-          //console.log("it produced this event:", e);
-          //console.log("It was in this column:", column);
-          console.log("It was in this row:", rowInfo);
-          //console.log("It was in this table instance:", instance);
-
-          /*if (column.Header === "Edit") {
-            props.onEditClick(rowInfo.original);
-          }*/
-          if (column.field === "delete") {
-            props.remove(rowInfo.original.key);
-          }
-          // IMPORTANT! React-Table uses onClick internally to trigger
-          // events like expanding SubComponents and pivots.
-          // By default a custom 'onClick' handler will override this functionality.
-          // If you want to fire the original onClick handler, call the
-          // 'handleOriginal' function.
-          /*if (handleOriginal) {
-            handleOriginal();
-          }*/
-        }
-      }
-    }
-    console.log(selectedRows);
+    //console.log(selectedRows);
     
-    /*
-    useEffect(() => {
-      ReactTooltip.rebuild();
-    });
-    */
     //console.log("List Table : isRefresh :"+isRefresh);
    return (
     <Styles>
       {/*<ReactTooltip delayShow={200} id='wireListTtip' place="right" className="tooltipcls" textColor="#000000" backgroundColor="#f4f4f4" effect="float" multiline={true} />*/}
       <Table 
-        getTdProps={onRowClick} 
         columns={columns} 
         data={data}
         filtersarr={filtersarr}
@@ -657,8 +620,6 @@ function Table({
         fetchData={fetchData}
         loading={loading}
         pageCount={pageCount}
-        selectedRowsTb={selectedRows}
-        setSelectedRowsTb={setSelectedRows}
         isRefresh={isRefresh}
         setIsRefresh={setIsRefresh}
         updateMyData={updateMyData}
