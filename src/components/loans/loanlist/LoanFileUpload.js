@@ -16,11 +16,30 @@ function LoanFileUpload (props) {
     }
     return (
       <>
-        <Modal show={isOpenRet} onHide={hideRetModal}>
+        <Modal size="lg" show={isOpenRet} onHide={hideRetModal}>
         <Modal.Header>
           <Modal.Title>Uploaded Document Info</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          <table width="100%">
+            <thead> 
+              <th>ID</th>
+              <th>Document ID</th>
+              <th>Object Id</th>
+              <th>Object Type</th>
+            </thead>
+            <tbody> 
+            {docRetData.map((data) => (
+              <tr key={data.id}> 
+                <td>{data.id}</td>
+                <td>{data.documentId}</td>
+                <td>{data.objectId}</td>
+                <td>{data.objectType}</td>
+              </tr>
+            ))}
+            </tbody> 
+          </table>
+          {/*
           <div className="form-group row">
             <label data-for='' className="col-sm-3 col-form-label">ID</label>
             <div className="col-sm-9">
@@ -45,6 +64,7 @@ function LoanFileUpload (props) {
               <input type="text" className="form-control" readOnly value={objectId}></input>
             </div>
           </div>
+          */}
         </Modal.Body>
         <Modal.Footer>
           <button style={{ width:"70px" }} className="btn btn-primary btn-sm" onClick={hideRetModal}>Ok</button>

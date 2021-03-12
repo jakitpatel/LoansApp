@@ -9,8 +9,6 @@ const {API_KEY, Loan_Upload_Doc_Url} = window.constVar;
 
 function Dropzone (props) {
     const fileInputRef = useRef();
-    const modalImageRef = useRef();
-    const modalRef = useRef();
     const progressRef = useRef();
     const uploadRef = useRef();
     const uploadModalRef = useRef();
@@ -19,7 +17,7 @@ function Dropzone (props) {
     const [unsupportedFiles, setUnsupportedFiles] = useState([]);
     const [errorMessage, setErrorMessage] = useState('');
 
-    const {hideModal, selLoanObj} = props;
+    const {hideModal, selLoanObj, setDocData, showDocRetModal} = props;
 
     const { session_token } = useSelector(state => {
         return {
@@ -142,20 +140,6 @@ function Dropzone (props) {
         }
     }
 
-    const openImageModal = (file) => {
-        const reader = new FileReader();
-        modalRef.current.style.display = "block";
-        reader.readAsDataURL(file);
-        reader.onload = function(e) {
-            modalImageRef.current.style.backgroundImage = `url(${e.target.result})`;
-        }
-    }
-
-    const closeModal = () => {
-        modalRef.current.style.display = "none";
-        modalImageRef.current.style.backgroundImage = 'none';
-    }
-
     const convertBase64 = (file) => {
         return new Promise((resolve, reject) => {
             const fileReader = new FileReader();
@@ -170,14 +154,15 @@ function Dropzone (props) {
     }
     
     const uploadFiles = async () => {
-        uploadModalRef.current.style.display = 'block';
-        uploadRef.current.innerHTML = 'File(s) Uploading...';
+        //uploadModalRef.current.style.display = 'block';
+        //uploadRef.current.innerHTML = 'File(s) Uploading...';
         const options = {
             headers: {
                 'X-DreamFactory-API-Key': API_KEY,
                 'X-DreamFactory-Session-Token': session_token
             }
         };
+        let docRetArr = [];
         for (let i = 0; i < validFiles.length; i++) {
             const base64 = await convertBase64(validFiles[i]);
             let tmpLoanObj = {};
@@ -187,13 +172,14 @@ function Dropzone (props) {
             tmpLoanObj.associationCustomerId = selLoanObj.customerId;
             tmpLoanObj.content        = base64;
 
-            axios.post(Loan_Upload_Doc_Url, tmpLoanObj, {
+            let res = await axios.post(Loan_Upload_Doc_Url, tmpLoanObj/*, {
                 onUploadProgress: (progressEvent) => {
                     const uploadPercentage = Math.floor((progressEvent.loaded / progressEvent.total) * 100);
                     progressRef.current.innerHTML = `${uploadPercentage}%`;
                     progressRef.current.style.width = `${uploadPercentage}%`;
 
                     if (uploadPercentage === 100) {
+                        console.log("File Uploaded successfully!");
                         uploadRef.current.innerHTML = 'File(s) Uploaded';
                         validFiles.length = 0;
                         setValidFiles([...validFiles]);
@@ -201,12 +187,33 @@ function Dropzone (props) {
                         setUnsupportedFiles([...validFiles]);
                     }
                 },
+            }*/)
+            .catch((error) => {
+                //uploadRef.current.innerHTML = `<span class="error">Error Uploading File(s)</span>`;
+                //progressRef.current.style.backgroundColor = 'red';
+                if(error.response){
+                    console.log(error.response);
+                    if (401 === error.response.status) {
+                        // handle error: inform user, go to login, etc
+                        let res = error.response.data;
+                        console.log(res.error.message);
+                        //alert(res.error.message);
+                    } else {
+                        console.log(error);
+                        //alert(error);
+                    }
+                } else {
+                    console.log(error);
+                    //alert(error);
+                }
             })
-            .catch(() => {
-                uploadRef.current.innerHTML = `<span class="error">Error Uploading File(s)</span>`;
-                progressRef.current.style.backgroundColor = 'red';
-            })
+            console.log(res.data);
+            docRetArr.push(res.data);
         }
+        console.log("File Uploaded successfully!");
+        hideModal();
+        setDocData(docRetArr);
+        showDocRetModal();
     }
 
     const closeUploadModal = () => {
@@ -247,7 +254,7 @@ function Dropzone (props) {
                     {
                         validFiles.map((data, i) => 
                             <div className="file-status-bar" key={i}>
-                                <div style={{float:"left"}} onClick={!data.invalid ? () => openImageModal(data) : () => removeFile(data.name)}>
+                                <div style={{float:"left"}}>
                                     <div className="file-type-logo"></div>
                                     <div className="file-type">{fileType(data.name)}</div>
                                     <span className={`file-name ${data.invalid ? 'file-error' : ''}`}>{data.name}</span>
@@ -277,11 +284,6 @@ function Dropzone (props) {
                         )
                     }
                 </div>
-            </div>
-            <div className="file-status-modal" ref={modalRef}>
-                <div className="overlay"></div>
-                <span className="close" onClick={(() => closeModal())}>X</span>
-                <div className="file-status-modal-image" ref={modalImageRef}></div>
             </div>
 
             <div className="upload-modal" ref={uploadModalRef}>
