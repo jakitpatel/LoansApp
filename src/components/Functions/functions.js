@@ -44,11 +44,11 @@ const buildSortByUrl = (sortArr) => {
         filterUrl += " and ("+filterClm+" is null)";
       }
     } else {
-      if(filterClm==="ALDLoanApplicationNumberOnly"){
+      if(filterClm==="ALDLoanApplicationNumberOnly" || filterClm==="TaxID"){
         filterOpr = "=";
         filterUrl += " and ("+filterClm+" "+filterOpr+" "+filterVal+")";
       } else {
-        filterUrl += " and ("+filterClm+" "+filterOpr+" '%"+filterVal+"%')";
+        filterUrl += " and ("+filterClm+" "+filterOpr+" %"+filterVal+"%)";
       }
     }
   });
