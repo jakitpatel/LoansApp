@@ -134,7 +134,7 @@ function LoanDetails(props) {
             brokerRep : loanDetailsObj.brokerRep,
             brokerComments : loanDetailsObj.brokerComments
           };
-        } else if(e.target.innerHTML === "Cancel Issue"){
+        } else if(e.target.innerHTML === "Cancelled"){
           tmpLoanObj = {
             statusIndication : "Cancelled",
           };
@@ -200,7 +200,7 @@ function LoanDetails(props) {
               }
               {showCancelIssueBtn &&
               <button type="button" style={{ float: "right", marginRight:"10px" }} onClick={saveLoanDetails} className={`btn btn-primary btn-sm`}>
-                  Cancel Issue
+                  Cancelled
                 </button>
               }
               <div style={{ clear:"both"}}></div>
