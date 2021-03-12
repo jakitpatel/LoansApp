@@ -3,7 +3,6 @@ import Modal from "react-bootstrap/Modal";
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import DropZone from "./dropzone/DropZone.js";
-import { ContribDocTypeOptions} from './../../../commonVar.js';
 const {API_KEY, Loans_Url, SetLoans_Url, Loan_Upload_Doc_Url} = window.constVar;
 
 function LoanFileUploadWizard (props) {
@@ -97,15 +96,7 @@ function LoanFileUploadWizard (props) {
     return (
       <>
       <Modal show={isOpen} onHide={hideModal} size="lg" dialogClassName="modal-90w" aria-labelledby="example-custom-modal-styling-title">
-        <Modal.Header closeButton>
-          <Modal.Title>File Upload</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div>
-              <div className="content">
-                  <DropZone selLoanObj={selLoanObj} />
-              </div>
-          </div>
+          <DropZone hideModal={hideModal} selLoanObj={selLoanObj} />
         {/*
         <div className="form-group row">
           <label data-for='' className="col-sm-3 col-form-label">Doc Type</label>
@@ -129,18 +120,7 @@ function LoanFileUploadWizard (props) {
             </select>
           </div>
         </div>
-        <div className="form-group row">
-          <label data-for='' className="col-sm-3 col-form-label">Select File</label>
-          <div className="col-sm-9">
-              <input type="file" onChange={onFileChange} />
-          </div>
-        </div>
             */}
-        </Modal.Body>
-        <Modal.Footer>
-          <button style={{ width:"70px" }} className="btn btn-primary btn-sm" onClick={onLoanFileUpload}>Upload</button>
-          <button style={{ width:"70px" }} className="btn btn-primary btn-sm" onClick={hideModal}>Cancel</button>
-        </Modal.Footer>
       </Modal>
     </>
     );

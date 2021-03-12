@@ -1,6 +1,8 @@
 import React, { useRef, useState, useEffect } from 'react';
 import axios from 'axios';
+import Modal from "react-bootstrap/Modal";
 import { useSelector, useDispatch } from 'react-redux';
+import { ContribDocTypeOptions} from './../../../../commonVar.js';
 import './DropZone.css';
 
 const {API_KEY, Loan_Upload_Doc_Url} = window.constVar;
@@ -17,7 +19,7 @@ function Dropzone (props) {
     const [unsupportedFiles, setUnsupportedFiles] = useState([]);
     const [errorMessage, setErrorMessage] = useState('');
 
-    const {selLoanObj} = props;
+    const {hideModal, selLoanObj} = props;
 
     const { session_token } = useSelector(state => {
         return {
@@ -124,6 +126,22 @@ function Dropzone (props) {
         }
     }
 
+    const handleDocTypeChange = (data, e) => {
+        let name = data.name;
+        const index = validFiles.findIndex(e => e.name === name);
+        const index2 = selectedFiles.findIndex(e => e.name === name);
+        const index3 = unsupportedFiles.findIndex(e => e.name === name);
+        validFiles[index]['docType'] = e.target.value;
+        selectedFiles[index2]['docType'] = e.target.value;
+        
+        setValidFiles(prevArray => [...prevArray, validFiles[index]]);
+        setSelectedFiles(prevArray => [...prevArray, selectedFiles[index2]]);
+        if (index3 !== -1) {
+            unsupportedFiles[index3]['docType'] = e.target.value;
+            setUnsupportedFiles(prevArray => [...prevArray, unsupportedFiles[index3]]);
+        }
+    }
+
     const openImageModal = (file) => {
         const reader = new FileReader();
         modalRef.current.style.display = "block";
@@ -163,7 +181,7 @@ function Dropzone (props) {
         for (let i = 0; i < validFiles.length; i++) {
             const base64 = await convertBase64(validFiles[i]);
             let tmpLoanObj = {};
-            tmpLoanObj.description    = "";//docTypeVal;
+            tmpLoanObj.description    = validFiles[i].docType;
             tmpLoanObj.name           = validFiles[i].name;
             tmpLoanObj.ProposedLoanId = selLoanObj.proposedLoanId;
             tmpLoanObj.associationCustomerId = selLoanObj.customerId;
@@ -195,11 +213,16 @@ function Dropzone (props) {
         uploadModalRef.current.style.display = 'none';
     }
 
-
     return (
         <>
+        <Modal.Header closeButton>
+            <Modal.Title>File Upload</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div>
+            <div className="content">
             <div className="filedrop-container">
-                {unsupportedFiles.length === 0 && validFiles.length ? <button className="file-upload-btn" onClick={() => uploadFiles()}>Upload Files</button> : ''} 
+                {/*unsupportedFiles.length === 0 && validFiles.length ? <button className="file-upload-btn" onClick={() => uploadFiles()}>Upload Files</button> : ''*/} 
                 {unsupportedFiles.length ? <p>Please remove all unsupported files.</p> : ''}
                 <div className="drop-container"
                     onDragOver={dragOver}
@@ -224,11 +247,30 @@ function Dropzone (props) {
                     {
                         validFiles.map((data, i) => 
                             <div className="file-status-bar" key={i}>
-                                <div onClick={!data.invalid ? () => openImageModal(data) : () => removeFile(data.name)}>
+                                <div style={{float:"left"}} onClick={!data.invalid ? () => openImageModal(data) : () => removeFile(data.name)}>
                                     <div className="file-type-logo"></div>
                                     <div className="file-type">{fileType(data.name)}</div>
                                     <span className={`file-name ${data.invalid ? 'file-error' : ''}`}>{data.name}</span>
                                     <span className="file-size">({fileSize(data.size)})</span> {data.invalid && <span className='file-error-message'>({errorMessage})</span>}
+                                </div>
+                                <div style={{float:"right", width:"30%", marginRight:"30px"}}>
+                                    <select
+                                    className="form-control custom-select"
+                                    name="docType"
+                                    value={data.docType}
+                                    onChange={(e)=>{handleDocTypeChange(data, e)}}
+                                    >
+                                    <option value=""></option>
+                                    {ContribDocTypeOptions.map((option, i) => {
+                                        if(option.label!=="All"){
+                                        return (
+                                            <option key={i} value={option.value}>
+                                            {option.label}
+                                            </option>
+                                        )
+                                        }
+                                    })}           
+                                    </select>
                                 </div>
                                 <div className="file-remove" onClick={() => removeFile(data.name)}>X</div>
                             </div>
@@ -252,6 +294,13 @@ function Dropzone (props) {
                     </div>
                 </div>
             </div>
+            </div>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <button style={{ width:"110px" }} disabled={unsupportedFiles.length === 0 && validFiles.length ? false : true} className="btn btn-primary btn-sm" onClick={() => uploadFiles()}>Upload Files</button>
+          <button style={{ width:"110px" }} className="btn btn-primary btn-sm" onClick={hideModal}>Cancel</button>
+        </Modal.Footer>
         </>
     );
 }
