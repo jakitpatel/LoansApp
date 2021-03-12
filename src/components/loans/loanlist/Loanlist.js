@@ -13,6 +13,7 @@ import {SBAOptions, BrokerOptions, StatusOptions, applicationStatusOptions, Brok
 import ExcelExport from './../../ExcelExport/ExcelExport';
 import { MentorAssignedOptions, ReviewerAssignedOptions, ContribDocTypeOptions} from './../../../commonVar.js';
 import LoanFileUpload from './LoanFileUpload';
+import LoanFileUploadWizard from './LoanFileUploadWizard';
 import Modal from "react-bootstrap/Modal";
 //import {API_KEY, Loans_Url, env, SetLoans_Url, Loan_Upload_Doc_Url} from './../../../const';
 const {API_KEY, Loans_Url, SetLoans_Url, Loan_Upload_Doc_Url} = window.constVar;
@@ -37,8 +38,6 @@ function Loanlist(props) {
   const [isRefresh, setIsRefresh] = useState(false);
   //const [selectedRows, setSelectedRows] = useState([]);
   const [isOpen, setIsOpen] = React.useState(false);
-  const [selectedFile, setSelectedFile] = React.useState(null);
-  const [docTypeVal, setDocTypeVal] = React.useState("");
   const [selLoanObj, setSelLoanObj] = useState({});
   const [isOpenDocRet, setIsOpenDocRet] = React.useState(false);
   const [docData, setDocData] = React.useState([]);
@@ -939,82 +938,6 @@ function Loanlist(props) {
       setIsOpen(false);
   };
 
-  // On file select (from the pop up)
-  const onFileChange = (event) => {
-    // Update the state
-    setSelectedFile(event.target.files[0]);  
-  };
-
-  const convertBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-      fileReader.onload = () => {
-        resolve(fileReader.result);
-      }
-      fileReader.onerror = (error) => {
-        reject(error);
-      }
-    })
-  }
-
-  const onLoanFileUpload = async () => {
-  
-    // Details of the uploaded file
-    console.log(selectedFile);
-    if(selectedFile===null){
-      alert("Please upload file.");
-      return false;
-    }
-    const base64 = await convertBase64(selectedFile);
-    console.log(base64);
-    try {
-      const options = {
-        headers: {
-          'X-DreamFactory-API-Key': API_KEY,
-          'X-DreamFactory-Session-Token': session_token
-        }
-      };
-      let tmpLoanObj = {};
-      tmpLoanObj.description    = docTypeVal;
-      tmpLoanObj.name           = selectedFile.name;
-      tmpLoanObj.ProposedLoanId = selLoanObj.proposedLoanId;
-      tmpLoanObj.associationCustomerId = selLoanObj.customerId;
-      tmpLoanObj.content        = base64;
-      let res = await axios.post(Loan_Upload_Doc_Url, tmpLoanObj);
-      console.log(res);
-      //alert("Data saved successfully!");
-      console.log("File Uploaded successfully!");
-      hideModal();
-      let docDataInfo = res.data; //res.data.resource;
-      console.log(docDataInfo);
-      let tmpArr = [];
-      tmpArr.push(docDataInfo);
-      setDocData(tmpArr);
-      showDocRetModal();
-    } catch (error) {
-      if(error.response){
-        console.log(error.response);
-        if (401 === error.response.status) {
-            // handle error: inform user, go to login, etc
-            let res = error.response.data;
-            console.log(res.error.message);
-            alert(res.error.message);
-        } else {
-          console.log(error);
-          alert(error);
-        }
-      } else {
-        console.log(error);
-        alert(error);
-      }
-    }
-  };
-
-  const handleDocTypeChange = (e) =>{
-    setDocTypeVal(e.target.value);
-  }
-
   const showDocRetModal = () => {
       setIsOpenDocRet(true);
   };
@@ -1026,45 +949,8 @@ function Loanlist(props) {
   return (
     <React.Fragment>
       <LoanFileUpload isOpenRet={isOpenDocRet} docRetData={docData} hideRetModal={hideDocRetModal} />
-      <Modal show={isOpen} onHide={hideModal}>
-        <Modal.Header>
-          <Modal.Title>File Upload</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-        <div className="form-group row">
-          <label data-for='' className="col-sm-3 col-form-label">Doc Type</label>
-          <div className="col-sm-9">
-            <select
-              className="form-control custom-select"
-              name="docType"
-              value={docTypeVal}
-              onChange={handleDocTypeChange}
-            >
-              <option value=""></option>
-              {ContribDocTypeOptions.map((option, i) => {
-                if(option.label!=="All"){
-                  return (
-                    <option key={i} value={option.value}>
-                      {option.label}
-                    </option>
-                  )
-                }
-              })}           
-            </select>
-          </div>
-        </div>
-        <div className="form-group row">
-          <label data-for='' className="col-sm-3 col-form-label">Select File</label>
-          <div className="col-sm-9">
-              <input type="file" onChange={onFileChange} />
-          </div>
-        </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <button style={{ width:"70px" }} className="btn btn-primary btn-sm" onClick={onLoanFileUpload}>Upload</button>
-          <button style={{ width:"70px" }} className="btn btn-primary btn-sm" onClick={hideModal}>Cancel</button>
-        </Modal.Footer>
-      </Modal>
+      <LoanFileUploadWizard isOpen={isOpen} hideModal={hideModal} selLoanObj={selLoanObj} 
+      setDocData={setDocData} showDocRetModal={showDocRetModal} />
       <div className="container" style={{marginLeft:"0px", width:"100%", maxWidth:"100%"}}>
         <div className="row">
           <div className="col-sm-12 col-md-offset-3">

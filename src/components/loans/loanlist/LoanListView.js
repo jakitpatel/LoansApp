@@ -54,7 +54,7 @@ const EditableCell = ({
   column: { id, editable, columnType,columnOptions },
   updateMyData, // This is a custom function that we supplied to our table instance
 }) => {
-  if(editable && (columnType==="list" || columnType==="textarea")){
+  if(editable && (columnType==="list" || columnType==="textarea" || columnType==="text")){
     if(initialValue===null){
       initialValue = "";
     }

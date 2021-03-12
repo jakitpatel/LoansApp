@@ -47,7 +47,8 @@ const StatusOptions = [
     { value: 'Approved by SBA',    label: 'Approved by SBA' },
     { value: 'Submitted to the SBA',    label: 'Submitted to the SBA' },
     { value: 'Ready for sba submission - on hold',    label: 'Ready for sba submission - on hold' },
-    { value: 'Pending Validation',    label: 'Pending Validation' }
+    { value: 'Pending Validation',    label: 'Pending Validation' },
+    { value: 'Shelved',            label: 'Shelved' }
 ];
  
 

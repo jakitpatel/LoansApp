@@ -48,7 +48,7 @@ const buildSortByUrl = (sortArr) => {
         filterOpr = "=";
         filterUrl += " and ("+filterClm+" "+filterOpr+" "+filterVal+")";
       } else {
-        filterUrl += " and ("+filterClm+" "+filterOpr+" %"+filterVal+"%)";
+        filterUrl += " and ("+filterClm+" "+filterOpr+" '%"+filterVal+"%')";
       }
     }
   });
