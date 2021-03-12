@@ -134,6 +134,10 @@ function LoanDetails(props) {
             brokerRep : loanDetailsObj.brokerRep,
             brokerComments : loanDetailsObj.brokerComments
           };
+        } else if(e.target.innerHTML === "Cancel Issue"){
+          tmpLoanObj = {
+            statusIndication : "Cancelled",
+          };
         } else {
           tmpLoanObj = {
             statusIndication : "Resolved",
@@ -168,8 +172,10 @@ function LoanDetails(props) {
   if(loanDetailsObj.statusIndication==="Resolved" || loanDetailsObj.statusIndication==="" || loanDetailsObj.statusIndication===null){
     showResolvedIssueBtn = false;
   }
+  let showCancelIssueBtn = true;
   if(isInternalUser){
     showResolvedIssueBtn = false;
+    showCancelIssueBtn = false;
   }
 
   return (
@@ -190,6 +196,11 @@ function LoanDetails(props) {
               {showResolvedIssueBtn &&
               <button type="button" style={{ float: "right", marginRight:"10px" }} onClick={saveLoanDetails} className={`btn btn-primary btn-sm`}>
                   Resolve Issue
+                </button>
+              }
+              {showCancelIssueBtn &&
+              <button type="button" style={{ float: "right", marginRight:"10px" }} onClick={saveLoanDetails} className={`btn btn-primary btn-sm`}>
+                  Cancel Issue
                 </button>
               }
               <div style={{ clear:"both"}}></div>

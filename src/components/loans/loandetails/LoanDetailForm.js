@@ -268,7 +268,7 @@ function LoanDetailForm(props) {
                         />
                       </React.Fragment>
                     )
-                  } else if(key==="statusIndication"){
+                  }/* else if(key==="statusIndication"){
                     if(value===null){
                       value = "";
                     }
@@ -286,7 +286,7 @@ function LoanDetailForm(props) {
                         />
                       </React.Fragment>
                     )
-                  } else {
+                  } */else {
                     return (
                       <React.Fragment key={key}>
                         <TextInput
