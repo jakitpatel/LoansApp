@@ -178,7 +178,8 @@ function Login(props) {
                   type="checkbox"
                   onChange={e => {
                     //setIsInternalUser(e.target.value)
-                    setIsInternalUser(!isInternalUser)
+                    setIsInternalUser(!isInternalUser);
+                    setUsername(email);
                   }} 
                   id="isInternalUserId" />
                   <label className="form-check-label" htmlFor="isInternalUserId">
