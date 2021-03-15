@@ -103,6 +103,10 @@ function LoanDetails(props) {
           }
         }
         console.log("statusVal : "+statusVal);
+        let brokerOverrideVal = loanDetailsObj.brokerOverride;
+        if(brokerOverrideVal===""){
+          brokerOverrideVal = null;
+        }
         tmpLoanObj = {
           //ALDLoanApplicationNumberOnly : loanDetailsObj.ALDLoanApplicationNumberOnly,
           ReviewerAssigned : loanDetailsObj.ReviewerAssigned,
@@ -120,7 +124,7 @@ function LoanDetails(props) {
           ownershipIndication : loanDetailsObj.ownershipIndication,
           documentIndication  : loanDetailsObj.documentIndication,
           finacialSeachIndication  : loanDetailsObj.finacialSeachIndication,
-          brokerOverride : loanDetailsObj.brokerOverride,
+          brokerOverride : brokerOverrideVal,
           teambmember    : loanDetailsObj.teambmember
         };
       } else {
