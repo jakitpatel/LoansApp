@@ -2,6 +2,8 @@ import React from "react";
 import { useSelector } from 'react-redux';
 import preval from 'preval.macro';
 //import {API_URL} from './../../const.js';
+import PieChart from './Piechart';
+
 const {API_URL, env} = window.constVar;
 
 function DashboardMain(props) {
@@ -31,6 +33,9 @@ function DashboardMain(props) {
                     <b>Build Date</b> :- {preval`module.exports = new Date().toLocaleString();`}.<br />
                     <b>Environment</b> :- <span style={{color:colorCode}}>{env}</span> <br />
                 </div>
+            </div>
+            <div className="chart-container" style={{height:"600px"}}>
+                <PieChart />
             </div>
         </React.Fragment>
     );
