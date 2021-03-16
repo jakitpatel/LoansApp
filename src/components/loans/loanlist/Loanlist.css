@@ -16,3 +16,6 @@ table td textarea.editor-field {
     margin: 0;
     border: 0;
 }
+.tableContainer .select__value-container--has-value {
+    display: none;
+}

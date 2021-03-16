@@ -27,6 +27,7 @@ const BrokerOptions = [
     { value: 'Funding Forward',    label: 'Funding Forward' },
     { value: 'Premium Merchant Funding',    label: 'Premium Merchant Funding' },
     { value: 'Park Place Financial Group', label: 'Park Place Financial Group' },
+    { value: 'Skyline Capital', label: 'Skyline Capital' }
 ];
 
 
@@ -77,7 +78,8 @@ const brokerOverrideOptions = [
 { value: 'ABC Capital Corp.', label: 'ABC Capital Corp.' },
 { value: 'Funding Forward', label: 'Funding Forward' },
 { value: 'Park Place Financial Group', label: 'Park Place Financial Group' },
-{ value: 'Useful Funding', label: 'Useful Funding' }
+{ value: 'Useful Funding', label: 'Useful Funding' },
+{ value: 'Skyline Capital', label: 'Skyline Capital' }
 ];
 
 
