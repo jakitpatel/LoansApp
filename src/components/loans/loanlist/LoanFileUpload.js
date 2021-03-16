@@ -1,18 +1,112 @@
 import React from 'react';
 import Modal from "react-bootstrap/Modal";
+import { useSelector, useDispatch } from 'react-redux';
+import axios from 'axios';
+import moment from 'moment';
+const {API_KEY, SetLoans_Url} = window.constVar;
 
 function LoanFileUpload (props) {
-    const {isOpenRet, docRetData, hideRetModal} = props;
+    const {isOpenRet, docRetData, hideRetModal, selLoanObj} = props;
 
-    let docId = "";
-    let id = "";
-    let objectId = "";
-    let objectType = "";
-    if(docRetData.length > 0){
-      id = docRetData[0].id;
-      docId = docRetData[0].documentId;
-      objectId = docRetData[0].objectId;
-      objectType = docRetData[0].objectType;
+    const { session_token, isInternalUser } = useSelector(state => {
+      return {
+          ...state.userReducer
+      }
+    });
+
+    const saveLoanDetails = async (e) => {
+      console.log("Save Loan Details");
+      //console.log(e);
+      //console.log(e.target.innerHTML);
+      //console.log(selLoanObj);
+      try {
+        const options = {
+          headers: {
+            'X-DreamFactory-API-Key': API_KEY,
+            'X-DreamFactory-Session-Token': session_token
+          }
+        };
+        let tmpLoanObj = {};
+        if(isInternalUser){
+          let statusVal = selLoanObj.statusIndication;
+          if(statusVal===""){
+            statusVal = null;
+          }
+          console.log("StatusCComments : "+selLoanObj.StatusCComments);
+          if(selLoanObj.StatusCComments !== "" && selLoanObj.StatusCComments !== null){
+            let resSt = selLoanObj.StatusCComments.toLowerCase();
+            if(resSt === "funded"){
+              statusVal = "Funded";
+            }
+          }
+          console.log("statusVal : "+statusVal);
+          let brokerOverrideVal = selLoanObj.brokerOverride;
+          if(brokerOverrideVal===""){
+            brokerOverrideVal = null;
+          }
+          tmpLoanObj = {
+            //ALDLoanApplicationNumberOnly : selLoanObj.ALDLoanApplicationNumberOnly,
+            ReviewerAssigned : selLoanObj.ReviewerAssigned,
+            MentorAssigned   : selLoanObj.MentorAssigned,
+            //LastModifyDate   : selLoanObj.LastModifyDate,
+            StatusAComments  : selLoanObj.StatusAComments,
+            StatusBComments  : selLoanObj.StatusBComments,
+            StatusCComments  : selLoanObj.StatusCComments,
+            StatusDComments  : selLoanObj.StatusDComments,
+            MentorEmail      : selLoanObj.MentorEmail,
+            MentorPhone      : selLoanObj.MentorPhone,
+            statusIndication : statusVal,
+            businessIndication  : selLoanObj.businessIndication,
+            personalIndication  : selLoanObj.personalIndication,
+            ownershipIndication : selLoanObj.ownershipIndication,
+            documentIndication  : selLoanObj.documentIndication,
+            finacialSeachIndication  : selLoanObj.finacialSeachIndication,
+            brokerOverride : brokerOverrideVal,
+            teambmember    : selLoanObj.teambmember
+          };
+        } else {
+          if(e.target.innerHTML === "Save"){
+            tmpLoanObj = {
+              brokerRep : selLoanObj.brokerRep,
+              brokerComments : selLoanObj.brokerComments
+            };
+          } else if(e.target.innerHTML === "Cancelled"){
+            tmpLoanObj = {
+              statusIndication : "Cancelled",
+            };
+          } else {
+            tmpLoanObj = {
+              statusIndication : "Resolved",
+            };
+          }
+        }
+        if(selLoanObj.ALD_ID === "" || selLoanObj.ALD_ID === null){
+          alert("ALD_ID is empty! So, can not able to save the loan.");
+          return false;
+        }
+        let ald_id = selLoanObj.ALD_ID;
+        //tmpLoanObj.LastUpdateUser = uid;
+        tmpLoanObj.LastModifyDate = moment().format('YYYY-MM-DD');
+        let res = await axios.put(SetLoans_Url+'/'+ald_id, tmpLoanObj, options);
+        console.log(res);
+        alert("Data saved successfully!");
+        //backToLoanList();
+      } catch (error) {
+        console.log(error.response);
+        if (401 === error.response.status) {
+            // handle error: inform user, go to login, etc
+            let res = error.response.data;
+            alert(res.error.message);
+        } else {
+          alert(error);
+        }
+        //backToLoanList();
+      }
+    }
+
+    let showResolvedIssueBtn = true;
+    if(selLoanObj.statusIndication==="Resolved" || selLoanObj.statusIndication==="" || selLoanObj.statusIndication===null){
+      showResolvedIssueBtn = false;
     }
     return (
       <>
@@ -39,34 +133,13 @@ function LoanFileUpload (props) {
             ))}
             </tbody> 
           </table>
-          {/*
-          <div className="form-group row">
-            <label data-for='' className="col-sm-3 col-form-label">ID</label>
-            <div className="col-sm-9">
-               <input type="text" className="form-control" readOnly value={id}></input>
-            </div>
-          </div>
-          <div className="form-group row">
-            <label data-for='' className="col-sm-3 col-form-label">Document ID</label>
-            <div className="col-sm-9">
-              <input type="text" className="form-control" readOnly value={docId}></input>
-            </div>
-          </div>
-          <div className="form-group row">
-            <label data-for='' className="col-sm-3 col-form-label">Object Type</label>
-            <div className="col-sm-9">
-              <input type="text" className="form-control" readOnly value={objectType}></input>
-            </div>
-          </div>
-          <div className="form-group row">
-            <label data-for='' className="col-sm-3 col-form-label">Object Id</label>
-            <div className="col-sm-9">
-              <input type="text" className="form-control" readOnly value={objectId}></input>
-            </div>
-          </div>
-          */}
         </Modal.Body>
         <Modal.Footer>
+          {showResolvedIssueBtn &&
+            <button type="button" style={{ float: "right", marginRight:"10px" }} onClick={saveLoanDetails} className={`btn btn-primary btn-sm`}>
+              Resolve Issue
+            </button>
+          }
           <button style={{ width:"70px" }} className="btn btn-primary btn-sm" onClick={hideRetModal}>Ok</button>
         </Modal.Footer>
       </Modal>
