@@ -34,9 +34,11 @@ function DashboardMain(props) {
                     <b>Environment</b> :- <span style={{color:colorCode}}>{env}</span> <br />
                 </div>
             </div>
+            {isInternalUser &&
             <div className="chart-container" style={{height:"600px"}}>
                 <PieChart />
             </div>
+            }
         </React.Fragment>
     );
 }

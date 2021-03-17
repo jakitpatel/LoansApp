@@ -27,6 +27,7 @@ window.constVar = {
     Loan_Upload_Doc_Url  : API_CONTRIB_URL+"contrib",
     LoanDetails_Url      : API_URL+"getLoanDetails?filter=",  
     Usr_Permission_Url   : API_URL+"ppploans/permission?filter=",
+    LoanSummary_Url      : API_URL+"getsummary",
     LoanDetails_Url_DEV      : API_URL+"getLoanDetails",  // For Local Env, Don't Modify
     Usr_Permission_Url_DEV   : API_URL+"wireAppPermission",  // For Local Env, Don't Modify
 }
