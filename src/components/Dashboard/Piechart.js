@@ -8,7 +8,7 @@ const {API_KEY, LoanSummary_Url} = window.constVar;
 const PieChart = () => {
     
   const [pieData, setPieData] = React.useState([]);
-  const [pieOption, setPieOption] = React.useState("NULLCount");
+  const [pieOption, setPieOption] = React.useState("NULLSum");
   const [pieOptionList, setPieOptionList] = React.useState([]);
 
   const { session_token} = useSelector(state => {
@@ -86,26 +86,7 @@ const PieChart = () => {
               borderColor: borderColorArr,
               borderWidth: 1,
             },
-          ],
-          options: {
-            //responsive: true,
-            //maintainAspectRatio: false
-            /*
-            tooltips: {
-              callbacks: {
-                  label: function(tooltipItem, data) {
-                      var label = data.datasets[tooltipItem.datasetIndex].label || '';
-  
-                      if (label) {
-                          label += ': ';
-                      }
-                      label += Math.round(tooltipItem.yLabel * 100) / 100;
-                      return "demo";//label;
-                  }
-              }
-            }
-            */
-          }
+          ]
         }
         setPieData(newData);
       }
@@ -118,14 +99,39 @@ const PieChart = () => {
       setPieOption(e.target.value);
     }
 
+    let options = {
+      //responsive: true,
+      //maintainAspectRatio: false
+      tooltips: {
+        callbacks: {
+            label: function(tooltipItem, data) {
+                //console.log(data);
+                //console.log(tooltipItem);
+                var label = data.labels[tooltipItem.index] || '';
+                //var label = data.datasets[tooltipItem.datasetIndex].label || '';
+                //console.log(label);
+                if (label) {
+                    label += ': ';
+                }
+                let val = data.datasets[0].data[tooltipItem.index]
+                if(pieOption.includes("Sum") && val!==null){
+                  label += new Intl.NumberFormat('en-US',{ style: 'currency', currency: 'USD' }).format(val);
+                } else {
+                  label += val;
+                }
+                return label;
+            }
+        }
+      }
+    }
     return (
       <>
         <div className='header'>
           <h1 className='title'>Pie Chart</h1>
-          <div className="col-sm-6">
+          <div className="col-sm-4">
             <div className="form-group row">
-              <label className="col-sm-4 col-form-label">Type</label>
-              <div className="col-sm-8">
+              <label className="col-sm-2 col-form-label">Type</label>
+              <div className="col-sm-6">
                 <select
                     className="form-control custom-select"
                     name="pieOption"
@@ -148,7 +154,7 @@ const PieChart = () => {
             </div>
           </div>
         </div>
-        <Pie data={pieData} height={100} />
+        <Pie data={pieData} height={100} options={options} />
       </>
     )
 }
