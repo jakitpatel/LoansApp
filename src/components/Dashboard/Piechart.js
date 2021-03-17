@@ -8,7 +8,7 @@ const {API_KEY, LoanSummary_Url} = window.constVar;
 const PieChart = () => {
     
   const [pieData, setPieData] = React.useState([]);
-  const [pieOption, setPieOption] = React.useState("By Quantity");
+  const [pieOption, setPieOption] = React.useState("By NULLCount");
 
   const { session_token} = useSelector(state => {
       return {
@@ -69,10 +69,10 @@ const PieChart = () => {
         console.log("pieOption : "+pieOption);
         for(let i=0; i<dataRet.length; i++){
           labelsArr.push(dataRet[i].broker);
-          if(pieOption==="By Amount"){
-            dataArr.push(parseInt(dataRet[i].Sum));
+          if(pieOption==="By NULLSum"){
+            dataArr.push(parseInt(dataRet[i].NULLSum));
           } else {
-            dataArr.push(parseInt(dataRet[i].Count));
+            dataArr.push(parseInt(dataRet[i].NULLCount));
           }
           colorArr.push(preDefColorArr[i]);
         }
@@ -118,16 +118,14 @@ const PieChart = () => {
                     value={pieOption}
                     onChange={pieOptionChange}
                   >
-                    <option key="1" value="By Quantity">By Quantity</option>
-                    <option key="2" value="By Amount">By Amount</option>       
+                    <option key="1" value="By NULLCount">By NULLCount</option>
+                    <option key="2" value="By NULLSum">By NULLSum</option>       
                 </select>
               </div>
             </div>
           </div>
         </div>
-        <div style={{height: "300px"}}>
-          <Pie data={pieData} height={100} />
-        </div>
+        <Pie data={pieData} height={100} />
       </>
     )
 }
