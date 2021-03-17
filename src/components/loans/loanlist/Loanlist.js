@@ -11,7 +11,7 @@ import {buildSortByUrl, buildPageUrl, buildFilterUrl, buildExternalLoanExportDet
 import SelectColumnFilter from './../../Filter/SelectColumnFilter.js';
 import {SBAOptions, BrokerOptions, StatusOptions, applicationStatusOptions, BroketTeamOptions} from './../../../commonVar.js';
 import ExcelExport from './../../ExcelExport/ExcelExport';
-import { MentorAssignedOptions, ReviewerAssignedOptions, ContribDocTypeOptions} from './../../../commonVar.js';
+import { MentorAssignedOptions, ReviewerAssignedOptions, ContribDocTypeOptions, AkayBrokerOptions} from './../../../commonVar.js';
 import LoanFileUpload from './LoanFileUpload';
 import LoanFileUploadWizard from './LoanFileUploadWizard';
 import Modal from "react-bootstrap/Modal";
@@ -443,18 +443,25 @@ function Loanlist(props) {
         }*/
         //Filter: SelectColumnFilter,
         //filter: 'includes'
-      },
-      {
-        field: "broker",
-        Header: "Broker",
-        accessor: "broker",
-        Filter: SelectColumnFilter,
-        filter: 'includes',
-        options:BrokerOptions
       });
 
-      //let brokerTeamEditable = false;
-      if(!isInternalUser && uid==="akay@pmfus.com"){
+      if(uid!=="akay@pmfus.com"){
+        columnDefs.push({
+          field: "broker",
+          Header: "Broker",
+          accessor: "broker",
+          disableFilters: true
+        });
+      } else {
+     // if(uid==="akay@pmfus.com"){
+        columnDefs.push({
+          field: "broker",
+          Header: "Broker",
+          accessor: "broker",
+          Filter: SelectColumnFilter,
+          filter: 'includes',
+          options:AkayBrokerOptions
+        });
         //brokerTeamEditable = true;
         columnDefs.push({
             field: "brokerTeam",

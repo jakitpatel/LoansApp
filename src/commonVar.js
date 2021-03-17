@@ -177,6 +177,16 @@ const BroketTeamOptions = [
     { value: 'LA', label: 'LA' }
 ];
 
+const AkayBrokerOptions = [
+    { value: '',     label: 'All' },
+    { value: 'Guidance Funding', label: 'Guidance Funding' },
+    { value: 'Motor City Funding', label: 'Motor City Funding' },
+    { value: 'is NULL',  label: 'NULL' },
+    { value: 'PMF', label: 'PMF' },
+    { value: 'Lendie Capital',    label: 'Lendie Capital' },
+    { value: 'Premium Merchant Funding',    label: 'Premium Merchant Funding' }
+];
+
 export { SBAOptions, BrokerOptions, StatusOptions, applicationStatusOptions, 
     brokerOverrideOptions, MentorAssignedOptions, ReviewerAssignedOptions,TeamBAssignedOptions,
-    ContribDocTypeOptions, BroketTeamOptions};
+    ContribDocTypeOptions, BroketTeamOptions, AkayBrokerOptions};
