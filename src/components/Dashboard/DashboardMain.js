@@ -3,11 +3,11 @@ import { useSelector } from 'react-redux';
 import preval from 'preval.macro';
 //import {API_URL} from './../../const.js';
 import PieChart from './Piechart';
-
+import { internalUserList } from './../../commonVar';
 const {API_URL, env} = window.constVar;
 
 function DashboardMain(props) {
-    const { name, isInternalUser, teamInt } = useSelector(state => {
+    const { name, isInternalUser, teamInt, uid, email } = useSelector(state => {
         return {
             ...state.userReducer
         }
@@ -22,6 +22,15 @@ function DashboardMain(props) {
     if(env==="DEV" || env==="dev"){
         colorCode = "BLUE";
     }
+    let showPieChartFlag = false;
+    if(isInternalUser){
+        for(let i=0; i<internalUserList.length; i++){
+            if(internalUserList[i].value === uid){
+                showPieChartFlag = true;
+            }
+        }
+    }
+
     return (
         <React.Fragment>
             <div className="container">
@@ -34,7 +43,7 @@ function DashboardMain(props) {
                     <b>Environment</b> :- <span style={{color:colorCode}}>{env}</span> <br />
                 </div>
             </div>
-            {isInternalUser &&
+            {showPieChartFlag &&
             <div className="chart-container" style={{height:"600px"}}>
                 <PieChart />
             </div>

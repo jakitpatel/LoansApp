@@ -49,7 +49,8 @@ const StatusOptions = [
     { value: 'Submitted to the SBA',    label: 'Submitted to the SBA' },
     { value: 'Ready for sba submission - on hold',    label: 'Ready for sba submission - on hold' },
     { value: 'Pending Validation',    label: 'Pending Validation' },
-    { value: 'Shelved',            label: 'Shelved' }
+    { value: 'Shelved',            label: 'Shelved' },
+    { value: 'Resolved',           label: 'Resolved'}
 ];
  
 
@@ -187,6 +188,21 @@ const AkayBrokerOptions = [
     { value: 'Premium Merchant Funding',    label: 'Premium Merchant Funding' }
 ];
 
+const internalUserList = [
+    { value: 'acederbaum@cfsb.com',     label: 'Adiv Cederbaum' },
+    { value: 'asarwan@cfsb.com', label: 'Andrea Sarwan' },
+    { value: 'daloi-mcconnell@cfsb.com', label: 'Denice Aloi-McConnell' },
+    { value: 'jsanders@cfsb.com',  label: 'Jeremy Sanders' },
+    { value: 'mversella@cfsb.com', label: 'Mark Versella' },
+    { value: 'mbirkental@cfsb.com',    label: 'Merick Birkental' },
+    { value: 'mhosephros@cfsb.com',    label: 'Mike Hosephros' },
+    { value: 'pzerbib@cfsb.com',  label: 'Pinchas Zerbib' },
+    { value: 'serickson@cfsb.com', label: 'Steve Erickson' },
+    { value: 'shossain@cfsb.com',    label: 'Syed Hossain' },
+    { value: 'mhyman@cfsb.com',    label: 'Martin Hyman' }/*,
+    { value: 'jakit',    label: 'Jakit Patel' }*/
+];
+
 export { SBAOptions, BrokerOptions, StatusOptions, applicationStatusOptions, 
     brokerOverrideOptions, MentorAssignedOptions, ReviewerAssignedOptions,TeamBAssignedOptions,
-    ContribDocTypeOptions, BroketTeamOptions, AkayBrokerOptions};
+    ContribDocTypeOptions, BroketTeamOptions, AkayBrokerOptions, internalUserList};
