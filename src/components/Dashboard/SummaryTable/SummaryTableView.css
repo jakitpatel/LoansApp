@@ -1,0 +1,31 @@
+.tooltipcls {
+    width: 230px;
+    "word-break": break-all;
+    "overflow-wrap": break-word;
+    display : block;
+}
+.pagination {
+    margin-bottom: 0.4rem;
+}
+.pagination .btn {
+    width: 48px;
+}
+.stickyHeaderTable .stickyHeader {
+    top: 0;
+    left: 0;
+    z-index: 35;
+    position: sticky;
+    background: #fff;
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+    border-collapse: separate;
+}
+.tableContainer {
+    max-height: 800px;
+    overflow-x: auto;
+    border-bottom: 1px solid black;
+}
+.tableContainer .stickyHeaderTable {
+    border-collapse: separate;
+    border-top: 0px;
+}

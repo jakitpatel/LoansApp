@@ -2,7 +2,8 @@ import React from "react";
 import { useSelector } from 'react-redux';
 import preval from 'preval.macro';
 //import {API_URL} from './../../const.js';
-import PieChart from './Piechart';
+//import PieChart from './Piechart';
+import SummaryTable from './SummaryTable/SummaryTable.js';
 import { internalUserList } from './../../commonVar';
 const {API_URL, env} = window.constVar;
 
@@ -33,7 +34,7 @@ function DashboardMain(props) {
 
     return (
         <React.Fragment>
-            <div className="container">
+            <div className="container" style={{height:"108px"}}>
                 Hello, {name} ({userType}) {isInternalUser && (teamInt)}
                 <div style={{float:"right"}}>
                     <b>App Name </b> :- {process.env.REACT_APP_NAME} <br />
@@ -44,10 +45,12 @@ function DashboardMain(props) {
                 </div>
             </div>
             {showPieChartFlag &&
-            <div className="chart-container" style={{height:"600px"}}>
+            <SummaryTable />
+            }
+            {/*<div className="chart-container" style={{height:"600px"}}>
                 <PieChart />
             </div>
-            }
+            */}
         </React.Fragment>
     );
 }

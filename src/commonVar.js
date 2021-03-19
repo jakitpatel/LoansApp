@@ -199,8 +199,8 @@ const internalUserList = [
     { value: 'pzerbib@cfsb.com',  label: 'Pinchas Zerbib' },
     { value: 'serickson@cfsb.com', label: 'Steve Erickson' },
     { value: 'shossain@cfsb.com',    label: 'Syed Hossain' },
-    { value: 'mhyman@cfsb.com',    label: 'Martin Hyman' }/*,
-    { value: 'jakit',    label: 'Jakit Patel' }*/
+    { value: 'mhyman@cfsb.com',    label: 'Martin Hyman' },
+    { value: 'jakit',    label: 'Jakit Patel' }
 ];
 
 export { SBAOptions, BrokerOptions, StatusOptions, applicationStatusOptions, 
