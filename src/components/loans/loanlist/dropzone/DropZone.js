@@ -87,12 +87,17 @@ function Dropzone (props) {
     }
 
     const validateFile = (file) => {
-        /*
-        const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/x-icon'];
-        if (validTypes.indexOf(file.type) === -1) {
+        console.log(file);
+        let ext = fileType(file.name);
+        console.log(ext);
+        //const validTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/x-icon'];
+        const validTypes = ['image/heic', 'image/heic-sequence', 'image/heif'];
+        if (validTypes.indexOf(file.type) !== -1) {
             return false;
         }
-        */
+        if(ext=== 'heic' || ext==='heif'){
+            return false;
+        }
         return true;
     }
 

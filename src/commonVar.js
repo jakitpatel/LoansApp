@@ -189,18 +189,19 @@ const AkayBrokerOptions = [
 ];
 
 const internalUserList = [
-    { value: 'acederbaum@cfsb.com',     label: 'Adiv Cederbaum' },
-    { value: 'asarwan@cfsb.com', label: 'Andrea Sarwan' },
-    { value: 'daloi-mcconnell@cfsb.com', label: 'Denice Aloi-McConnell' },
-    { value: 'jsanders@cfsb.com',  label: 'Jeremy Sanders' },
-    { value: 'mversella@cfsb.com', label: 'Mark Versella' },
-    { value: 'mbirkental@cfsb.com',    label: 'Merick Birkental' },
-    { value: 'mhosephros@cfsb.com',    label: 'Mike Hosephros' },
-    { value: 'pzerbib@cfsb.com',  label: 'Pinchas Zerbib' },
-    { value: 'serickson@cfsb.com', label: 'Steve Erickson' },
-    { value: 'shossain@cfsb.com',    label: 'Syed Hossain' },
-    { value: 'mhyman@cfsb.com',    label: 'Martin Hyman' },
-    { value: 'jakit',    label: 'Jakit Patel' }
+    { value: 'acederbaum',     label: 'Adiv Cederbaum' },
+    { value: 'asarwan',        label: 'Andrea Sarwan' },
+    { value: 'daloi-mcconnell',label: 'Denice Aloi-McConnell' },
+    { value: 'jsanders',   label: 'Jeremy Sanders' },
+    { value: 'mversella',  label: 'Mark Versella' },
+    { value: 'mbirkental', label: 'Merick Birkental' },
+    { value: 'mhosephros', label: 'Mike Hosephros' },
+    { value: 'pzerbib',    label: 'Pinchas Zerbib' },
+    { value: 'serickson',  label: 'Steve Erickson' },
+    { value: 'shossain',   label: 'Syed Hossain' },
+    { value: 'mhyman',     label: 'Martin Hyman' },
+    { value: 'sbenjamin',  label: 'sbenjamin' }/*,
+    { value: 'jakit',      label: 'Jakit Patel' }*/
 ];
 
 export { SBAOptions, BrokerOptions, StatusOptions, applicationStatusOptions, 
