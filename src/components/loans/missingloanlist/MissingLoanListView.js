@@ -297,54 +297,6 @@ function Table({
   useSortBy,
   usePagination,
   useRowSelect)
-  
-  // Changes related to reset the filter on change of Team
-  useEffect(() => {
-    //console.log("Team "+teamInt);
-    if(isInternalUser && teamChangeFlag===true){
-      dispatch({
-        type:'UPDATEUSER',
-        payload:{
-          teamChangeFlag: false
-        }
-      });
-      if(teamInt==="teamb"){
-        setAllFilters([{
-          id: "SBAStatus", 
-          value: [
-            { value: 'Further Research Required', label: 'Further Research Required' },
-            { value: 'Submission Failed', label: 'Submission Failed' },
-            { value: 'Failed Validation',  label: 'Failed Validation' },
-            { value: 'Not Approved by SBA', label: 'Not Approved by SBA' }
-          ]
-        }]);
-      } else if(teamInt==="teama"){
-        setAllFilters([{
-          id: "SBAStatus", 
-          value: [
-            { value: 'is NULL', label: 'NULL' }/*,
-            { value: 'Further Research Required', label: 'Further Research Required' }*/
-          ]
-        },{
-          id: "statusIndication", 
-          value: [
-            { value: 'is NULL', label: 'NULL' },
-            { value: 'Not Assigned',     label: 'Not Assigned' },
-            { value: 'In Progress', label: 'In Progress' },
-            { value: 'P/R docs Needed', label: 'P/R docs Needed' },
-            { value: 'P/R docs in file OFAC SAM OK – move to approval', label: 'P/R docs in file OFAC SAM OK – move to approval' },
-            { value: 'Prior To Funding docs in file',  label: 'Prior To Funding docs in file' },
-            { value: 'Prior to Funding docs Needed', label: 'Prior to Funding docs Needed' },
-            { value: 'Loans with SBA Submission Errors',    label: 'Loans with SBA Submission Errors' }
-          ]
-        }]);
-      } else if(teamInt==="teamc") {
-        //alert(teamInt);
-        //alert("Reset All Filters");
-        setAllFilters([]);
-      }
-    }
-  }, [teamInt]);
 
 
   // Debounce our onFetchData call for 100ms
@@ -381,7 +333,7 @@ function Table({
       gotoPage(0);
     } else {
       dispatch({
-        type:'UPDATELOANLIST',
+        type:'UPDATEMISSINGLOANLIST',
         payload:{
           backToList:false
         }
@@ -389,26 +341,6 @@ function Table({
     }
   }, [ filters, setFiltersarr, sortBy]);
 
-  /*
-  useEffect(() => {
-    console.log("After Render Wire List View");
-    if(pageState.backToList){
-      alert("Go To Page No : "+pageState.pageIndex);
-      gotoPage(pageState.pageIndex);
-      console.log("pageIndex State : "+pageIndex);
-      
-      setTimeout(() => {
-        console.log("pageIndex State : "+pageIndex);
-        dispatch({
-          type:'UPDATELOANLIST',
-          payload:{
-            backToList:false
-          }
-        });
-      }, 1000);
-    }
-  }, [dispatch, gotoPage, pageIndex, pageState.backToList, pageState.pageIndex]);
-  */
   /*
   useEffect(() => {
     setHiddenColumns(
@@ -420,37 +352,6 @@ function Table({
   //console.log("Table : isRefresh :"+isRefresh);
   return (
     <>
-    {/*
-    <pre>
-        <code>
-          {JSON.stringify(
-            {
-              pageIndex,
-              pageSize,
-              pageCount,
-              canNextPage,
-              canPreviousPage,
-            },
-            null,
-            2
-          )}
-        </code>
-      </pre>
-      <div>
-        <pre>
-          <code>
-            {JSON.stringify(
-              {
-                "initialState.filters": filtersarr,
-                "state.filters": filters
-              },
-              null,
-              2
-            )}
-          </code>
-        </pre>
-      </div>
-      */}
     {/* 
       Pagination can be built however you'd like. 
       This is just a very basic UI implementation:
@@ -532,7 +433,7 @@ function Table({
     </div>
     {/*}*/}
     <div className="tableContainer">
-    <table className="stickyHeaderTable" key={isRefresh} {...getTableProps()}>
+    <table className="stickyHeaderTable" style={{width:"100%"}} key={isRefresh} {...getTableProps()}>
       <thead>
         {headerGroups.map(headerGroup => (
             <tr {...headerGroup.getHeaderGroupProps()}>

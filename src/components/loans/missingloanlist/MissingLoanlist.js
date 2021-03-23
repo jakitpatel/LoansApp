@@ -40,7 +40,7 @@ function MissingLoanlist(props) {
       }
   });
 
-  const { loans, pageIndex, pageSize, totalCount, sortBy, filters, backToList } = useSelector(state => {
+  const { missingloans, pageIndex, pageSize, totalCount, sortBy, filters, backToList } = useSelector(state => {
     return {
         ...state.MissingLoansReducer
     }
@@ -92,13 +92,6 @@ function MissingLoanlist(props) {
     editable:true,
     columnType:'text'
   });
-
-  // After data chagnes, we turn the flag back off
-  // so that if data actually changes when we're not
-  // editing it, the page is reset
-  React.useEffect(() => {
-    setSkipPageReset(false)
-  }, [loans])
 
   const fetchData = React.useCallback(({ pageSize, pageIndex, filters, sortBy }) => {
     // This will get called when the table needs new data
@@ -163,7 +156,7 @@ function MissingLoanlist(props) {
           totalCount:totalCnt,
           sortBy : sortBy,
           filters : filters,
-          loans:res.data.resource
+          missingloans:res.data.resource
         }
       });
       
@@ -253,7 +246,7 @@ function MissingLoanlist(props) {
 
   let headerTitle = "Missing Loan List";
 
-  console.log("loans", loans);
+  console.log("loans", missingloans);
   console.log("isRefresh", isRefresh);
 
   let filterStateArr = filters;
@@ -276,7 +269,7 @@ function MissingLoanlist(props) {
       <h3> LOADING... </h3>
     ) :*/ (
       <MissingLoanListView
-        data={loans}
+        data={missingloans}
         columnDefs={columnDefs}
         initialState={initialState}
         pageState={pageState}
@@ -297,12 +290,12 @@ function MissingLoanlist(props) {
 
   const onLoanListExport = (event, dataType) => {
     console.log("On Loan List Export Button Click");
-    if(loans.length > 0){
+    if(missingloans.length > 0){
       console.log(dataType);
       let newArray = [],exportFileNameVal="";
       if(dataType==="List"){
         exportFileNameVal = "LoanList";
-        newArray = loans.map((data) => {
+        newArray = missingloans.map((data) => {
           if(isInternalUser){
             if(teamInt==="teama"){
               return {
@@ -371,9 +364,9 @@ function MissingLoanlist(props) {
       } else {
         exportFileNameVal = "LoanListDetails";
         if(isInternalUser){
-          newArray = loans;
+          newArray = missingloans;
         } else {
-          newArray = buildExternalLoanExportDetailList(loans);
+          newArray = buildExternalLoanExportDetailList(missingloans);
         }
       }
       setStoreLoansData(newArray);
