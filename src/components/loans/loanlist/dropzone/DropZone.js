@@ -3,6 +3,7 @@ import axios from 'axios';
 import Modal from "react-bootstrap/Modal";
 import { useSelector, useDispatch } from 'react-redux';
 import { ContribDocTypeOptions} from './../../../../commonVar.js';
+import { PDFDocument } from 'pdf-lib'
 import './DropZone.css';
 
 const {API_KEY, Loan_Upload_Doc_Url} = window.constVar;
@@ -169,7 +170,27 @@ function Dropzone (props) {
         };
         let docRetArr = [];
         for (let i = 0; i < validFiles.length; i++) {
-            const base64 = await convertBase64(validFiles[i]);
+            let base64 = await convertBase64(validFiles[i]);
+
+            /// For PDF Convert from 1.3 to 1.7
+            //console.log(validFiles[i]);
+            //console.log(validFiles[i].type);
+            let ext = fileType(validFiles[i].name);
+            //console.log(base64);
+            if(validFiles[i].type==="application/pdf" || ext==="pdf"){
+                const pdfDoc1 = await PDFDocument.load(base64);
+                console.log(pdfDoc1);
+                const pdfDoc = await PDFDocument.create();
+
+                const [firstDonorPage] = await pdfDoc.copyPages(pdfDoc1, [0]);
+                pdfDoc.addPage(firstDonorPage);
+                console.log(pdfDoc);
+                base64 = await pdfDoc.saveAsBase64({ dataUri: true });
+                console.log("---Modified---");
+                //console.log(base64);
+            }
+            //////////
+            
             let tmpLoanObj = {};
             tmpLoanObj.description    = validFiles[i].docType;
             tmpLoanObj.name           = validFiles[i].name;
