@@ -9,7 +9,6 @@ import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
 import {buildSortByUrl, buildPageUrl, buildFilterUrl, buildExternalLoanExportDetailList, toCurrency} from './../../Functions/functions.js';
 import SelectColumnFilter from './../../Filter/SelectColumnFilter.js';
-import {UnassociatedLoanStatusOption} from './../../../commonVar.js';
 //import {API_KEY, Loans_Url, env, SetLoans_Url, Loan_Upload_Doc_Url} from './../../../const';
 const {API_KEY, Loans_Url, MissingLoans_Url} = window.constVar;
 
@@ -73,24 +72,24 @@ function MissingLoanlist(props) {
     }
   },*/
   {
-    field: "businessname",
-    Header: "Business Name",
-    accessor: "businessname"
+    field: "broker",
+    Header: "broker",
+    accessor: "broker"
   },
   {
-    field: "unassociatedLoanStatus",
-    Header: "unassociatedLoanStatus",
-    accessor: "unassociatedLoanStatus",
-    Filter: SelectColumnFilter,
-    filter: 'includes',
-    options:UnassociatedLoanStatusOption
+    field: "businessName",
+    Header: "businessName",
+    accessor: "businessName"
   },
   {
-    field: "unassociatedLoanComments",
-    Header: "unassociatedLoanComments",
-    accessor: "unassociatedLoanComments",
-    editable:true,
-    columnType:'text'
+    field: "taxID",
+    Header: "taxID",
+    accessor: "taxID"
+  },
+  {
+    field: "userName",
+    Header: "userName",
+    accessor: "userName"
   });
 
   const fetchData = React.useCallback(({ pageSize, pageIndex, filters, sortBy }) => {
