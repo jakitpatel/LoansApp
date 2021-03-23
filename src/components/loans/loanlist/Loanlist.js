@@ -955,7 +955,7 @@ function Loanlist(props) {
 
   return (
     <React.Fragment>
-      <LoanFileUpload isOpenRet={isOpenDocRet} selLoanObj={selLoanObj} docRetData={docData} hideRetModal={hideDocRetModal} />
+      <LoanFileUpload isOpenRet={isOpenDocRet} selLoanObj={selLoanObj} docRetData={docData} hideRetModal={hideDocRetModal} isRefresh={isRefresh} setIsRefresh={setIsRefresh} />
       <LoanFileUploadWizard isOpen={isOpen} hideModal={hideModal} selLoanObj={selLoanObj} 
       setDocData={setDocData} showDocRetModal={showDocRetModal} />
       <div className="container" style={{marginLeft:"0px", width:"100%", maxWidth:"100%"}}>

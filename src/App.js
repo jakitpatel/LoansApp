@@ -20,6 +20,7 @@ function App(props) {
           <Route exact path={`${process.env.PUBLIC_URL}/login`} component={Login} />
           <Route exact path={`${process.env.PUBLIC_URL}/dashboard`} component={Dashboard} />
           <Route exact path={`${process.env.PUBLIC_URL}/loans`} component={Dashboard} />
+          <Route exact path={`${process.env.PUBLIC_URL}/missingloans`} component={Dashboard} />
           <Route exact path={`${process.env.PUBLIC_URL}/loandetails/:loanID`} component={Dashboard} />
           <Route exact path={`${process.env.PUBLIC_URL}`} component={Login} />
         </Switch>

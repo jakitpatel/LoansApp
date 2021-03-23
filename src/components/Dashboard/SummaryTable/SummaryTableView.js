@@ -207,19 +207,19 @@ function Table({
           let color = null;
           if(column.Header=="Row Labels"){
             color = "#7C9148";
-          } else if(column.Header=="Approved By SBA" || column.id=="loanDoneCount" || column.id=="loanDoneSum"){
+          } else if(column.Header==="Approved By SBA" || column.id==="loanDoneCount" || column.id==="loanDoneSum"){
             color = "#A0CD63";
-          } else if(column.Header=="Failed Validation" || column.id=="FailedValidationCount" || column.id=="FailedValidationSum" || column.Header=="Not Approved by SBA" || column.id=="NotApprovedbySBACount" || column.id=="NotApprovedbySBASum"){
+          } else if(column.Header==="Failed Validation" || column.id==="FailedValidationCount" || column.id==="FailedValidationSum" || column.Header=="Not Approved by SBA" || column.id=="NotApprovedbySBACount" || column.id=="NotApprovedbySBASum"){
             color = "#EB3223";
-          } else if(column.Header=="Further Research Required" || column.id=="FurtherResearchReqCount" || column.id=="FurtherResearchReqSum" 
-          || column.Header=="Pending Validation" || column.id=="PendingValidationCount" || column.id=="PendingValidationSum"
-          || column.Header=="Submission Failed" || column.id=="SubmissionFailedCount" || column.id=="SubmissionFailedSum"){
+          } else if(column.Header==="Further Research Required" || column.id==="FurtherResearchReqCount" || column.id==="FurtherResearchReqSum" 
+          || column.Header==="Pending Validation" || column.id==="PendingValidationCount" || column.id==="PendingValidationSum"
+          || column.Header==="Submission Failed" || column.id==="SubmissionFailedCount" || column.id==="SubmissionFailedSum"){
             color = "#F6C242";
-          } else if(column.Header=="Under Review" || column.id=="UnderReviewCount" || column.id=="UnderReviewSum"){
+          } else if(column.Header==="Under Review" || column.id==="UnderReviewCount" || column.id==="UnderReviewSum"){
             color = "#FFFE54";
-          } else if(column.Header=="(blank)" || column.id=="BlankCount" || column.id=="BlankSum"){
+          } else if(column.Header==="(blank)" || column.id==="BlankCount" || column.id==="BlankSum"){
             color = "#4CAEEA";
-          } else if(column.Header=="Total" || column.id=="TotalCount" || column.id=="TotalSum"){
+          } else if(column.Header==="Total" || column.id==="TotalCount" || column.id==="TotalSum"){
             color = "#7C9148";
           }
           if(color!==null){

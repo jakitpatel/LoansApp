@@ -51,6 +51,12 @@ function LeftNavBar(props) {
             iconName="dollarSign"
             enableVal={LOAN_ENABLER}
           />
+          <MenuListItem
+            menuName="Missing Loans"
+            routePath={`${process.env.PUBLIC_URL}/missingloans`}
+            iconName="dollarSign"
+            enableVal={LOAN_ENABLER}
+          />
           <DownloadProtocol protocol={LoanFAQPdf} name="FAQ" />
         </ul>
       </div>

@@ -1,0 +1,21 @@
+.centerCell {
+    text-align: center;
+}
+.title-center {
+    padding: 1rem;
+}
+.btnCls {
+    padding: 1rem;
+}
+.sm-vert-form .form-group {
+    margin-bottom: 0.5rem;
+}
+table td textarea.editor-field {
+    font-size: 1rem;
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+.tableContainer .select__value-container--has-value {
+    display: none;
+}

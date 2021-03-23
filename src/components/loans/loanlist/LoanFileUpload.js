@@ -6,7 +6,7 @@ import moment from 'moment';
 const {API_KEY, SetLoans_Url} = window.constVar;
 
 function LoanFileUpload (props) {
-    const {isOpenRet, docRetData, hideRetModal, selLoanObj} = props;
+    const {isOpenRet, docRetData, hideRetModal, selLoanObj, isRefresh, setIsRefresh} = props;
 
     const { session_token, isInternalUser } = useSelector(state => {
       return {
@@ -89,10 +89,14 @@ function LoanFileUpload (props) {
         tmpLoanObj.LastModifyDate = moment().format('YYYY-MM-DD');
         let res = await axios.put(SetLoans_Url+'/'+ald_id, tmpLoanObj, options);
         console.log(res);
+        setIsRefresh(!isRefresh);
         alert("Data saved successfully!");
+        hideRetModal();
         //backToLoanList();
       } catch (error) {
         console.log(error.response);
+        //setIsRefresh(!isRefresh);
+        //hideRetModal();
         if (401 === error.response.status) {
             // handle error: inform user, go to login, etc
             let res = error.response.data;
