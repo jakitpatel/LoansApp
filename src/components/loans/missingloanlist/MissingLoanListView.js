@@ -124,7 +124,7 @@ const EditableCell = ({
       </select>
     )
   } else if(editable && columnType==="text"){
-    return retObj = <input className="editor-field" 
+    return retObj = <input style={{width:"100%"}} className="editor-field" 
       value={value} 
       onChange={onChangeInput} 
       //onBlur={onBlur} 
@@ -246,51 +246,6 @@ function Table({
     pageCount: controlledPageCount, // This means we'll also have to provide our own pageCount.
     /*,state: {
       selectedRowIds: selectedRowsTb
-    }*/
-      /*
-      useControlledState: state => {
-        return React.useMemo(
-          () => ({
-            ...state,
-            pageIndex: pageState.pageIndex,
-          }),
-          [state, pageState.pageIndex]
-        )
-      },
-      */
-    /*
-    useControlledState: state => {
-      return React.useMemo(
-        () => {
-          console.log(pageState);
-          console.log(state);
-          console.log(initialState);
-          let pageIndexVal = state.pageIndex;
-
-          if(pageState.backToList){
-            pageIndexVal = pageState.pageIndex;
-            setTimeout(() => {
-            console.log("pageIndex State : "+pageIndex);
-              dispatch({
-                type:'UPDATELOANLIST',
-                payload:{
-                  backToList:false
-                }
-              });
-            }, 2000);
-            console.log("setPageIndex : "+pageIndexVal);
-            return ({
-              ...state,
-              pageIndex: pageIndexVal,
-            })
-          } else {
-            return ({
-              ...state
-            })
-          }
-        },
-        [state]
-      )
     }*/
   },
   useFilters, // useFilters!
@@ -531,8 +486,8 @@ function Table({
         totalCount={totalCount}
         getRowProps={row => ({
           style: {
-            background: row.original.possibleDup === 'true' ? 'pink' : 'white',
-            //background: row.index % 2 === 0 ? 'rgba(0,0,0,.1)' : 'white',
+            //background: row.original.possibleDup === 'true' ? 'pink' : 'white',
+            background: 'white',
           },
         })}
         />

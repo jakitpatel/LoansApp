@@ -180,12 +180,14 @@ function Dropzone (props) {
             if(validFiles[i].type==="application/pdf" || ext==="pdf"){
                 const pdfDoc1 = await PDFDocument.load(base64);
                 console.log(pdfDoc1);
+                /*
                 const pdfDoc = await PDFDocument.create();
 
                 const [firstDonorPage] = await pdfDoc.copyPages(pdfDoc1, [0]);
                 pdfDoc.addPage(firstDonorPage);
                 console.log(pdfDoc);
-                base64 = await pdfDoc.saveAsBase64({ dataUri: true });
+                */
+                base64 = await pdfDoc1.saveAsBase64({ dataUri: true });
                 console.log("---Modified---");
                 //console.log(base64);
             }

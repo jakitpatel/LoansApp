@@ -204,6 +204,12 @@ const internalUserList = [
     { value: 'jakit',      label: 'Jakit Patel' }*/
 ];
 
+const UnAssocLoanStatusOptions = [
+    { value: '',     label: 'All' },
+    { value: 'is NULL', label: 'NULL' },
+    { value: 'BelongToLoan',     label: 'BelongToLoan' },
+    { value: 'Cancelled',         label: 'Cancelled' }
+];
 export { SBAOptions, BrokerOptions, StatusOptions, applicationStatusOptions, 
     brokerOverrideOptions, MentorAssignedOptions, ReviewerAssignedOptions,TeamBAssignedOptions,
-    ContribDocTypeOptions, BroketTeamOptions, AkayBrokerOptions, internalUserList};
+    ContribDocTypeOptions, BroketTeamOptions, AkayBrokerOptions, internalUserList, UnAssocLoanStatusOptions};

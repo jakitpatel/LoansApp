@@ -8,9 +8,10 @@ import axios from 'axios';
 import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
 import {buildSortByUrl, buildPageUrl, buildFilterUrl, buildExternalLoanExportDetailList, toCurrency} from './../../Functions/functions.js';
+import { BrokerOptions, UnAssocLoanStatusOptions} from './../../../commonVar.js';
 import SelectColumnFilter from './../../Filter/SelectColumnFilter.js';
 //import {API_KEY, Loans_Url, env, SetLoans_Url, Loan_Upload_Doc_Url} from './../../../const';
-const {API_KEY, Loans_Url, MissingLoans_Url} = window.constVar;
+const {API_KEY, SetMissingLoans_Url, MissingLoans_Url} = window.constVar;
 
 function MissingLoanlist(props) {
   
@@ -48,49 +49,157 @@ function MissingLoanlist(props) {
   //console.log("backToList : "+backToList);
 
   let columnDefs = [];
-  columnDefs.push(/*{
-    Header: "View",
-    show : true, 
-    width: 55,
-    //id: 'colViewWireDetail',
-    accessor: row => row.attrbuiteName,
-    disableFilters: true,
-    //filterable: false, // Overrides the table option
-    Cell: obj => {
-      //console.log(obj.row);
-      let loanObj = obj.row.original;
-      return (
-        <Link
-          to={{
-            pathname: `${process.env.PUBLIC_URL}/loandetails/${loanObj.ALDLoanApplicationNumberOnly}`,
-            state: obj.row.original
-          }}
-        >
-          <Icon.Edit />
-        </Link>
-      );
+  if(isInternalUser){
+    columnDefs.push({
+      field: "broker",
+      Header: "broker",
+      accessor: "broker",
+      Filter: SelectColumnFilter,
+      filter: 'includes',
+      options:BrokerOptions
+    },
+    {
+      field: "businessName",
+      Header: "businessName",
+      accessor: "businessName"
+    },
+    {
+      field: "taxID",
+      Header: "taxID",
+      accessor: "taxID"
+    },
+    {
+      field: "unassociatedLoanStatus",
+      Header: "unassociatedLoanStatus",
+      accessor: "unassociatedLoanStatus",
+      Filter: SelectColumnFilter,
+      filter: 'includes',
+      options:UnAssocLoanStatusOptions,
+      editable:true,
+      columnType:'list',
+      columnOptions:UnAssocLoanStatusOptions
+    },
+    {
+      field: "UnassociatedLoanComments",
+      Header: "UnassociatedLoanComments",
+      accessor: "UnassociatedLoanComments",
+      editable:true,
+      columnType:'text'
+    },
+    {
+      name: "LoanApplicationNumberOnly",
+      field: "LoanApplicationNumberOnly",
+      Header: "LoanApplicationNumberOnly",
+      accessor: "LoanApplicationNumberOnly",
+      editable:true,
+      columnType:'text'
+    });
+  } else {
+    columnDefs.push(
+    {
+      field: "businessName",
+      Header: "businessName",
+      accessor: "businessName"
+    },
+    {
+      field: "unassociatedLoanStatus",
+      Header: "unassociatedLoanStatus",
+      accessor: "unassociatedLoanStatus",
+      Filter: SelectColumnFilter,
+      filter: 'includes',
+      options:UnAssocLoanStatusOptions,
+      editable:true,
+      columnType:'list',
+      columnOptions:UnAssocLoanStatusOptions
+    },
+    {
+      field: "UnassociatedLoanComments",
+      Header: "UnassociatedLoanComments",
+      accessor: "UnassociatedLoanComments",
+      editable:true,
+      columnType:'text'
+    });
+  }
+
+  // We need to keep the table from resetting the pageIndex when we
+  // Update data. So we can keep track of that flag with a ref.
+
+  // When our cell renderer calls updateMyData, we'll use
+  // the rowIndex, columnId and new value to update the
+  // original data
+  const updateMyData = (rowIndex, columnId, value) => {
+    // We also turn on the flag to not reset the page
+    setSkipPageReset(true);
+    let oldData = missingloans;
+    let modifiedRec = null;
+    let newData = oldData.map((row, index) => {
+      if (index === rowIndex) {
+        modifiedRec = {
+          ...oldData[rowIndex],
+          [columnId]: value,
+        };
+        return modifiedRec
+      }
+      return row
+    });
+    saveLoanDetails({
+      [columnId]:value,
+      ID:modifiedRec.ID
+    });
+    //setData(newData);
+    dispatch({
+      type:'UPDATEMISSINGLOANLIST',
+      payload:{
+        missingloans:newData
+      }
+    });
+  }
+
+  const saveLoanDetails = async (obj) => {
+    console.log("Save Missing Loan Details");
+    console.log(obj);
+    try {
+      const options = {
+        headers: {
+          'X-DreamFactory-API-Key': API_KEY,
+          'X-DreamFactory-Session-Token': session_token
+        }
+      };
+      let tmpLoanObj = obj;
+      if(tmpLoanObj.ID === "" || tmpLoanObj.ID === null || tmpLoanObj.ID === undefined){
+        //alert("ALD_ID is empty! So, can not able to save the loan.");
+        console.log("ID is empty! So, can not able to save the missing loan.");
+        //return false;
+      } else {
+        let ald_id = tmpLoanObj.ID;
+        //tmpLoanObj.LastUpdateUser = uid;
+        tmpLoanObj.LastModifyDate = moment().format('YYYY-MM-DD');
+        let res = await axios.put(SetMissingLoans_Url+'/'+ald_id, tmpLoanObj, options);
+        console.log(res);
+        //alert("Data saved successfully!");
+        console.log("Data saved successfully!");
+      }
+    } catch (error) {
+      console.log(error.response);
+      if (401 === error.response.status) {
+          // handle error: inform user, go to login, etc
+          let res = error.response.data;
+          console.log(res.error.message);
+          //alert(res.error.message);
+      } else {
+        console.log(error);
+        //alert(error);
+      }
+      //backToWireList();
     }
-  },*/
-  {
-    field: "broker",
-    Header: "broker",
-    accessor: "broker"
-  },
-  {
-    field: "businessName",
-    Header: "businessName",
-    accessor: "businessName"
-  },
-  {
-    field: "taxID",
-    Header: "taxID",
-    accessor: "taxID"
-  },
-  {
-    field: "userName",
-    Header: "userName",
-    accessor: "userName"
-  });
+  }
+
+  // After data chagnes, we turn the flag back off
+  // so that if data actually changes when we're not
+  // editing it, the page is reset
+  React.useEffect(() => {
+    setSkipPageReset(false)
+  }, [missingloans])
 
   const fetchData = React.useCallback(({ pageSize, pageIndex, filters, sortBy }) => {
     // This will get called when the table needs new data
@@ -173,76 +282,6 @@ function MissingLoanlist(props) {
     }
   }, [ dispatch, session_token]);
 
-  //// Start Code for Wire To OFAC Value /////
-  const onAllLoansExportBtnClick = async (e,exportType) => {
-    const options = {
-      headers: {
-        'X-DreamFactory-API-Key': API_KEY,
-        'X-DreamFactory-Session-Token': session_token
-      }
-    };
-    let url = Loans_Url;
-
-    url += "?include_count=true";
-    let filtersTemp = filters;
-    if(filtersTemp.length>0){
-      console.log("filters");
-      console.log(filtersTemp);
-      url += "&filter=";
-      url += buildFilterUrl(filtersTemp);
-    }
-    if(sortBy.length>0){
-      console.log(sortBy);
-      url += buildSortByUrl(sortBy);
-    }
-
-    let tmpPageSize = 2000;
-    let tmpPageIndex = 0;
-    let totalRetRecCount = 0;
-    let totalRecCount = 2000;
-  
-    let allloandata = [];
-    url += "&limit="+tmpPageSize;
-    url += "&offset=0";
-    while(parseInt(totalRetRecCount) < parseInt(totalRecCount)){
-      //console.log("At Start");
-      console.log("totalRetRecCount : "+totalRetRecCount);
-      console.log("totalRecCount : "+totalRecCount);
-      let res = await axios.get(url, options);
-      //console.log(res.data.resource);
-      let loanArrData = res.data.resource;
-      totalRetRecCount +=  loanArrData.length;
-      //allloandata = loanArrData; ///merge array
-      allloandata = allloandata.concat(loanArrData);
-      totalRecCount = parseInt(res.data.meta.count);
-      tmpPageIndex++;
-
-      let offset = tmpPageSize * tmpPageIndex;
-      url = url.substr(0, url.lastIndexOf("=") + 1);
-      url += offset;
-      console.log("At End While");
-      console.log("totalRetRecCount : "+totalRetRecCount);
-      console.log("totalRecCount : "+totalRecCount);
-      console.log("totalRetRecCount < totalRecCount");
-      if(totalRetRecCount < totalRecCount){
-        console.log("Continue with one more request offset: "+offset);
-      } else {
-        console.log("Done Break out of loop");
-        //break;
-      }
-    }
-    if(allloandata==null){
-      allloandata = [];
-    }
-    if(!isInternalUser) {
-      if(exportType !== "allFields"){
-        allloandata = buildExternalLoanExportDetailList(allloandata);
-      }
-    }
-    setAllLoansData(allloandata);
-    setDownloadAllLoans(!downloadAllLoans);
-  }
-
   let headerTitle = "Missing Loan List";
 
   console.log("loans", missingloans);
@@ -279,6 +318,7 @@ function MissingLoanlist(props) {
         pageCount={pageCount}
         isRefresh={isRefresh}
         setIsRefresh={setIsRefresh}
+        updateMyData={updateMyData}
         skipPageReset={skipPageReset}
         teamInt={teamInt}
         teamChangeFlag={teamChangeFlag}
@@ -409,10 +449,10 @@ function MissingLoanlist(props) {
                     {downloadStoreLoans &&
                       <ExcelExport hideEl={true} excelFile={exportFileName} sheetName={exportFileName} data={storeLoansData}></ExcelExport>
                     }
+                  */}
                     <button type="button" style={{ float: "right", marginRight:"5px" }} onClick={(e)=> {setIsRefresh(!isRefresh);}} className={`btn btn-primary btn-sm`}>
                       <Icon.RefreshCw />
                     </button>
-                  */}
                   </React.Fragment>
                   <div style={{ clear:"both"}}></div>
                 </div>
