@@ -203,7 +203,7 @@ function Table({
         setIsRefresh={setIsRefresh}
         totalCount={totalCount}
         getHeaderProps={column => {
-          console.log(column);
+          //console.log(column);
           let color = null;
           if(column.Header=="Row Labels"){
             color = "#7C9148";

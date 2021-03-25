@@ -7,6 +7,7 @@ import "./SummaryTable.css";
 import axios from 'axios';
 import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
+import ToggleButtonGroupControlled from './ToggleBtnGroup.js';
 import {buildSortByUrl, buildPageUrl, buildFilterUrl, buildExternalLoanExportDetailList, toCurrency} from './../../Functions/functions.js';
 import SelectColumnFilter from './../../Filter/SelectColumnFilter.js';
 import {SBAOptions, BrokerOptions, StatusOptions, applicationStatusOptions, BroketTeamOptions} from './../../../commonVar.js';
@@ -21,6 +22,7 @@ function SummaryTable(props) {
   const [pageCount, setPageCount] = React.useState(0);
   const fetchIdRef = React.useRef(0);
   const [isRefresh, setIsRefresh] = useState(false);
+  const [optionValue, setOptionValue] = useState([1]);
   const dispatch = useDispatch();
 
   const { session_token, teamInt, uid, isInternalUser } = useSelector(state => {
@@ -350,6 +352,11 @@ function SummaryTable(props) {
       };
 
       let url = LoanSummary_Url;
+      if(optionValue===2){
+        url += "?filter=yesterday";
+      } else if(optionValue===3){
+        url += "?filter=delta";
+      }
       let res = await axios.get(url, options);
       let dataVal = res.data.resource;
       let newData = [];
@@ -372,7 +379,7 @@ function SummaryTable(props) {
     if (fetchId === fetchIdRef.current) {
       fetchLoanList();
     }
-  }, [ dispatch, session_token]);
+  }, [ dispatch, session_token, optionValue]);
 
   let disCmp =
     /*loading === true ? (
@@ -388,11 +395,26 @@ function SummaryTable(props) {
       />
     );
 
+  /*
+     * The second argument that will be passed to
+     * `handleChange` from `ToggleButtonGroup`
+     * is the SyntheticEvent object, but we are
+     * not using it in this example so we will omit it.
+     */
+  const handleChangeOption = (val) => {
+    console.log("Change Toggle Option");
+    setOptionValue(val);
+    setIsRefresh(!isRefresh);
+  }
+
   return (
     <React.Fragment>
       <div className="container" style={{marginLeft:"0px", width:"100%", maxWidth:"100%"}}>
         <div className="row">
           <div className="col-sm-12 col-md-offset-3">
+            <div style={{paddingLeft: "1rem"}}>
+              <ToggleButtonGroupControlled optionValue={optionValue} setOptionValue={setOptionValue} handleChangeOption={handleChangeOption} />
+            </div>
             {disCmp}
           </div>
         </div>
