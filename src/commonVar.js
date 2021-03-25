@@ -200,8 +200,8 @@ const internalUserList = [
     { value: 'serickson',  label: 'Steve Erickson' },
     { value: 'shossain',   label: 'Syed Hossain' },
     { value: 'mhyman',     label: 'Martin Hyman' },
-    { value: 'sbenjamin',  label: 'sbenjamin' }/*,
-    { value: 'jakit',      label: 'Jakit Patel' }*/
+    { value: 'sbenjamin',  label: 'sbenjamin' },
+    { value: 'jakit',      label: 'Jakit Patel' }
 ];
 
 const UnAssocLoanStatusOptions = [
