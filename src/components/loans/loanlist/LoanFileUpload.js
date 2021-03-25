@@ -127,7 +127,7 @@ function LoanFileUpload (props) {
               <th>Object Type</th>
             </thead>
             <tbody> 
-            {docRetData.map((data) => (
+            {docRetData.length > 0 && docRetData.map((data) => (
               <tr key={data.id}> 
                 <td>{data.id}</td>
                 <td>{data.documentId}</td>

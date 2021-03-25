@@ -80,9 +80,9 @@ function MissingLoanlist(props) {
       columnOptions:UnAssocLoanStatusOptions
     },
     {
-      field: "UnassociatedLoanComments",
-      Header: "UnassociatedLoanComments",
-      accessor: "UnassociatedLoanComments",
+      field: "unassociatedLoanComments",
+      Header: "unassociatedLoanComments",
+      accessor: "unassociatedLoanComments",
       editable:true,
       columnType:'text'
     },
@@ -113,9 +113,9 @@ function MissingLoanlist(props) {
       columnOptions:UnAssocLoanStatusOptions
     },
     {
-      field: "UnassociatedLoanComments",
-      Header: "UnassociatedLoanComments",
-      accessor: "UnassociatedLoanComments",
+      field: "unassociatedLoanComments",
+      Header: "unassociatedLoanComments",
+      accessor: "unassociatedLoanComments",
       editable:true,
       columnType:'text'
     });
