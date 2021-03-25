@@ -2,11 +2,11 @@ import React from "react";
 import "./LoanDetailForm.css";
 import ReactTooltip from 'react-tooltip';
 import { useSelector } from 'react-redux';
-import {StatusOptions, brokerOverrideOptions, MentorAssignedOptions, 
-  ReviewerAssignedOptions, TeamBAssignedOptions} from './../../../commonVar.js';
 import SelectInput from './SelectInput';
 import TextAreaInput from './TextAreaInput';
 import TextInput from './TextInput';
+//import {StatusOptions, brokerOverrideOptions, MentorAssignedOptions, ReviewerAssignedOptions, TeamBAssignedOptions} from './../../../commonVar.js';
+const {StatusOptions, brokerOverrideOptions, MentorAssignedOptions, ReviewerAssignedOptions, TeamBAssignedOptions} = window.commonVar;
 
 function LoanDetailForm(props) {
   const { isInternalUser } = useSelector(state => {

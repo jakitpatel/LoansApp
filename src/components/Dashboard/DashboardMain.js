@@ -1,10 +1,11 @@
 import React from "react";
 import { useSelector } from 'react-redux';
 import preval from 'preval.macro';
-//import {API_URL} from './../../const.js';
 //import PieChart from './Piechart';
 import SummaryTable from './SummaryTable/SummaryTable.js';
-import { internalUserList } from './../../commonVar';
+//import { internalUserList } from './../../commonVar';
+//import {API_URL} from './../../const.js';
+const { internalUserList } = window.commonVar;
 const {API_URL, env} = window.constVar;
 
 function DashboardMain(props) {

@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
+//import { useParams } from "react-router-dom";
 import SummaryTableView from "./SummaryTableView.js";
-import * as Icon from "react-feather";
+//import * as Icon from "react-feather";
 import "./SummaryTable.css";
 import axios from 'axios';
 import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
 import ToggleButtonGroupControlled from './ToggleBtnGroup.js';
-import {buildSortByUrl, buildPageUrl, buildFilterUrl, buildExternalLoanExportDetailList, toCurrency} from './../../Functions/functions.js';
+import {toCurrency} from './../../Functions/functions.js';
 import SelectColumnFilter from './../../Filter/SelectColumnFilter.js';
-import {SBAOptions, BrokerOptions, StatusOptions, applicationStatusOptions, BroketTeamOptions} from './../../../commonVar.js';
 //import {API_KEY, Loans_Url, env, SetLoans_Url, Loan_Upload_Doc_Url} from './../../../const';
 const {API_KEY, LoanSummary_Url} = window.constVar;
 

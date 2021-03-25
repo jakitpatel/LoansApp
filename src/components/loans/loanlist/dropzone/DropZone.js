@@ -2,10 +2,10 @@ import React, { useRef, useState, useEffect } from 'react';
 import axios from 'axios';
 import Modal from "react-bootstrap/Modal";
 import { useSelector, useDispatch } from 'react-redux';
-import { ContribDocTypeOptions} from './../../../../commonVar.js';
 import { PDFDocument } from 'pdf-lib'
 import './DropZone.css';
-
+//import { ContribDocTypeOptions} from './../../../../commonVar.js';
+const { ContribDocTypeOptions} = window.commonVar;
 const {API_KEY, Loan_Upload_Doc_Url} = window.constVar;
 
 function Dropzone (props) {

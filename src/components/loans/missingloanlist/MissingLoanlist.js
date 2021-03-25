@@ -8,10 +8,11 @@ import axios from 'axios';
 import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
 import {buildSortByUrl, buildPageUrl, buildFilterUrl, buildExternalLoanExportDetailList, toCurrency} from './../../Functions/functions.js';
-import { BrokerOptions, UnAssocLoanStatusOptions} from './../../../commonVar.js';
 import SelectColumnFilter from './../../Filter/SelectColumnFilter.js';
 //import {API_KEY, Loans_Url, env, SetLoans_Url, Loan_Upload_Doc_Url} from './../../../const';
 const {API_KEY, SetMissingLoans_Url, MissingLoans_Url} = window.constVar;
+//import { BrokerOptions, UnAssocLoanStatusOptions} from './../../../commonVar.js';
+const { BrokerOptions, UnAssocLoanStatusOptions} = window.commonVar;
 
 function MissingLoanlist(props) {
   
