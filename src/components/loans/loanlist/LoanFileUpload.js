@@ -127,14 +127,21 @@ function LoanFileUpload (props) {
               <th>Object Type</th>
             </thead>
             <tbody> 
-            {docRetData.length > 0 && docRetData.map((data) => (
-              <tr key={data.id}> 
-                <td>{data.id}</td>
-                <td>{data.documentId}</td>
-                <td>{data.objectId}</td>
-                <td>{data.objectType}</td>
-              </tr>
-            ))}
+            {docRetData.length > 0 && docRetData.map((data) => {
+              //if(data!==null){
+                return (
+                  <tr key={data.id}> 
+                    <td>{data.id}</td>
+                    <td>{data.documentId}</td>
+                    <td>{data.objectId}</td>
+                    <td>{data.objectType}</td>
+                  </tr>
+                )
+              /*} else {
+                return null;
+              }*/
+            }
+            )}
             </tbody> 
           </table>
         </Modal.Body>
