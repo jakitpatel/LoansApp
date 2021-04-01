@@ -13,7 +13,7 @@ if (env === 'DEV') {
     API_CONTRIB_URL = "https://8ty30aj3ki.execute-api.us-east-1.amazonaws.com/cfsb_contrib/";
 } else if(env === 'DEVLOCAL'){
     API_URL = "http://localhost:3001/";  // For Local Env, Don't Modify
-    API_CONTRIB_URL = "http://localhost:3001/";  // For Local Env, Don't Modify
+    API_CONTRIB_URL = "http://localhost:3000/";  // For Local Env, Don't Modify
 }
 
 window.constVar = {
@@ -25,6 +25,7 @@ window.constVar = {
     Loans_Url    : API_URL+"getppp",
     SetLoans_Url : API_URL+"setloanstatus",
     Loan_Upload_Doc_Url  : API_CONTRIB_URL+"contrib",
+    //Loan_Upload_Doc_Url  : API_CONTRIB_URL+"contrib.json",
     LoanDetails_Url      : API_URL+"getLoanDetails?filter=",
     MissingLoans_Url     : API_URL+"getassociates",
     SetMissingLoans_Url  : API_URL+"setwebform",  

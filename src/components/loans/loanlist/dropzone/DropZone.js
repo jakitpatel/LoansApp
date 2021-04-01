@@ -156,6 +156,7 @@ function Dropzone (props) {
         //uploadModalRef.current.style.display = 'block';
         //uploadRef.current.innerHTML = 'File(s) Uploading...';
         let docRetArr = [];
+        let flagSuccess = true;
         for (let i = 0; i < validFiles.length; i++) {
             let base64 = await convertBase64(validFiles[i]);
 
@@ -186,24 +187,34 @@ function Dropzone (props) {
             tmpLoanObj.ProposedLoanId = selLoanObj.proposedLoanId;
             tmpLoanObj.associationCustomerId = selLoanObj.customerId;
             tmpLoanObj.content        = base64;
+            //tmpLoanObj.image          = base64;
+            //tmpLoanObj.key            = "1be2b400c6163908c81e8e455197effe";
 
-            let res = await axios.post(Loan_Upload_Doc_Url, tmpLoanObj/*, {
+            let res = await axios.post(Loan_Upload_Doc_Url, tmpLoanObj, {
                 onUploadProgress: (progressEvent) => {
                     const uploadPercentage = Math.floor((progressEvent.loaded / progressEvent.total) * 100);
-                    progressRef.current.innerHTML = `${uploadPercentage}%`;
-                    progressRef.current.style.width = `${uploadPercentage}%`;
+                    //progressRef.current.innerHTML = `${uploadPercentage}%`;
+                    //progressRef.current.style.width = `${uploadPercentage}%`;
 
+                    //const index = validFiles.findIndex(e => e.name === name);
+                    validFiles[i]['uploadPercentage'] = `${uploadPercentage}%`;
+                    //setValidFiles(prevArray => [...prevArray, validFiles[i]]);
+                    setValidFiles([...validFiles]);
                     if (uploadPercentage === 100) {
-                        console.log("File Uploaded successfully!");
-                        uploadRef.current.innerHTML = 'File(s) Uploaded';
+                        console.log(validFiles[i].name + "File Uploaded successfully!");
+                        //uploadRef.current.innerHTML = 'File(s) Uploaded';
+                        //uploadFileMsg = "File(s) Uploaded";
+                        /*
                         validFiles.length = 0;
                         setValidFiles([...validFiles]);
                         setSelectedFiles([...validFiles]);
                         setUnsupportedFiles([...validFiles]);
+                        */
                     }
                 },
-            }*/)
+            })
             .catch((error) => {
+                flagSuccess = false;
                 //uploadRef.current.innerHTML = `<span class="error">Error Uploading File(s)</span>`;
                 //progressRef.current.style.backgroundColor = 'red';
                 if(error.response){
@@ -222,13 +233,17 @@ function Dropzone (props) {
                     //alert(error);
                 }
             })
-            console.log(res.data);
-            docRetArr.push(res.data);
+            if(res.data){
+                console.log(res.data);
+                docRetArr.push(res.data);
+            }
         }
-        console.log("File Uploaded successfully!");
-        hideModal();
-        setDocData(docRetArr);
-        showDocRetModal();
+        if(flagSuccess){
+            console.log("All Files are uploaded successfully!");
+            hideModal();
+            setDocData(docRetArr);
+            showDocRetModal();
+        }
     }
 
     const closeUploadModal = () => {
@@ -267,42 +282,63 @@ function Dropzone (props) {
                 </div>
                 <div className="file-display-container">
                     {
-                        validFiles.map((data, i) => 
-                            <div className="file-status-bar" key={i}>
-                                <div style={{float:"left"}}>
-                                    <div className="file-type-logo"></div>
-                                    <div className="file-type">{fileType(data.name)}</div>
-                                    <span className={`file-name ${data.invalid ? 'file-error' : ''}`}>{data.name}</span>
-                                    <span className="file-size">({fileSize(data.size)})</span> {data.invalid && <span className='file-error-message'>({errorMessage})</span>}
+                        validFiles.map((data, i) => {
+                            let pct = `${data.uploadPercentage}%`;
+                            const divStyle = {
+                                width: data.uploadPercentage
+                            };                        
+                            return (
+                            <div className="file-container-block" style={{marginBottom:"10px"}} key={i}>
+                                <div className="file-status-bar">
+                                    <div style={{float:"left"}}>
+                                        <div className="file-type-logo"></div>
+                                        <div className="file-type">{fileType(data.name)}</div>
+                                        <span className={`file-name ${data.invalid ? 'file-error' : ''}`}>{data.name}</span>
+                                        <span className="file-size">({fileSize(data.size)})</span> {data.invalid && <span className='file-error-message'>({errorMessage})</span>}
+                                    </div>
+                                    <div style={{float:"right", width:"30%", marginRight:"30px"}}>
+                                        <select
+                                        className="form-control custom-select"
+                                        name="docType"
+                                        value={data.docType}
+                                        onChange={(e)=>{handleDocTypeChange(data, e)}}
+                                        >
+                                        <option value=""></option>
+                                        {ContribDocTypeOptions.map((option, i) => {
+                                            if(option.label!=="All"){
+                                                return (
+                                                    <option key={i} value={option.value}>
+                                                    {option.label}
+                                                    </option>
+                                                )
+                                            } else {
+                                                return null;
+                                            }
+                                        })}           
+                                        </select>
+                                    </div>
+                                    <div className="file-remove" onClick={() => removeFile(data.name)}>X</div>
+                                    <div style={{clear:"both"}}></div>
                                 </div>
-                                <div style={{float:"right", width:"30%", marginRight:"30px"}}>
-                                    <select
-                                    className="form-control custom-select"
-                                    name="docType"
-                                    value={data.docType}
-                                    onChange={(e)=>{handleDocTypeChange(data, e)}}
-                                    >
-                                    <option value=""></option>
-                                    {ContribDocTypeOptions.map((option, i) => {
-                                        if(option.label!=="All"){
-                                            return (
-                                                <option key={i} value={option.value}>
-                                                {option.label}
-                                                </option>
-                                            )
-                                        } else {
-                                            return null;
-                                        }
-                                    })}           
-                                    </select>
+                                <div className="upload-modal">
+                                    {/*
+                                    <div className="overlay"></div>
+                                    <div className="close" onClick={(() => closeUploadModal())}>X</div>
+                                    */}
+                                    <div className="progress-container">
+                                        {/*<span>{data.uploadFileMsg}</span>*/}
+                                        <div className="progress">
+                                            <div className="progress-bar" style={divStyle}>{data.uploadPercentage}</div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="file-remove" onClick={() => removeFile(data.name)}>X</div>
-                            </div>
+                            </div>)
+                            }
                         )
                     }
                 </div>
             </div>
-
+            {/*
             <div className="upload-modal" ref={uploadModalRef}>
                 <div className="overlay"></div>
                 <div className="close" onClick={(() => closeUploadModal())}>X</div>
@@ -313,6 +349,7 @@ function Dropzone (props) {
                     </div>
                 </div>
             </div>
+            */}
             </div>
           </div>
         </Modal.Body>

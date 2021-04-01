@@ -121,10 +121,12 @@ function LoanFileUpload (props) {
         <Modal.Body>
           <table width="100%">
             <thead> 
-              <th>ID</th>
-              <th>Document ID</th>
-              <th>Object Id</th>
-              <th>Object Type</th>
+              <tr>
+                <th>ID</th>
+                <th>Document ID</th>
+                <th>Object Id</th>
+                <th>Object Type</th>
+              </tr>
             </thead>
             <tbody> 
             {docRetData.length > 0 && docRetData.map((data) => {
