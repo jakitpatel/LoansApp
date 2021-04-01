@@ -1,9 +1,9 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React from 'react';
 import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
 import ToggleButton from 'react-bootstrap/ToggleButton'
 
 function ToggleButtonGroupControlled(props) {
-    const { handleChangeOption, optionValue, setOptionValue } = props;
+    const { handleChangeOption, optionValue } = props;
   
     return (
       <ToggleButtonGroup type="radio" name="options" value={optionValue} onChange={handleChangeOption}>

@@ -1,7 +1,6 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { useTable, useSortBy, useFilters, usePagination, useRowSelect, useAsyncDebounce } from 'react-table';
+import React from "react";
+import { useTable, useSortBy, useAsyncDebounce } from 'react-table';
 import styled from 'styled-components';
-import { useSelector, useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import './SummaryTableView.css';
 
@@ -62,7 +61,7 @@ const Styles = styled.div`
 
 // Create a default prop getter
 const defaultPropGetter = () => ({})
-// Be sure to pass our updateMyData and the skipPageReset option
+
 function Table({
   getRowProps = defaultPropGetter,
   getTbdProps, 
@@ -79,7 +78,6 @@ function Table({
 }) {
 
   const location = useLocation();
-  const dispatch = useDispatch();
 
   // Use the state and functions returned from useTable to build your UI
 
@@ -90,7 +88,6 @@ function Table({
     rows, //-> we change 'rows' to 'page'
     //page,
     prepareRow,
-    setHiddenColumns,
   } = useTable({
     getTbdProps,
     columns,
@@ -182,10 +179,8 @@ function Table({
    //const data = React.useMemo(() => props.items, [props.items])
    const columns = React.useMemo(() => props.columnDefs,[props.columnDefs])
 
-   let { initialState, loading, 
-    fetchData, pageCount, 
-    data, isRefresh, setIsRefresh, pageState,
-    updateMyData, totalCount } = props;
+   let { initialState, loading, fetchData, pageCount, 
+    data, isRefresh, setIsRefresh, pageState, totalCount } = props;
     
     //console.log("List Table : isRefresh :"+isRefresh);
    return (
@@ -205,11 +200,11 @@ function Table({
         getHeaderProps={column => {
           //console.log(column);
           let color = null;
-          if(column.Header=="Row Labels"){
+          if(column.Header==="Row Labels"){
             color = "#7C9148";
           } else if(column.Header==="Approved By SBA" || column.id==="loanDoneCount" || column.id==="loanDoneSum"){
             color = "#A0CD63";
-          } else if(column.Header==="Failed Validation" || column.id==="FailedValidationCount" || column.id==="FailedValidationSum" || column.Header=="Not Approved by SBA" || column.id=="NotApprovedbySBACount" || column.id=="NotApprovedbySBASum"){
+          } else if(column.Header==="Failed Validation" || column.id==="FailedValidationCount" || column.id==="FailedValidationSum" || column.Header==="Not Approved by SBA" || column.id==="NotApprovedbySBACount" || column.id==="NotApprovedbySBASum"){
             color = "#EB3223";
           } else if(column.Header==="Further Research Required" || column.id==="FurtherResearchReqCount" || column.id==="FurtherResearchReqSum" 
           || column.Header==="Pending Validation" || column.id==="PendingValidationCount" || column.id==="PendingValidationSum"
@@ -240,24 +235,24 @@ function Table({
         })}
         getRowProps={row => {
           let color = "white";
-          if(row.index==0 || row.index==1){
+          if(row.index===0 || row.index===1){
             color = "#9FCBDA";
-          } else if(row.index==2){
+          } else if(row.index===2){
             color = "#91B1DA";
-          } else if(row.index==3 || row.index==4 || row.index==12){
+          } else if(row.index===3 || row.index===4 || row.index===12){
             color = "#CAC0D8";
-          } else if(row.index==5){
+          } else if(row.index===5){
             color = "#D09996";
-          } else if(row.index==6 || row.index==7 || row.index==8 || row.index==10 || row.index==11){
+          } else if(row.index===6 || row.index===7 || row.index===8 || row.index===10 || row.index===11){
             color = "#C8D5A1";
-          }else if(row.index==9){
+          }else if(row.index===9){
             color = "#F6D6B8";
-          } else if(row.index==13){
+          } else if(row.index===13){
             color = "#E3DFEB";
           } 
           
           let fontweight = "normal";
-          if(row.original.broker == "GrandTotal"){
+          if(row.original.broker === "GrandTotal"){
             fontweight = "bolder";
           }
           return ({

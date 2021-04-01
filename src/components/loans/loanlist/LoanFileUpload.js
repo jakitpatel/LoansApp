@@ -1,6 +1,6 @@
 import React from 'react';
 import Modal from "react-bootstrap/Modal";
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import axios from 'axios';
 import moment from 'moment';
 const {API_KEY, SetLoans_Url} = window.constVar;

@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
 import MissingLoanListView from "./MissingLoanListView.js";
 import * as Icon from "react-feather";
 import "./MissingLoanlist.css";
 import axios from 'axios';
 import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
-import {buildSortByUrl, buildPageUrl, buildFilterUrl, buildExternalLoanExportDetailList, toCurrency} from './../../Functions/functions.js';
+import {buildSortByUrl, buildPageUrl, buildFilterUrl} from './../../Functions/functions.js';
 import SelectColumnFilter from './../../Filter/SelectColumnFilter.js';
 //import {API_KEY, Loans_Url, env, SetLoans_Url, Loan_Upload_Doc_Url} from './../../../const';
 const {API_KEY, SetMissingLoans_Url, MissingLoans_Url} = window.constVar;
@@ -18,24 +16,15 @@ function MissingLoanlist(props) {
   
   // We'll start our table without any data
   const [skipPageReset, setSkipPageReset] = React.useState(false);
-  const [allLoansData, setAllLoansData] = React.useState([]);
-  const [storeLoansData, setStoreLoansData] = React.useState([]);
-  //const [loanListData, setLoanListData] = React.useState([]);
-  //const [loanDetailsData, setLoanDetailsData] = React.useState([]);
   const [filtersarr, setFiltersarr] = React.useState([]);
-  //const [data, setData] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
   const [pageCount, setPageCount] = React.useState(0);
   const fetchIdRef = React.useRef(0);
-
-  const [downloadAllLoans, setDownloadAllLoans] = useState(false);
-  const [downloadStoreLoans, setDownloadStoreLoans] = useState(false);
-  const [exportFileName, setExportFileName] = React.useState("");
   const [isRefresh, setIsRefresh] = useState(false);
 
   const dispatch = useDispatch();
 
-  const { session_token, teamInt,teamChangeFlag, uid, isInternalUser } = useSelector(state => {
+  const { session_token, teamInt,teamChangeFlag, isInternalUser } = useSelector(state => {
       return {
           ...state.userReducer
       }
@@ -327,97 +316,6 @@ function MissingLoanlist(props) {
         totalCount={totalCount}
       />
     );
-
-  const onLoanListExport = (event, dataType) => {
-    console.log("On Loan List Export Button Click");
-    if(missingloans.length > 0){
-      console.log(dataType);
-      let newArray = [],exportFileNameVal="";
-      if(dataType==="List"){
-        exportFileNameVal = "LoanList";
-        newArray = missingloans.map((data) => {
-          if(isInternalUser){
-            if(teamInt==="teama"){
-              return {
-                'ALDLoanApplicationNumberOnly' : data.ALDLoanApplicationNumberOnly,
-                'ReviewerAssigned': data.ReviewerAssigned,
-                'MentorAssigned' : data.MentorAssigned,
-                'ApplicationCreatedDate' : data.ApplicationCreatedDate,
-                'LastModifyDate' : data.LastModifyDate,
-                'Primary Borrower' : data.PrimaryBorrowers,
-                'TotalRequest' : data.FirstLoanAmount,
-                'StatusAComments': data.StatusAComments,
-                'ApplicationStatus' : data.statusIndication,
-                'SBAStatus' : data.SBAStatus,
-                'Broker'    : data.broker,
-                'EIN#': data.TaxID,
-                'Borrower Address': data.Address1,
-                'DocumentsSent': data.DocumentsSent,
-                'DocumentsRequired' : data.DocumentsRequired
-              }
-            } else if(teamInt==="teamb"){
-              return {
-                'ReviewerAssigned': data.ReviewerAssigned,
-                'ALDLoanApplicationNumberOnly' : data.ALDLoanApplicationNumberOnly,
-                'Broker'    : data.broker,
-                'Primary Borrower' : data.PrimaryBorrowers,
-                'SBAStatus' : data.SBAStatus,
-                'ErrorMessage' : data.ErrorMessage,
-                'MentorAssigned' : data.MentorAssigned,
-                'StatusAComments': data.StatusAComments,
-                'Application Status"' : data.R2_ApplicationStatus,
-                'statusIndication' : data.statusIndication,
-                'teambmember' : data.teambmember
-              }
-            } else if(teamInt==="teamc"){
-              return {
-                'ReviewerAssigned': data.ReviewerAssigned,
-                'ALDLoanApplicationNumberOnly' : data.ALDLoanApplicationNumberOnly,
-                'Primary Borrower' : data.PrimaryBorrowers,
-                'TotalRequest' : data.FirstLoanAmount,
-                'SBAStatus' : data.SBAStatus,
-                'MentorAssigned' : data.MentorAssigned,
-                'StatusCComments': data.StatusCComments,
-                'Application Status"' : data.R2_ApplicationStatus
-              }
-            } else {
-              return null;
-            }
-          } else {
-            let amt = data.R2_LoanAmount;
-            if(amt!==null) {
-              amt = toCurrency(amt);
-            }
-            return {
-              'ApplicationCreatedDate' : data.ApplicationCreatedDate,
-              'BusinessName' : data.PrimaryBorrower,
-              'LoanApplicationNumber': data.ALDLoanApplicationNumberOnly,
-              'TotalRequest' : data.R2_LoanAmount,
-              'LastModifyDate' : data.LastModifyDate,
-              'SBALoanNumber': data.SBALoanNumber,
-              'SBAApprovalDate': data.SBAApprovalDate,
-              'SBAStatus' : data.SBAStatus,
-              'Overall Status' : data.statusIndication
-            }
-          }
-        });
-      } else {
-        exportFileNameVal = "LoanListDetails";
-        if(isInternalUser){
-          newArray = missingloans;
-        } else {
-          newArray = buildExternalLoanExportDetailList(missingloans);
-        }
-      }
-      setStoreLoansData(newArray);
-      setExportFileName(exportFileNameVal);
-      setDownloadStoreLoans(!downloadStoreLoans);
-    } else {
-      console.log("Return From Loans Export");
-      alert("No Loan is present");
-      return false;
-    }
-  }
 
   return (
     <React.Fragment>

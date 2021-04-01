@@ -1,12 +1,11 @@
 import React, { useRef, useState, useEffect } from 'react';
 import axios from 'axios';
 import Modal from "react-bootstrap/Modal";
-import { useSelector, useDispatch } from 'react-redux';
 import { PDFDocument } from 'pdf-lib'
 import './DropZone.css';
 //import { ContribDocTypeOptions} from './../../../../commonVar.js';
 const { ContribDocTypeOptions} = window.commonVar;
-const {API_KEY, Loan_Upload_Doc_Url} = window.constVar;
+const { Loan_Upload_Doc_Url} = window.constVar;
 
 function Dropzone (props) {
     const fileInputRef = useRef();
@@ -19,12 +18,6 @@ function Dropzone (props) {
     const [errorMessage, setErrorMessage] = useState('');
 
     const {hideModal, selLoanObj, setDocData, showDocRetModal} = props;
-
-    const { session_token } = useSelector(state => {
-        return {
-            ...state.userReducer
-        }
-    });
 
     useEffect(() => {
         let filteredArr = selectedFiles.reduce((acc, current) => {
@@ -162,12 +155,6 @@ function Dropzone (props) {
     const uploadFiles = async () => {
         //uploadModalRef.current.style.display = 'block';
         //uploadRef.current.innerHTML = 'File(s) Uploading...';
-        const options = {
-            headers: {
-                'X-DreamFactory-API-Key': API_KEY,
-                'X-DreamFactory-Session-Token': session_token
-            }
-        };
         let docRetArr = [];
         for (let i = 0; i < validFiles.length; i++) {
             let base64 = await convertBase64(validFiles[i]);
@@ -178,7 +165,7 @@ function Dropzone (props) {
             let ext = fileType(validFiles[i].name);
             //console.log(base64);
             if(validFiles[i].type==="application/pdf" || ext==="pdf"){
-                const pdfDoc1 = await PDFDocument.load(base64);
+                const pdfDoc1 = await PDFDocument.load(base64,{ignoreEncryption:true});
                 console.log(pdfDoc1);
                 /*
                 const pdfDoc = await PDFDocument.create();
@@ -298,11 +285,13 @@ function Dropzone (props) {
                                     <option value=""></option>
                                     {ContribDocTypeOptions.map((option, i) => {
                                         if(option.label!=="All"){
-                                        return (
-                                            <option key={i} value={option.value}>
-                                            {option.label}
-                                            </option>
-                                        )
+                                            return (
+                                                <option key={i} value={option.value}>
+                                                {option.label}
+                                                </option>
+                                            )
+                                        } else {
+                                            return null;
                                         }
                                     })}           
                                     </select>

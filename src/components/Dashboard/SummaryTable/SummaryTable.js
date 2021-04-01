@@ -1,14 +1,11 @@
-import React, { useState, useEffect } from "react";
-//import { useParams } from "react-router-dom";
+import React, { useState } from "react";
 import SummaryTableView from "./SummaryTableView.js";
-//import * as Icon from "react-feather";
 import "./SummaryTable.css";
 import axios from 'axios';
 import moment from 'moment';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import ToggleButtonGroupControlled from './ToggleBtnGroup.js';
 import {toCurrency} from './../../Functions/functions.js';
-import SelectColumnFilter from './../../Filter/SelectColumnFilter.js';
 //import {API_KEY, Loans_Url, env, SetLoans_Url, Loan_Upload_Doc_Url} from './../../../const';
 const {API_KEY, LoanSummary_Url} = window.constVar;
 
@@ -17,13 +14,11 @@ function SummaryTable(props) {
   // We'll start our table without any data
   const [data, setData] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
-  const [pageCount, setPageCount] = React.useState(0);
   const fetchIdRef = React.useRef(0);
   const [isRefresh, setIsRefresh] = useState(false);
   const [optionValue, setOptionValue] = useState([1]);
-  const dispatch = useDispatch();
 
-  const { session_token, teamInt, uid, isInternalUser } = useSelector(state => {
+  const { session_token } = useSelector(state => {
       return {
           ...state.userReducer
       }
@@ -377,7 +372,7 @@ function SummaryTable(props) {
     if (fetchId === fetchIdRef.current) {
       fetchLoanList();
     }
-  }, [ dispatch, session_token, optionValue]);
+  }, [session_token, optionValue]);
 
   let disCmp =
     /*loading === true ? (

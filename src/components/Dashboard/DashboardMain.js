@@ -9,7 +9,7 @@ const { internalUserList } = window.commonVar;
 const {API_URL, env} = window.constVar;
 
 function DashboardMain(props) {
-    const { name, isInternalUser, teamInt, uid, email } = useSelector(state => {
+    const { name, isInternalUser, teamInt, uid } = useSelector(state => {
         return {
             ...state.userReducer
         }

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import LoanListView from "./LoanListView.js";
 import * as Icon from "react-feather";
@@ -12,9 +11,8 @@ import SelectColumnFilter from './../../Filter/SelectColumnFilter.js';
 import ExcelExport from './../../ExcelExport/ExcelExport';
 import LoanFileUpload from './LoanFileUpload';
 import LoanFileUploadWizard from './LoanFileUploadWizard';
-import Modal from "react-bootstrap/Modal";
 //import {API_KEY, Loans_Url, env, SetLoans_Url, Loan_Upload_Doc_Url} from './../../../const';
-const {API_KEY, Loans_Url, SetLoans_Url, Loan_Upload_Doc_Url} = window.constVar;
+const {API_KEY, Loans_Url, SetLoans_Url} = window.constVar;
 //import {SBAOptions, BrokerOptions, StatusOptions, applicationStatusOptions, BroketTeamOptions, MentorAssignedOptions, ReviewerAssignedOptions, AkayBrokerOptions} from './../../../commonVar.js';
 const {SBAOptions, BrokerOptions, StatusOptions, applicationStatusOptions, BroketTeamOptions, MentorAssignedOptions, ReviewerAssignedOptions, AkayBrokerOptions} = window.commonVar;
 
@@ -24,10 +22,7 @@ function Loanlist(props) {
   const [skipPageReset, setSkipPageReset] = React.useState(false);
   const [allLoansData, setAllLoansData] = React.useState([]);
   const [storeLoansData, setStoreLoansData] = React.useState([]);
-  //const [loanListData, setLoanListData] = React.useState([]);
-  //const [loanDetailsData, setLoanDetailsData] = React.useState([]);
   const [filtersarr, setFiltersarr] = React.useState([]);
-  //const [data, setData] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
   const [pageCount, setPageCount] = React.useState(0);
   const fetchIdRef = React.useRef(0);
