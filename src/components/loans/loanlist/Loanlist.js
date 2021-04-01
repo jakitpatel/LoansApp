@@ -14,7 +14,7 @@ import LoanFileUploadWizard from './LoanFileUploadWizard';
 //import {API_KEY, Loans_Url, env, SetLoans_Url, Loan_Upload_Doc_Url} from './../../../const';
 const {API_KEY, Loans_Url, SetLoans_Url} = window.constVar;
 //import {SBAOptions, BrokerOptions, StatusOptions, applicationStatusOptions, BroketTeamOptions, MentorAssignedOptions, ReviewerAssignedOptions, AkayBrokerOptions} from './../../../commonVar.js';
-const {SBAOptions, BrokerOptions, StatusOptions, applicationStatusOptions, BroketTeamOptions, MentorAssignedOptions, ReviewerAssignedOptions, AkayBrokerOptions} = window.commonVar;
+const {SBAOptions, BrokerOptions, StatusOptions, applicationStatusOptions, BroketTeamOptions, MentorAssignedOptions, ReviewerAssignedOptions, AkayBrokerOptions, TeamBAssignedOptions} = window.commonVar;
 
 function Loanlist(props) {
   
@@ -323,7 +323,13 @@ function Loanlist(props) {
         {
           field: "teambmember",
           Header: "teambmember",
-          accessor: "teambmember"
+          accessor: "teambmember",
+          /*Filter: SelectColumnFilter,
+          filter: 'includes',
+          options:TeamBAssignedOptions,*/
+          editable:true,
+          columnType:'list',
+          columnOptions:TeamBAssignedOptions
         });
       } else if(teamInt==="teamc"){
         columnDefs.push({
