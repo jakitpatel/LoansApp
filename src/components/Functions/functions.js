@@ -44,7 +44,7 @@ const buildSortByUrl = (sortArr) => {
         filterUrl += " and ("+filterClm+" is null)";
       }
     } else {
-      if(filterClm==="ALDLoanApplicationNumberOnly" || filterClm==="TaxID" || filterClm==="taxID"){
+      if(filterClm==="ALDLoanApplicationNumberOnly" || filterClm==="TaxID"){
         filterOpr = "=";
         filterUrl += " and ("+filterClm+" "+filterOpr+" "+filterVal+")";
       } else {
