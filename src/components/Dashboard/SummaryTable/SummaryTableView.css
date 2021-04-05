@@ -21,7 +21,7 @@
     border-collapse: separate;
 }
 .tableContainer {
-    max-height: 1200px;
+    max-height: 100%;
     overflow-x: auto;
     border-bottom: 1px solid black;
 }
