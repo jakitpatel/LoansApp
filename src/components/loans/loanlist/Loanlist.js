@@ -761,42 +761,49 @@ function Loanlist(props) {
       //console.log("At Start");
       console.log("totalRetRecCount : "+totalRetRecCount);
       console.log("totalRecCount : "+totalRecCount);
-      let res = await axios.get(url, options);
-      //console.log(res.data.resource);
-      let loanArrData = res.data.resource;
-      totalRetRecCount +=  loanArrData.length;
-      //allloandata = loanArrData; ///merge array
-      allloandata = allloandata.concat(loanArrData);
-      totalRecCount = parseInt(res.data.meta.count);
-      tmpPageIndex++;
+      try {
+        let res = await axios.get(url, options);
+        //console.log(res.data.resource);
+        let loanArrData = res.data.resource;
+        totalRetRecCount +=  loanArrData.length;
+        //allloandata = loanArrData; ///merge array
+        allloandata = allloandata.concat(loanArrData);
+        totalRecCount = parseInt(res.data.meta.count);
+        tmpPageIndex++;
 
-      /// If Next is not equal to length+Offset then break out of it
-      if(res.data.meta.next){
-        let nextOffsetRecCnt = parseInt(res.data.meta.next);
-        console.log("nextOffsetRecCnt : "+nextOffsetRecCnt);
-        console.log("rec Cnt : "+loanArrData.length);
-        console.log("lastOffset : "+lastOffset);
-        if((loanArrData.length + lastOffset) !== nextOffsetRecCnt){
-          flag = false;
-          console.log("Next is not equal to length+Offset then break out of it");
-          break;
+        /// If Next is not equal to length+Offset then break out of it
+        if(res.data.meta.next){
+          let nextOffsetRecCnt = parseInt(res.data.meta.next);
+          console.log("nextOffsetRecCnt : "+nextOffsetRecCnt);
+          console.log("rec Cnt : "+loanArrData.length);
+          console.log("lastOffset : "+lastOffset);
+          if((loanArrData.length + lastOffset) !== nextOffsetRecCnt){
+            flag = false;
+            console.log("Next is not equal to length+Offset then break out of it");
+            break;
+          }
         }
-      }
 
-      let offset = tmpPageSize * tmpPageIndex;
-      url = url.substr(0, url.lastIndexOf("=") + 1);
-      url += offset;
-      console.log("At End While");
-      console.log("totalRetRecCount : "+totalRetRecCount);
-      console.log("totalRecCount : "+totalRecCount);
-      console.log("totalRetRecCount < totalRecCount");
-      lastOffset = offset;
+        let offset = tmpPageSize * tmpPageIndex;
+        url = url.substr(0, url.lastIndexOf("=") + 1);
+        url += offset;
+        console.log("At End While");
+        console.log("totalRetRecCount : "+totalRetRecCount);
+        console.log("totalRecCount : "+totalRecCount);
+        console.log("totalRetRecCount < totalRecCount");
+        lastOffset = offset;
 
-      if(totalRetRecCount < totalRecCount){
-        console.log("Continue with one more request offset: "+offset);
-      } else {
-        console.log("Done Break out of loop");
-        //break;
+        if(totalRetRecCount < totalRecCount){
+          console.log("Continue with one more request offset: "+offset);
+        } else {
+          console.log("Done Break out of loop");
+          //break;
+        }
+      } catch (err) {
+        // Error handling here
+        //throw new Error('Unable to get a token.')
+        console.log("Something went wrong with the request!");
+        alert("Something went wrong  with the request!");
       }
     }
     if(allloandata==null){
@@ -808,6 +815,7 @@ function Loanlist(props) {
       }
     }
     if(flag){
+      alert("Download "+allloandata.length+" records completed successfully.");
       setAllLoansData(allloandata);
       setDownloadAllLoans(!downloadAllLoans);
     } else {
