@@ -746,14 +746,17 @@ function Loanlist(props) {
       url += buildSortByUrl(sortBy);
     }
 
-    let tmpPageSize = 2000;
+    let tmpPageSize = 1000;
     let tmpPageIndex = 0;
     let totalRetRecCount = 0;
-    let totalRecCount = 2000;
+    let totalRecCount = 1000;
   
     let allloandata = [];
     url += "&limit="+tmpPageSize;
     url += "&offset=0";
+    let lastOffset = 0;
+
+    let flag = true;
     while(parseInt(totalRetRecCount) < parseInt(totalRecCount)){
       //console.log("At Start");
       console.log("totalRetRecCount : "+totalRetRecCount);
@@ -767,6 +770,18 @@ function Loanlist(props) {
       totalRecCount = parseInt(res.data.meta.count);
       tmpPageIndex++;
 
+      /// If Next is not equal to length+Offset then break out of it
+      if(res.data.meta.next){
+        nextOffsetRecCnt = parseInt(res.data.meta.next);
+        console.log("nextOffsetRecCnt : "+nextOffsetRecCnt);
+        console.log("rec Cnt : "+loanArrData.length);
+        console.log("lastOffset : "+lastOffset);
+        if((loanArrData.length + lastOffset) !== nextOffsetRecCnt){
+          flag = false;
+          break;
+        }
+      }
+
       let offset = tmpPageSize * tmpPageIndex;
       url = url.substr(0, url.lastIndexOf("=") + 1);
       url += offset;
@@ -774,6 +789,8 @@ function Loanlist(props) {
       console.log("totalRetRecCount : "+totalRetRecCount);
       console.log("totalRecCount : "+totalRecCount);
       console.log("totalRetRecCount < totalRecCount");
+      lastOffset = offset;
+
       if(totalRetRecCount < totalRecCount){
         console.log("Continue with one more request offset: "+offset);
       } else {
@@ -789,8 +806,12 @@ function Loanlist(props) {
         allloandata = buildExternalLoanExportDetailList(allloandata);
       }
     }
-    setAllLoansData(allloandata);
-    setDownloadAllLoans(!downloadAllLoans);
+    if(flag){
+      setAllLoansData(allloandata);
+      setDownloadAllLoans(!downloadAllLoans);
+    } else {
+      alert("Something went wrong! File has not been created.");
+    }
   }
 
   let headerTitle = "Loan List";
