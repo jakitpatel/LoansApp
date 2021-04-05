@@ -772,7 +772,7 @@ function Loanlist(props) {
 
       /// If Next is not equal to length+Offset then break out of it
       if(res.data.meta.next){
-        nextOffsetRecCnt = parseInt(res.data.meta.next);
+        let nextOffsetRecCnt = parseInt(res.data.meta.next);
         console.log("nextOffsetRecCnt : "+nextOffsetRecCnt);
         console.log("rec Cnt : "+loanArrData.length);
         console.log("lastOffset : "+lastOffset);
