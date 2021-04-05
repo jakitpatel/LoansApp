@@ -778,6 +778,7 @@ function Loanlist(props) {
         console.log("lastOffset : "+lastOffset);
         if((loanArrData.length + lastOffset) !== nextOffsetRecCnt){
           flag = false;
+          console.log("Next is not equal to length+Offset then break out of it");
           break;
         }
       }
@@ -810,6 +811,7 @@ function Loanlist(props) {
       setAllLoansData(allloandata);
       setDownloadAllLoans(!downloadAllLoans);
     } else {
+      console.log("Something went wrong! File has not been created");
       alert("Something went wrong! File has not been created.");
     }
   }
