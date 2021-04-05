@@ -815,7 +815,7 @@ function Loanlist(props) {
       }
     }
     if(flag){
-      alert("Download "+allloandata.length+" records completed successfully.");
+      alert("Downloaded "+allloandata.length+" record completed successfully. Upon ok writing to excel will still take around a minute.");
       setAllLoansData(allloandata);
       setDownloadAllLoans(!downloadAllLoans);
     } else {
