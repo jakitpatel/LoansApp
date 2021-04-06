@@ -25,6 +25,10 @@ function SummaryTable(props) {
   });
 
   let todayDate = moment().format('LLLL');
+  if(optionValue===2){
+    todayDate = moment().subtract(1, 'days').format('LLLL');
+  }
+
   let columnDefs = [];
     
     columnDefs.push({
