@@ -317,6 +317,11 @@ function Table({
             { value: 'Failed Validation',  label: 'Failed Validation' },
             { value: 'Not Approved by SBA', label: 'Not Approved by SBA' }
           ]
+        },{
+          id: "statusIndication", 
+          value: [
+            { value: 'Resolved',     label: 'Resolved' }
+          ]
         }]);
       } else if(teamInt==="teama"){
         setAllFilters([{
@@ -335,7 +340,8 @@ function Table({
             { value: 'P/R docs in file OFAC SAM OK – move to approval', label: 'P/R docs in file OFAC SAM OK – move to approval' },
             { value: 'Prior To Funding docs in file',  label: 'Prior To Funding docs in file' },
             { value: 'Prior to Funding docs Needed', label: 'Prior to Funding docs Needed' },
-            { value: 'Loans with SBA Submission Errors',    label: 'Loans with SBA Submission Errors' }
+            { value: 'Loans with SBA Submission Errors',    label: 'Loans with SBA Submission Errors' },
+            { value: 'Resolved',     label: 'Resolved' }
           ]
         }]);
       } else if(teamInt==="teamc") {
