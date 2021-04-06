@@ -91,8 +91,8 @@ const buildSortByUrl = (sortArr) => {
         'AdobeSigned147':data.AdobeSigned147,
         'FirstDrawLoanAmount':data.FirstDrawLoanAmount,
         'FirstDrawSbaLoanNumber':data.FirstDrawSbaLoanNumber,
-        'ReviewerAssigned' : data.ReviewerAssigned,
-        'MentorAssigned'   : data.MentorAssigned,
+        //'ReviewerAssigned' : data.ReviewerAssigned,
+        //'MentorAssigned'   : data.MentorAssigned,
         'broker'      : data.broker,
         'R2_LoanOfficer' : data.R2_LoanOfficer,
         'Phone' : data.Phone,
@@ -104,4 +104,25 @@ const buildSortByUrl = (sortArr) => {
   return newDetailArray;
  }
 
- export { buildSortByUrl, buildPageUrl, buildFilterUrl, buildExternalLoanExportDetailList, toCurrency } ; 
+ const buildExternalLoanExportAllDetailList = (loanArray) => {
+  let newDetailArray = loanArray.map((data) => {
+      let amt = data.R2_LoanAmount;
+      if(amt!==null) {
+        amt = new Intl.NumberFormat('en-US',{ style: 'currency', currency: 'USD' }).format(amt);
+        data.R2_LoanAmount = amt;
+      }
+      delete data.bankPayout;
+      delete data.ReviewerAssigned;
+      delete data.MentorAssigned;
+      delete data.TaxID;
+      delete data.R2_TaxID;
+      delete data.WFtaxID;
+      delete data.MentorEmail;
+      delete data.teambmember;
+      delete data.teambmember;
+      return data;
+  });
+  return newDetailArray;
+ }
+
+ export { buildSortByUrl, buildPageUrl, buildFilterUrl, buildExternalLoanExportDetailList, toCurrency, buildExternalLoanExportAllDetailList } ; 

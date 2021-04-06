@@ -6,7 +6,7 @@ import "./Loanlist.css";
 import axios from 'axios';
 import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
-import {buildSortByUrl, buildPageUrl, buildFilterUrl, buildExternalLoanExportDetailList, toCurrency} from './../../Functions/functions.js';
+import {buildSortByUrl, buildPageUrl, buildFilterUrl, buildExternalLoanExportDetailList, buildExternalLoanExportAllDetailList, toCurrency} from './../../Functions/functions.js';
 import SelectColumnFilter from './../../Filter/SelectColumnFilter.js';
 import ExcelExport from './../../ExcelExport/ExcelExport';
 import LoanFileUpload from './LoanFileUpload';
@@ -812,6 +812,8 @@ function Loanlist(props) {
     if(!isInternalUser) {
       if(exportType !== "allFields"){
         allloandata = buildExternalLoanExportDetailList(allloandata);
+      } else {
+        allloandata = buildExternalLoanExportAllDetailList(allloandata);
       }
     }
     if(flag){
