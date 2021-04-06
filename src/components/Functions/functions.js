@@ -47,6 +47,9 @@ const buildSortByUrl = (sortArr) => {
       if(filterClm==="ALDLoanApplicationNumberOnly" || filterClm==="TaxID"){
         filterOpr = "=";
         filterUrl += " and ("+filterClm+" "+filterOpr+" "+filterVal+")";
+      } else if(filterClm==="SBALoanNumber" && filterObj.filterOpr===">" && filterObj.defFilter==="teamc"){
+        filterOpr = filterObj.filterOpr;
+        filterUrl += " and ("+filterClm+" "+filterOpr+" "+filterVal+")";
       } else {
         filterUrl += " and ("+filterClm+" "+filterOpr+" %"+filterVal+"%)";
       }

@@ -663,16 +663,7 @@ function Loanlist(props) {
 
       let url = Loans_Url;
       url += buildPageUrl(pageSize,pageIndex);
-      /*
-      if(uid){
-        let tmpUrl = "(userName%20like%20%27%"+uid+"%%27)";
-        let starttmpUrl = "(userName like %";
-        let val = uid;
-        let endst = "%)";
-        let fullqst = encodeURIComponent(starttmpUrl)+val+encodeURIComponent(endst);
-        url += "&filter="+fullqst;
-      }
-      */
+
       if(filters.length>0){
         console.log("filters");
         console.log(filters);
@@ -682,6 +673,17 @@ function Loanlist(props) {
           url += "&filter=";
         //}
         url += buildFilterUrl(filters);
+        if(isInternalUser && teamInt==="teamc"){
+          let starttmpUrl = " and (SBALoanNumber > 1)";
+          let fullqst = encodeURIComponent(starttmpUrl);
+          url += fullqst;
+        }
+      } else {
+        if(isInternalUser && teamInt==="teamc"){
+          let starttmpUrl = "(SBALoanNumber > 1)";
+          let fullqst = encodeURIComponent(starttmpUrl);
+          url += "&filter="+fullqst;
+        }
       }
       if(sortBy.length>0){
         console.log(sortBy);
@@ -721,7 +723,7 @@ function Loanlist(props) {
     if (fetchId === fetchIdRef.current) {
       fetchLoanList();
     }
-  }, [ dispatch, session_token]);
+  }, [ dispatch, session_token, teamInt]);
 
   //// Start Code for Wire To OFAC Value /////
   const onAllLoansExportBtnClick = async (e,exportType) => {
