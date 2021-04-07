@@ -31,12 +31,19 @@ function Login(props) {
       uid = email;
       let url = Login_Url;
       if(isInternalUser){
+        let lasta = username.lastIndexOf('@');
+        let name = username;
+        if (lasta != -1) {
+            name = username.substring(0, lasta);
+        }
+
         userCred = {
-          username: username,
+          username: name,
           password: password
         };
         url = Internal_Login_Url;
-        uid = username;
+        //uid = username;
+        uid = name;
       }
       res = await axios.post(url, userCred);
       console.log(res.data);
