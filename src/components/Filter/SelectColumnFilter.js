@@ -10,9 +10,11 @@ function SelectColumnFilter({
   //console.log(filterValue);
   
   const styles = {
+    menuPortal: base => ({ ...base, zIndex: 9999 }),
     menu: (css) => ({
       ...css,
-      width: "250px"
+      width: "250px",
+      zIndex: 9999
     })
   };
 
@@ -21,6 +23,8 @@ function SelectColumnFilter({
     <Select
       isMulti
       styles={styles}
+      //menuPosition={'fixed'}
+      //menuPortalTarget={document.body}
       //menuIsOpen={true}
       value={filterValue || ''}
       options={options}
