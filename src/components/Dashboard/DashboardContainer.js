@@ -62,12 +62,16 @@ function DashboardContainer(props) {
   if (redirectToLogin === true) {
     return <Redirect to={`${process.env.PUBLIC_URL}/login`} />;
   }
- 
+  console.log("Session token : "+session_token);
+
   if (session_token === null) {
     //User Not Logged In
+    console.log("Session token Not Exist So please redirect to login.");
     alert("Please login first");
     setRedirectToLogin(true);
     return null;
+  } else {
+    console.log("Session token Exist : "+session_token);
   }
   //alert("Dashboard Container");
   function handleLogout() {
