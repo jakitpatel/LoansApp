@@ -23,6 +23,7 @@ function SelectColumnFilter({
     <Select
       isMulti
       styles={styles}
+      //autoFocus={true}
       //menuPosition={'fixed'}
       //menuPortalTarget={document.body}
       //menuIsOpen={true}
@@ -30,7 +31,7 @@ function SelectColumnFilter({
       options={options}
       hideSelectedOptions={false}
       className="basic-multi-select"
-      classNamePrefix="select"
+      classNamePrefix="custom_select"
       onChange={selectedOption => {
         //console.log(selectedOption);
         let allFound = false;
