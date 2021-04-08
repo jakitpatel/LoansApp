@@ -317,11 +317,6 @@ function Table({
             { value: 'Failed Validation',  label: 'Failed Validation' },
             { value: 'Not Approved by SBA', label: 'Not Approved by SBA' }
           ]
-        },{
-          id: "statusIndication", 
-          value: [
-            { value: 'Resolved',     label: 'Resolved' }
-          ]
         }]);
       } else if(teamInt==="teama"){
         setAllFilters([{

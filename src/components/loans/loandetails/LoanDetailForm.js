@@ -235,7 +235,7 @@ function LoanDetailForm(props) {
                 }
               } else {
                 //let fiedls_exist = "ALDLoanApplicationNumberOnly PrimaryBorrowers R2_LoanAmount SBAStatus ErrorMessage MentorAssigned MentorEmail MentorPhone LastModifyDate SBALoanNumber statusIndication businessIndication personalIndication documentIndication finacialSeachIndication";
-                let fiedls_exist = "ApplicationCreatedDate businessName ALDLoanApplicationNumberOnly MentorAssigned MentorPhone MentorEmail LastModifyDate AdobeSigned2483Date LoanStatus FirstDrawLoanAmount FirstDrawSbaLoanNumber IsSecondDrawLoan SBALoanNumber SBAApprovalDate SBAStatus ErrorMessage statusIndication businessIndication personalIndication ownershipIndication documentIndication financialSearchIndication PrimaryContactFirstName PrimaryContactLastName Phone Email StatusAComments StatusBComments StatusCComments brokerRep brokerComments";
+                let fiedls_exist = "ApplicationCreatedDate businessName ALDLoanApplicationNumberOnly MentorAssigned MentorPhone MentorEmail LastModifyDate AdobeSigned2483Date LoanStatus FirstDrawLoanAmount FirstDrawSbaLoanNumber IsSecondDrawLoan SBALoanNumber SBAApprovalDate SBAStatus ErrorMessage statusIndication businessIndication personalIndication ownershipIndication documentIndication financialSearchIndication PrimaryContactFirstName PrimaryContactLastName Phone Email StatusAComments StatusBComments StatusCComments brokerRep brokerComments AdobeSigned147 AdobeSigned147Date";
                 let labelText = key;
                 if(key==="PrimaryBorrowers" && value===null){
                   value = loadDtOrdObj.businessName;
