@@ -379,6 +379,11 @@ function Loanlist(props) {
             options:SBAOptions
           },
           {
+            field: "SBALoanNumber",
+            Header: "SBA Loan #",
+            accessor: "SBALoanNumber"
+          },
+          {
             field: "MentorAssigned",
             Header: "Mentor Assigned",
             accessor: "MentorAssigned",

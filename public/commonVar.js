@@ -132,7 +132,8 @@ const ReviewerAssignedOptions = [
     { value: 'Rivka Sanders',     label: 'Rivka Sanders' },
     { value: 'Santino Corelli',     label: 'Santino Corelli' },
     { value: 'Tara Himes',     label: 'Tara Himes' },
-    { value: 'Yoni Deutsch',     label: 'Yoni Deutsch' }
+    { value: 'Yoni Deutsch',     label: 'Yoni Deutsch' },
+    { value: 'Jennie Dubin-Rhodin',     label: 'Jennie Dubin-Rhodin' }
 ];
 
 const ContribDocTypeOptions = [
@@ -157,6 +158,8 @@ const ContribDocTypeOptions = [
     { value: 'Nov 2020 Bank Statement',     label: 'Nov 2020 Bank Statement' },
     { value: 'Dec 2020 Bank Statement',     label: 'Dec 2020 Bank Statement' },
     { value: 'Jan 2021 Bank Statement',     label: 'Jan 2021 Bank Statement' },
+    { value: 'February 2021 Bank Statement',label: 'February 2021 Bank Statement' },
+    { value: 'March 2021 Bank Statement',   label: 'March 2021 Bank Statement' },
     { value: 'Back of ID’s',     label: 'Back of ID’s' }
 ];
 
