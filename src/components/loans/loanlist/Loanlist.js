@@ -403,6 +403,17 @@ function Loanlist(props) {
             Filter: SelectColumnFilter,
             filter: 'includes',
             options:applicationStatusOptions
+          },
+          {
+            field: "statusIndication",
+            Header: "statusIndication",
+            accessor: "statusIndication",
+            Filter: SelectColumnFilter,
+            filter: 'includes',
+            options:StatusOptions,
+            editable:true,
+            columnType:'list',
+            columnOptions:StatusOptions
           });
       }
     } else {
