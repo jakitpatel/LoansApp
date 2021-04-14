@@ -397,13 +397,18 @@ function Loanlist(props) {
             accessor: "StatusCComments"
           },
           {
+            field: "AdobeSigned147",
+            Header: "AdobeSigned147",
+            accessor: "AdobeSigned147"
+          },
+          /*{
             field: "R2_ApplicationStatus",
             Header: "Application Status",
             accessor: "R2_ApplicationStatus",
             Filter: SelectColumnFilter,
             filter: 'includes',
             options:applicationStatusOptions
-          },
+          },*/
           {
             field: "statusIndication",
             Header: "statusIndication",

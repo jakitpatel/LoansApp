@@ -177,6 +177,7 @@ const BroketTeamOptions = [
     { value: 'LAJS ', label: 'LAJS' },
     { value: 'LAKK', label: 'LAKK' },
     { value: 'LAAA', label: 'LAAA' },
+    { value: 'LARA', label: 'LARA' },
     { value: 'Unassigned', label: 'Unassigned' },
     { value: 'LA', label: 'LA' }
 ];
