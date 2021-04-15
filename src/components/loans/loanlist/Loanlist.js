@@ -394,7 +394,9 @@ function Loanlist(props) {
           {
             field: "StatusCComments",
             Header: "StatusCComments",
-            accessor: "StatusCComments"
+            accessor: "StatusCComments",
+            editable: editableContent,
+            columnType:'textarea'
           },
           {
             field: "AdobeSigned147",
