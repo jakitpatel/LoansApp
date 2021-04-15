@@ -1,7 +1,7 @@
 {
   "name": "loanapp",
   "homepage": "https://devnycweb01.comfed.local/loanapp",
-  "version": "1.1.21",
+  "version": "1.1.22",
   "environment": "PROD",
   "private": true,
   "dependencies": {
