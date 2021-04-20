@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import LoanDocsListView from "./LoanDocsListView.js";
 import * as Icon from "react-feather";
 import "./LoanDocsList.css";
@@ -13,7 +14,7 @@ const {API_KEY, SetMissingLoans_Url, LoansDocs_Url} = window.constVar;
 const { BrokerOptions, UnAssocLoanStatusOptions} = window.commonVar;
 
 function LoanDocsList(props) {
-  
+  let history = useHistory();
   // We'll start our table without any data
   const [skipPageReset, setSkipPageReset] = React.useState(false);
   const [filtersarr, setFiltersarr] = React.useState([]);
@@ -132,6 +133,17 @@ function LoanDocsList(props) {
       }
       //backToWireList();
     }
+  }
+
+  const backToLoanList = () => {
+    console.log("Back To Loan List Button Click");
+    dispatch({
+      type:'UPDATELOANLIST',
+      payload:{
+        backToList:true
+      }
+    });
+    history.goBack();
   }
 
   // After data chagnes, we turn the flag back off
@@ -304,7 +316,12 @@ function LoanDocsList(props) {
                   <div style={{ clear:"both"}}></div>
                 </div>
                 <div style={{ clear:"both"}}></div>
-              </div>
+            </div>
+            <div className="btnCls">
+              <button type="button" onClick={backToLoanList} className="btn btn-primary btn-sm">
+                Back
+              </button>
+            </div>
             {disCmp}
           </div>
         </div>
