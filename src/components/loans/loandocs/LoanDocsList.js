@@ -46,6 +46,25 @@ function LoanDocsList(props) {
  
     columnDefs.push(
     {
+      Header: "View",
+      show : true, 
+      width: 55,
+      //id: 'colViewWireDetail',
+      accessor: row => row.attrbuiteName,
+      disableFilters: true,
+      //filterable: false, // Overrides the table option
+      Cell: obj => {
+        //console.log(obj.row);
+        let loanObj = obj.row.original;
+        //let enableVal = true;
+        return (
+          <button type="button" className={`btn btn-link btn-sm `}>
+            <Icon.Edit />
+          </button>
+        );
+      }
+    },
+    {
       field: "name",
       Header: "name",
       accessor: "name"
