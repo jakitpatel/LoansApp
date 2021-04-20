@@ -1,5 +1,5 @@
-//let env = "DEVLOCAL";
-let env = "DEV";
+let env = "DEVLOCAL";
+//let env = "DEV";
 //let env = "PROD";
  
 let API_URL = "";
@@ -31,6 +31,7 @@ window.constVar = {
     SetMissingLoans_Url  : API_URL+"setwebform",  
     Usr_Permission_Url   : API_URL+"ppploans/permission?filter=",
     LoanSummary_Url      : API_URL+"getsummary",
+    LoansDocs_Url        : API_URL+"getdocuments",
     LoanDetails_Url_DEV      : API_URL+"getLoanDetails",  // For Local Env, Don't Modify
     Usr_Permission_Url_DEV   : API_URL+"wireAppPermission",  // For Local Env, Don't Modify
 }

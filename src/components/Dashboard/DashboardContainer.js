@@ -5,6 +5,7 @@ import "./dashboard.css";
 import Loanlist from "./../loans/loanlist/Loanlist.js";
 import LoanDetails from "./../loans/loandetails/LoanDetails.js";
 import MissingLoanlist from "./../loans/missingloanlist/MissingLoanlist.js";
+import LoanDocsList from "./../loans/loandocs/LoanDocsList.js";
 import NavBar from "./../Navbar/navbar";
 import LeftNavBar from "./../Leftnavbar/leftnavbar";
 import DashboardMain from "./DashboardMain";
@@ -25,6 +26,11 @@ const MissingLoanListWrap = props => {
   return <MissingLoanlist loanRec={props.location.state} />;
 };
 
+const LoanDocsListtWrap = props => {
+  //console.log(props);
+  return <LoanDocsList loanRec={props.location.state} />;
+};
+
 const routes = [
   {
     path: "/dashboard",
@@ -40,6 +46,11 @@ const routes = [
     path: "/missingloans",
     exact: true,
     main: MissingLoanListWrap
+  },
+  {
+    path: "/loandocs/:proposedLoanId",
+    exact: true,
+    main: LoanDocsListtWrap
   },
   {
     path: "/loandetails/:ALDLoanApplicationNumberOnly",

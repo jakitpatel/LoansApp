@@ -85,6 +85,36 @@ function Loanlist(props) {
     }
   };
 
+  let loanDocsBtn = {
+    Header: "LoanDocs",
+    show : true, 
+    width: 55,
+    //id: 'colViewWireDetail',
+    accessor: row => row.attrbuiteName,
+    disableFilters: true,
+    //filterable: false, // Overrides the table option
+    Cell: obj => {
+      //console.log(obj.row);
+      let loanObj = obj.row.original;
+      let enableVal = true;
+      /*
+      if(loanObj.proposedLoanId==null || loanObj.proposedLoanId===0 || loanObj.customerId==null || loanObj.customerId===0){
+        enableVal = false;
+      }
+      */
+      return (
+        <Link
+          to={{
+            pathname: `${process.env.PUBLIC_URL}/loandocs/${loanObj.proposedLoanId}`,
+            state: obj.row.original
+          }}
+        >
+          <Icon.Book />
+        </Link>
+      );
+    }
+  };
+
   let editableContent = false;
   if(pageSize<1000){
     editableContent = true;
@@ -92,7 +122,7 @@ function Loanlist(props) {
 
   let columnDefs = [];
     if(isInternalUser){
-      columnDefs.push(contribBtn,{
+      columnDefs.push(loanDocsBtn, contribBtn,{
         Header: "View",
         show : true, 
         width: 55,
@@ -424,7 +454,7 @@ function Loanlist(props) {
           });
       }
     } else {
-      columnDefs.push(contribBtn,{
+      columnDefs.push(loanDocsBtn, contribBtn,{
         Header: "View",
         show : true, 
         width: 55,
@@ -562,6 +592,11 @@ function Loanlist(props) {
         filter: 'includes',
         options:SBAOptions,
         width:190
+      },
+      {
+        field: "AdobeSigned147Date",
+        Header: "AdobeSigned147Date",
+        accessor: "AdobeSigned147Date"
       },
       {
         field: "statusIndication",
