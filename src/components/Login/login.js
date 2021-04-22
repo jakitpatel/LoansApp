@@ -24,11 +24,11 @@ function Login(props) {
       const teamInt = localStorage.getItem('teamInt');
       const email = localStorage.getItem('email');
       const username = localStorage.getItem('username');
-      const password = localStorage.getItem('password');
+      //const password = localStorage.getItem('password');
       setIsInternalUser(isInternalUser);
       setTeamInt(teamInt);
       setEmail(email);
-      setPassword(password);
+      //setPassword(password);
       setUsername(username);
     }
   }, []);
@@ -73,7 +73,7 @@ function Login(props) {
       } else {
         /// Save the data to localstorage
         localStorage.setItem('isInternalUser', isInternalUser);
-        localStorage.setItem('password', password);
+        //localStorage.setItem('password', password);
         //if(isInternalUser){
           localStorage.setItem('username', username);
         //} else {

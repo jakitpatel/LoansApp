@@ -122,7 +122,11 @@ function LoanDetailForm(props) {
       "TaxID": loanDetailsObj.TaxID,
       "ALD_ID": loanDetailsObj.ALD_ID,
       "ALDLoanApplicationNumberOnly": loanDetailsObj.ALDLoanApplicationNumberOnly,
-      "userName": loanDetailsObj.userName
+      "userName": loanDetailsObj.userName,
+      "paymentDate": loanDetailsObj.paymentDate,
+      "beneficiaryName": loanDetailsObj.beneficiaryName,
+      "PPPONoteNumber" : loanDetailsObj.PPPONoteNumber,
+      "sbaNumber": loanDetailsObj.sbaNumber
     };
   }
   
