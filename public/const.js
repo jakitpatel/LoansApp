@@ -34,4 +34,5 @@ window.constVar = {
     LoansDocs_Url        : API_URL+"getdocuments",
     LoanDetails_Url_DEV      : API_URL+"getLoanDetails",  // For Local Env, Don't Modify
     Usr_Permission_Url_DEV   : API_URL+"wireAppPermission",  // For Local Env, Don't Modify
+    DocReader_Url        : API_URL+"docreader"
 }

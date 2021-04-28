@@ -7,11 +7,10 @@ import axios from 'axios';
 import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
 import {buildSortByUrl, buildPageUrl, buildFilterUrl} from './../../Functions/functions.js';
+import mime from 'mime-types';
 import SelectColumnFilter from './../../Filter/SelectColumnFilter.js';
 //import {API_KEY, Loans_Url, env, SetLoans_Url, Loan_Upload_Doc_Url} from './../../../const';
-const {API_KEY, SetMissingLoans_Url, LoansDocs_Url} = window.constVar;
-//import { BrokerOptions, UnAssocLoanStatusOptions} from './../../../commonVar.js';
-const { BrokerOptions, UnAssocLoanStatusOptions} = window.commonVar;
+const {API_KEY, SetMissingLoans_Url, LoansDocs_Url, DocReader_Url} = window.constVar;
 
 function LoanDocsList(props) {
   let history = useHistory();
@@ -39,6 +38,56 @@ function LoanDocsList(props) {
 
   //console.log("backToList : "+backToList);
 
+  const downloadDoc = async (documentID, fileName) => {
+    console.log("Download Docuemnt Doc Id : "+documentID);
+    try {
+      const options = {
+        headers: {
+          'X-DreamFactory-API-Key': API_KEY,
+          'X-DreamFactory-Session-Token': session_token
+        }
+      };
+      let docObj = {
+        "DocumentId" : documentID
+      };
+      let res = await axios.get(DocReader_Url, docObj, options);
+      console.log(res);
+      //let extension = fileName.split('.').pop();
+      let contentType = mime.lookup(fileName); // "application/pdf";
+      console.log("contentType :- "+contentType);
+      downloadBase64File(contentType, res.data.content, fileName);
+      //alert("Data saved successfully!");
+      console.log("Data saved successfully!");
+    } catch (error) {
+      console.log(error.response);
+      if (401 === error.response.status) {
+          // handle error: inform user, go to login, etc
+          let res = error.response.data;
+          console.log(res.error.message);
+          //alert(res.error.message);
+      } else {
+        console.log(error);
+        //alert(error);
+      }
+    }
+  }
+
+  // Parameters:
+  // contentType: The content type of your file. 
+  //              its like application/pdf or application/msword or image/jpeg or
+  //              image/png and so on
+  // base64Data: Its your actual base64 data
+  // fileName: Its the file name of the file which will be downloaded. 
+
+  function downloadBase64File(contentType, base64Data, fileName) {
+    const linkSource = `data:${contentType};base64,${base64Data}`;
+    const downloadLink = document.createElement("a");
+    downloadLink.href = linkSource;
+    downloadLink.download = fileName;
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+  }
+
   let loanRec = props.loanRec;
   console.log(loanRec);
 
@@ -56,9 +105,12 @@ function LoanDocsList(props) {
       Cell: obj => {
         //console.log(obj.row);
         let loanObj = obj.row.original;
-        //let enableVal = true;
+        let enableVal = false;
+        if(isInternalUser){
+          enableVal = true;
+        }
         return (
-          <button type="button" className={`btn btn-link btn-sm `}>
+          <button type="button" onClick={(e) => {downloadDoc(loanObj.documentID, loanObj.fileName)}} className={`btn btn-link btn-sm ${enableVal ? "" : "disabled"}`}>
             <Icon.Edit />
           </button>
         );

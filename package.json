@@ -12,6 +12,7 @@
     "bootstrap": "^4.5.2",
     "chart.js": "^2.9.4",
     "jquery": "^3.5.1",
+    "mime-types": "^2.1.30",
     "moment": "^2.27.0",
     "pdf-lib": "^1.16.0",
     "popper.js": "^1.16.1",
