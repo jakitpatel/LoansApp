@@ -48,8 +48,10 @@ function LoanDocsList(props) {
         }
       };
       let docObj = {
-        "DocumentId" : documentID
-      };
+        params: {
+          "DocumentId" : documentID
+        }
+      }
       let res = await axios.get(DocReader_Url, docObj, options);
       console.log(res);
       //let extension = fileName.split('.').pop();
