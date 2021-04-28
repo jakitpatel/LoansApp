@@ -102,7 +102,8 @@ const TeamBAssignedOptions = [
     { value: 'Steve Erickson', label: 'Steve Erickson' },
     { value: 'Cate Doss', label: 'Cate Doss' },
     { value: 'Judah Feinberg', label: 'Judah Feinberg' },
-    { value: 'Joshua Vance', label: 'Joshua Vance' }
+    { value: 'Joshua Vance', label: 'Joshua Vance' },
+    { value: 'Carl Mai', label: 'Carl Mai' }
 ];
 
 const ReviewerAssignedOptions = [
