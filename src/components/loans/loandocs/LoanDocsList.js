@@ -52,7 +52,7 @@ function LoanDocsList(props) {
           "DocumentId" : documentID
         //}
       }
-      let res = await axios.post(DocReader_Url, docObj, options);
+      let res = await axios.post(DocReader_Url, docObj);
       console.log(res);
       //let extension = fileName.split('.').pop();
       let contentType = mime.lookup(fileName); // "application/pdf";
