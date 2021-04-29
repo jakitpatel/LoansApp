@@ -54,23 +54,27 @@ function LoanDocsList(props) {
       }
       let res = await axios.post(DocReader_Url, docObj);
       console.log(res);
-      //let extension = fileName.split('.').pop();
-      let contentType = mime.lookup(fileName); // "application/pdf";
-      console.log("contentType :- "+contentType);
-      convertBase64ToBlob(contentType, res.data.content, fileName);
-      //downloadBase64File(contentType, res.data.content, fileName);
-      //alert("Data saved successfully!");
-      console.log("Data saved successfully!");
+      if(res.data.content){
+        //let extension = fileName.split('.').pop();
+        let contentType = mime.lookup(fileName); // "application/pdf";
+        console.log("contentType :- "+contentType);
+        convertBase64ToBlob(contentType, res.data.content, fileName);
+        //downloadBase64File(contentType, res.data.content, fileName);
+        //alert("Data saved successfully!");
+        console.log("base64 Data retrived successfully & opened pdf!");
+      } else {
+        alert("Something went wrong");
+      }
     } catch (error) {
       console.log(error.response);
       if (401 === error.response.status) {
           // handle error: inform user, go to login, etc
           let res = error.response.data;
           console.log(res.error.message);
-          //alert(res.error.message);
+          alert(res.error.message);
       } else {
         console.log(error);
-        //alert(error);
+        alert(error);
       }
     }
   }
