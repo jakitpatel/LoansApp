@@ -414,13 +414,18 @@ function Loanlist(props) {
             accessor: "SBALoanNumber"
           },
           {
+            field: "PPPONoteNumber",
+            Header: "PPPONoteNumber",
+            accessor: "PPPONoteNumber"
+          },
+          /*{
             field: "MentorAssigned",
             Header: "Mentor Assigned",
             accessor: "MentorAssigned",
             editable:true,
             columnType:'list',
             columnOptions:MentorAssignedOptions
-          },
+          },*/
           {
             field: "StatusCComments",
             Header: "StatusCComments",
