@@ -57,7 +57,8 @@ function LoanDocsList(props) {
       //let extension = fileName.split('.').pop();
       let contentType = mime.lookup(fileName); // "application/pdf";
       console.log("contentType :- "+contentType);
-      downloadBase64File(contentType, res.data.content, fileName);
+      convertBase64ToBlob(contentType, res.data.content, fileName);
+      //downloadBase64File(contentType, res.data.content, fileName);
       //alert("Data saved successfully!");
       console.log("Data saved successfully!");
     } catch (error) {
@@ -74,6 +75,21 @@ function LoanDocsList(props) {
     }
   }
 
+  const convertBase64ToBlob = async (contentType, base64Data, fileName) => {
+    console.log("convert Base64 To Blob");
+    const base64Response = await fetch(`data:${contentType};base64,${base64Data}`);
+    const blob = await base64Response.blob();
+    const blobURL = URL.createObjectURL(blob);
+    //window.open(blobURL);
+    const a = document.createElement("a");
+    a.href = blobURL;
+    a.target = "_blank";
+    a.style = "display: none";
+
+    //if (fileName && fileName.length) a.download = fileName;
+    document.body.appendChild(a);
+    a.click();
+  }
   // Parameters:
   // contentType: The content type of your file. 
   //              its like application/pdf or application/msword or image/jpeg or
@@ -82,6 +98,7 @@ function LoanDocsList(props) {
   // fileName: Its the file name of the file which will be downloaded. 
 
   function downloadBase64File(contentType, base64Data, fileName) {
+    console.log("downloadBase64File");
     const linkSource = `data:${contentType};base64,${base64Data}`;
     const downloadLink = document.createElement("a");
     downloadLink.href = linkSource;
