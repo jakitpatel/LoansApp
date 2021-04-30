@@ -38,7 +38,7 @@ function LoanDocsList(props) {
 
   //console.log("backToList : "+backToList);
 
-  const downloadDoc = async (documentID, fileName) => {
+  const downloadDoc = async (documentID, fileName, name, typeView) => {
     console.log("Download Docuemnt Doc Id : "+documentID);
     try {
       const options = {
@@ -58,7 +58,7 @@ function LoanDocsList(props) {
         //let extension = fileName.split('.').pop();
         let contentType = mime.lookup(fileName); // "application/pdf";
         console.log("contentType :- "+contentType);
-        convertBase64ToBlob(contentType, res.data.content, fileName);
+        convertBase64ToBlob(contentType, res.data.content, fileName, name, typeView);
         //downloadBase64File(contentType, res.data.content, fileName);
         //alert("Data saved successfully!");
         console.log("base64 Data retrived successfully & opened pdf!");
@@ -79,20 +79,29 @@ function LoanDocsList(props) {
     }
   }
 
-  const convertBase64ToBlob = async (contentType, base64Data, fileName) => {
+  const convertBase64ToBlob = async (contentType, base64Data, fileName, name, typeView) => {
     console.log("convert Base64 To Blob");
     const base64Response = await fetch(`data:${contentType};base64,${base64Data}`);
     const blob = await base64Response.blob();
-    const blobURL = URL.createObjectURL(blob);
-    //window.open(blobURL);
+    const blobURL = window.URL.createObjectURL(blob);
+    //window.open(blobURL,fileName);
+    
     const a = document.createElement("a");
     a.href = blobURL;
+    console.log("typeView : "+typeView);
+    if(typeView === "download"){
+      a.download = name;
+    }
     a.target = "_blank";
     a.style = "display: none";
 
     //if (fileName && fileName.length) a.download = fileName;
     document.body.appendChild(a);
     a.click();
+    setTimeout(() => {
+      window.URL.revokeObjectURL(blobURL);
+      document.body.removeChild(a);
+    }, 0)
   }
   // Parameters:
   // contentType: The content type of your file. 
@@ -117,7 +126,29 @@ function LoanDocsList(props) {
   let columnDefs = [];
  
     columnDefs.push(
-    {
+      {
+        Header: "Download",
+        show : true, 
+        width: 55,
+        //id: 'colViewWireDetail',
+        accessor: row => row.attrbuiteName,
+        disableFilters: true,
+        //filterable: false, // Overrides the table option
+        Cell: obj => {
+          //console.log(obj.row);
+          let loanObj = obj.row.original;
+          let enableVal = false;
+          if(isInternalUser){
+            enableVal = true;
+          }
+          return (
+            <button type="button" onClick={(e) => {downloadDoc(loanObj.documentID, loanObj.fileName, loanObj.name,"download")}} className={`btn btn-link btn-sm ${enableVal ? "" : "disabled"}`}>
+              <Icon.Download />
+            </button>
+          );
+        }
+      },
+      {
       Header: "View",
       show : true, 
       width: 55,
@@ -133,7 +164,7 @@ function LoanDocsList(props) {
           enableVal = true;
         }
         return (
-          <button type="button" onClick={(e) => {downloadDoc(loanObj.documentID, loanObj.fileName)}} className={`btn btn-link btn-sm ${enableVal ? "" : "disabled"}`}>
+          <button type="button" onClick={(e) => {downloadDoc(loanObj.documentID, loanObj.fileName, loanObj.name,"view")}} className={`btn btn-link btn-sm ${enableVal ? "" : "disabled"}`}>
             <Icon.Edit />
           </button>
         );
