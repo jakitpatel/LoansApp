@@ -98,6 +98,8 @@ function LoanDocsList(props) {
     //if (fileName && fileName.length) a.download = fileName;
     document.body.appendChild(a);
     a.click();
+    //link.dispatchEvent(new MouseEvent('click', {bubbles: true, cancelable: true, view: window}));
+    //link.remove();
     setTimeout(() => {
       window.URL.revokeObjectURL(blobURL);
       document.body.removeChild(a);

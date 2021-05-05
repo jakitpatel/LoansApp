@@ -27,6 +27,7 @@ const BrokerOptions = [
     { value: 'Funding Forward',    label: 'Funding Forward' },
     { value: 'Premium Merchant Funding',    label: 'Premium Merchant Funding' },
     { value: 'Park Place Financial Group', label: 'Park Place Financial Group' },
+    { value: 'Jason Goodstein', label: 'Jason Goodstein' },
     { value: 'Skyline Capital', label: 'Skyline Capital' }
 ];
 
@@ -67,20 +68,21 @@ const applicationStatusOptions = [
 ];
 
 const brokerOverrideOptions = [
-{ value: 'Premium Merchant Funding',     label: 'Premium Merchant Funding' },
-{ value: 'PMF', label: 'PMF' },
-{ value: 'Guidance Funding', label: 'Guidance Funding' },
-{ value: 'Lendie Capital', label: 'Lendie Capital' },
-{ value: 'Motor City Funding',  label: 'Motor City Funding' },
-{ value: 'Eastern Union Funding', label: 'Eastern Union Funding' },
-{ value: 'Asset Enhancement Solutions', label: 'Asset Enhancement Solutions' },
-{ value: 'Green Ark Funding', label: 'Green Ark Funding' },
-{ value: 'Donar Consulting', label: 'Donar Consulting' },
-{ value: 'ABC Capital Corp.', label: 'ABC Capital Corp.' },
-{ value: 'Funding Forward', label: 'Funding Forward' },
-{ value: 'Park Place Financial Group', label: 'Park Place Financial Group' },
-{ value: 'Useful Funding', label: 'Useful Funding' },
-{ value: 'Skyline Capital', label: 'Skyline Capital' }
+    { value: 'Premium Merchant Funding',     label: 'Premium Merchant Funding' },
+    { value: 'PMF', label: 'PMF' },
+    { value: 'Guidance Funding', label: 'Guidance Funding' },
+    { value: 'Lendie Capital', label: 'Lendie Capital' },
+    { value: 'Motor City Funding',  label: 'Motor City Funding' },
+    { value: 'Eastern Union Funding', label: 'Eastern Union Funding' },
+    { value: 'Asset Enhancement Solutions', label: 'Asset Enhancement Solutions' },
+    { value: 'Green Ark Funding', label: 'Green Ark Funding' },
+    { value: 'Donar Consulting', label: 'Donar Consulting' },
+    { value: 'ABC Capital Corp.', label: 'ABC Capital Corp.' },
+    { value: 'Funding Forward', label: 'Funding Forward' },
+    { value: 'Park Place Financial Group', label: 'Park Place Financial Group' },
+    { value: 'Jason Goodstein', label: 'Jason Goodstein' },
+    { value: 'Useful Funding', label: 'Useful Funding' },
+    { value: 'Skyline Capital', label: 'Skyline Capital' }
 ];
 
 
@@ -161,6 +163,7 @@ const ContribDocTypeOptions = [
     { value: 'Jan 2021 Bank Statement',     label: 'Jan 2021 Bank Statement' },
     { value: 'February 2021 Bank Statement',label: 'February 2021 Bank Statement' },
     { value: 'March 2021 Bank Statement',   label: 'March 2021 Bank Statement' },
+    { value: 'April 2021 Bank Statement',   label: 'April 2021 Bank Statement' },
     { value: 'Back of ID’s',     label: 'Back of ID’s' }
 ];
 
