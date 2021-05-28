@@ -41,6 +41,7 @@ export default function NavBar(props) {
                   <option value="teama">teama</option>
                   <option value="teamb">teamb</option>
                   <option value="teamc">teamc</option>
+                  <option value="teamd">teamd</option>
               </select>
           </div>
         </li>

@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import "./dashboard.css";
-import Loanlist from "./../loans/loanlist/Loanlist.js";
+import LoanListContainer from "./../loans/loanlist/LoanListContainer.js";
+//import Loanlist from "./../loans/loanlist/Loanlist.js";
 import LoanDetails from "./../loans/loandetails/LoanDetails.js";
 import MissingLoanlist from "./../loans/missingloanlist/MissingLoanlist.js";
 import LoanDocsList from "./../loans/loandocs/LoanDocsList.js";
@@ -13,7 +14,7 @@ import DashboardMain from "./DashboardMain";
 
 const LoanListWrap = props => {
   //console.log(props);
-  return <Loanlist loanRec={props.location.state} />;
+  return <LoanListContainer loanRec={props.location.state} />;
 };
 
 const LoanDetailsWrap = props => {

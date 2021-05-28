@@ -108,6 +108,16 @@ const TeamBAssignedOptions = [
     { value: 'Carl Mai', label: 'Carl Mai' }
 ];
 
+const TeamDAssignedOptions = [
+    { value: 'Adiv Cederbaum', label: 'Adiv Cederbaum' },
+    { value: 'Lawrence Allman', label: 'Lawrence Allman' },
+    { value: 'Steve Erickson', label: 'Steve Erickson' },
+    { value: 'Cate Doss', label: 'Cate Doss' },
+    { value: 'Judah Feinberg', label: 'Judah Feinberg' },
+    { value: 'Joshua Vance', label: 'Joshua Vance' },
+    { value: 'Carl Mai', label: 'Carl Mai' }
+];
+
 const ReviewerAssignedOptions = [
     { value: 'Abigail Hyman',     label: 'Abigail Hyman' },
     { value: 'Adiv Cederbaum',     label: 'Adiv Cederbaum' },
@@ -228,6 +238,7 @@ window.commonVar = {
     MentorAssignedOptions : MentorAssignedOptions, 
     ReviewerAssignedOptions : ReviewerAssignedOptions,
     TeamBAssignedOptions : TeamBAssignedOptions,
+    TeamDAssignedOptions : TeamDAssignedOptions,
     ContribDocTypeOptions : ContribDocTypeOptions, 
     BroketTeamOptions : BroketTeamOptions, 
     AkayBrokerOptions : AkayBrokerOptions, 

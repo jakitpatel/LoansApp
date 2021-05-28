@@ -23,6 +23,7 @@ window.constVar = {
     Login_Url : API_URL+"brokersession",
     Internal_Login_Url : API_URL+"internalsession",
     Loans_Url    : API_URL+"getppp",
+    LoansD_Url   : API_URL+"v_pppForgiveness",
     SetLoans_Url : API_URL+"setloanstatus",
     Loan_Upload_Doc_Url  : API_CONTRIB_URL+"contrib",
     //Loan_Upload_Doc_Url  : API_CONTRIB_URL+"contrib.json",
