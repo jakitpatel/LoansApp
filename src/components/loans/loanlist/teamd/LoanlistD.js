@@ -136,7 +136,7 @@ function LoanlistD(props) {
           return (
             <Link
               to={{
-                pathname: `${process.env.PUBLIC_URL}/loandetails/${loanObj.ALDLoanApplicationNumberOnly}`,
+                pathname: `${process.env.PUBLIC_URL}/loandetails/${loanObj.loan_number}`,
                 state: obj.row.original
               }}
             >
@@ -583,7 +583,7 @@ function LoanlistD(props) {
   console.log("loans", loans);
   console.log("isRefresh", isRefresh);
   
-  if(isInternalUser && sortBy.length===0){
+  if(isInternalUser && sortBy.length===0 && teamInt!=="teamd"){
     dispatch({
       type:'UPDATELOANLIST',
       payload:{
