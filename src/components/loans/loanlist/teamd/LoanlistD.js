@@ -170,6 +170,11 @@ function LoanlistD(props) {
           accessor: "status"
         },
         {
+          field: "notes",
+          Header: "notes",
+          accessor: "notes"
+        },
+        {
           field: "bank_notional_amount",
           Header: "bank_notional_amount",
           accessor: "bank_notional_amount",
