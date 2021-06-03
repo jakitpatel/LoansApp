@@ -110,12 +110,10 @@ const TeamBAssignedOptions = [
 
 const TeamDAssignedOptions = [
     { value: 'Adiv Cederbaum', label: 'Adiv Cederbaum' },
-    { value: 'Lawrence Allman', label: 'Lawrence Allman' },
-    { value: 'Steve Erickson', label: 'Steve Erickson' },
-    { value: 'Cate Doss', label: 'Cate Doss' },
-    { value: 'Judah Feinberg', label: 'Judah Feinberg' },
+    { value: 'Deanna McConnell', label: 'Deanna McConnell' },
+    { value: 'Mark Elbaz', label: 'Mark Elbaz' },
     { value: 'Joshua Vance', label: 'Joshua Vance' },
-    { value: 'Carl Mai', label: 'Carl Mai' }
+    { value: 'Jaime Mathew', label: 'Jaime Mathew' }
 ];
 
 const ReviewerAssignedOptions = [

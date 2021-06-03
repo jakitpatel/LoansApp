@@ -136,7 +136,7 @@ function LoanlistD(props) {
           return (
             <Link
               to={{
-                pathname: `${process.env.PUBLIC_URL}/loandetails/${loanObj.loan_number}`,
+                pathname: `${process.env.PUBLIC_URL}/loandetails/${loanObj.Loan_Account_Number}`,
                 state: obj.row.original
               }}
             >
@@ -148,16 +148,21 @@ function LoanlistD(props) {
       console.log("Internal Team : "+teamInt);
       if(teamInt==="teamd"){
         columnDefs.push({
-          field: "sba_account_number",
-          Header: "sba_account_number",
-          accessor: "sba_account_number",
+          field: "SBA_Account_Number",
+          Header: "SBA_Account_Number",
+          accessor: "SBA_Account_Number",
           show: false
         },
         {
-          field: "loan_number",
-          Header: "loan_number",
-          accessor: "loan_number",
+          field: "Loan_Account_Number",
+          Header: "Loan_Account_Number",
+          accessor: "Loan_Account_Number",
           show: false
+        },
+        {
+          field: "Business_Legal_Name",
+          Header: "Business_Legal_Name",
+          accessor: "Business_Legal_Name"
         },
         {
           field: "status",
@@ -202,7 +207,7 @@ function LoanlistD(props) {
           accessor: "created",
           disableFilters: true,
         },
-        {
+        /*{
           field: "first_upload_date",
           Header: "first_upload_date",
           accessor: "first_upload_date",
@@ -229,14 +234,14 @@ function LoanlistD(props) {
               </div>
             )
           }
-        },
+        },*/
         {
           field: "SBAfunding_date",
           Header: "SBAfunding_date",
           accessor: "SBAfunding_date",
           disableFilters: true,
         },
-        {
+        /*{
           field: "final_forgive_amount",
           Header: "final_forgive_amount",
           accessor: "final_forgive_amount",
@@ -251,7 +256,7 @@ function LoanlistD(props) {
               </div>
             )
           }
-        },
+        },*/
         {
           field: "Loan_Status",
           Header: "Loan_Status",
@@ -484,7 +489,9 @@ function LoanlistD(props) {
       }
     };
     let url = Loans_Url;
-
+    if(isInternalUser && teamInt==="teamd"){
+      url = LoansD_Url;
+    }
     url += "?include_count=true";
     let filtersTemp = filters;
     if(filtersTemp.length>0){
@@ -683,6 +690,23 @@ function LoanlistD(props) {
                 'MentorAssigned' : data.MentorAssigned,
                 'StatusCComments': data.StatusCComments,
                 'Application Status"' : data.R2_ApplicationStatus
+              }
+            } else if(teamInt==="teamd"){
+              return {
+                'SBA_Account_Number': data.SBA_Account_Number,
+                'Loan_Account_Number' : data.Loan_Account_Number,
+                'Business_Legal_Name' : data.Business_Legal_Name,
+                'status'    : data.status,
+                'bank_notional_amount' : data.bank_notional_amount,
+                'forgive_amount' : data.forgive_amount,
+                'created'        : data.created,
+                'SBAfunding_date' : data.SBAfunding_date,
+                'Loan_Status'     : data.Loan_Status,
+                'Forgiveness_Status' : data.Forgiveness_Status,
+                'Next_Payment_Due_Date'        : data.Next_Payment_Due_Date,
+                'comment'     : data.comment,
+                'TeamDmember' : data.TeamDmember,
+                'statusIndication' : data.statusIndication
               }
             } else {
               return null;
