@@ -53,6 +53,18 @@ const StatusOptions = [
     { value: 'Shelved',            label: 'Shelved' },
     { value: 'Resolved',           label: 'Resolved'}
 ];
+
+const StatusTeamDOptions = [
+    { value: '',     label: 'All' },
+    { value: 'is NULL', label: 'NULL' },
+    { value: 'Not yet called',     label: 'Not yet called' },
+    { value: 'Called with no success', label: 'Called with no success' },
+    { value: 'Borrower in portal/awaiting app', label: 'Borrower in portal/awaiting app' },
+    { value: 'Ready for review', label: 'Ready for review' },
+    { value: 'Sent back to borrower for changes',  label: 'Sent back to borrower for changes' },
+    { value: 'Ready for submission',    label: 'Ready for submission' },
+    { value: 'Submitted to the SBA',    label: 'Submitted to the SBA' }
+];
  
 
 const applicationStatusOptions = [
@@ -230,7 +242,8 @@ const UnAssocLoanStatusOptions = [
 window.commonVar = {
     SBAOptions : SBAOptions,
     BrokerOptions : BrokerOptions,
-    StatusOptions : StatusOptions, 
+    StatusOptions : StatusOptions,
+    StatusTeamDOptions : StatusTeamDOptions, 
     applicationStatusOptions : applicationStatusOptions, 
     brokerOverrideOptions : brokerOverrideOptions, 
     MentorAssignedOptions : MentorAssignedOptions, 

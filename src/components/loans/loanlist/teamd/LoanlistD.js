@@ -14,7 +14,7 @@ import LoanFileUploadWizard from './../LoanFileUploadWizard';
 //import {API_KEY, Loans_Url, env, SetLoans_Url, Loan_Upload_Doc_Url} from './../../../const';
 const {API_KEY, Loans_Url, LoansD_Url, SetLoans_Url} = window.constVar;
 //import {SBAOptions, BrokerOptions, StatusOptions, applicationStatusOptions, BroketTeamOptions, MentorAssignedOptions, ReviewerAssignedOptions, AkayBrokerOptions} from './../../../commonVar.js';
-const {SBAOptions, BrokerOptions, StatusOptions, applicationStatusOptions, BroketTeamOptions, MentorAssignedOptions, ReviewerAssignedOptions, AkayBrokerOptions, TeamBAssignedOptions, TeamDAssignedOptions} = window.commonVar;
+const {SBAOptions, BrokerOptions, StatusOptions, applicationStatusOptions, BroketTeamOptions, MentorAssignedOptions, ReviewerAssignedOptions, AkayBrokerOptions, TeamBAssignedOptions, TeamDAssignedOptions, StatusTeamDOptions} = window.commonVar;
 
 function LoanlistD(props) {
   
@@ -170,9 +170,9 @@ function LoanlistD(props) {
           accessor: "status"
         },
         {
-          field: "notes",
-          Header: "notes",
-          accessor: "notes"
+          field: "callernotes",
+          Header: "callernotes",
+          accessor: "callernotes"
         },
         {
           field: "bank_notional_amount",
@@ -302,10 +302,10 @@ function LoanlistD(props) {
           accessor: "statusIndication",
           Filter: SelectColumnFilter,
           filter: 'includes',
-          options:StatusOptions,
+          options:StatusTeamDOptions,
           editable:true,
           columnType:'list',
-          columnOptions:StatusOptions
+          columnOptions:StatusTeamDOptions
         });
       } 
     } 
