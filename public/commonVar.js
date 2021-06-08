@@ -239,6 +239,16 @@ const UnAssocLoanStatusOptions = [
     { value: 'Cancelled',         label: 'Cancelled' }
 ];
 
+const ForgivenessStatusOptions = [
+    { value: '',     label: 'All' },
+    { value: 'is NULL', label: 'NULL' },
+    { value: 'Forgiveness Awaiting Documents',     label: 'Forgiveness Awaiting Documents' },
+    { value: 'Forgiveness Requested', label: 'Forgiveness Requested' },
+    { value: 'Invalid Record', label: 'Invalid Record' },
+    { value: 'SBA E-Tran Approved', label: 'SBA E-Tran Approved' },
+    { value: 'Submitted To SBA',  label: 'Submitted To SBA' }
+];
+
 window.commonVar = {
     SBAOptions : SBAOptions,
     BrokerOptions : BrokerOptions,
@@ -254,5 +264,6 @@ window.commonVar = {
     BroketTeamOptions : BroketTeamOptions, 
     AkayBrokerOptions : AkayBrokerOptions, 
     internalUserList : internalUserList, 
-    UnAssocLoanStatusOptions : UnAssocLoanStatusOptions
+    UnAssocLoanStatusOptions : UnAssocLoanStatusOptions,
+    ForgivenessStatusOptions : ForgivenessStatusOptions
 }

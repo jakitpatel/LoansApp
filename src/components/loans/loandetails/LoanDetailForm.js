@@ -6,7 +6,7 @@ import SelectInput from './SelectInput';
 import TextAreaInput from './TextAreaInput';
 import TextInput from './TextInput';
 //import {StatusOptions, brokerOverrideOptions, MentorAssignedOptions, ReviewerAssignedOptions, TeamBAssignedOptions} from './../../../commonVar.js';
-const {StatusOptions, brokerOverrideOptions, MentorAssignedOptions, ReviewerAssignedOptions, TeamBAssignedOptions} = window.commonVar;
+const {StatusOptions, brokerOverrideOptions, MentorAssignedOptions, ReviewerAssignedOptions, TeamBAssignedOptions, TeamDAssignedOptions} = window.commonVar;
 
 function LoanDetailForm(props) {
   const { isInternalUser, teamInt } = useSelector(state => {
@@ -142,7 +142,7 @@ function LoanDetailForm(props) {
             let readOnlyVal = true;
             if(!str.includes(key)){
               if(isInternalUser){
-                if(isInternalUser && (key==="ReviewerAssigned" || key==="MentorAssigned" || key==="StatusAComments" || key==="StatusBComments" || key==="StatusCComments" || key==="StatusDComments" || key==="statusIndication" || key==="businessIndication" || key==="personalIndication" || key==="ownershipIndication" || key==="documentIndication" || key==="finacialSeachIndication" || key==="teambmember")){
+                if(isInternalUser && (key==="ReviewerAssigned" || key==="MentorAssigned" || key==="StatusAComments" || key==="StatusBComments" || key==="StatusCComments" || key==="StatusDComments" || key==="statusIndication" || key==="businessIndication" || key==="personalIndication" || key==="ownershipIndication" || key==="documentIndication" || key==="finacialSeachIndication" || key==="teambmember" || key==="TeamDmember" || key==="callernotes" || key==="comment")){
                   readOnlyVal = false;
                 }
                 if(key==="statusIndication"){
@@ -184,7 +184,7 @@ function LoanDetailForm(props) {
                       />
                     </React.Fragment>
                   )
-                } else if(key==="MentorAssigned" || key==="ReviewerAssigned" || key==="teambmember"){
+                } else if(key==="MentorAssigned" || key==="ReviewerAssigned" || key==="teambmember" || key==="TeamDmember"){
                   if(value===null){
                     value = "";
                   }
@@ -195,6 +195,8 @@ function LoanDetailForm(props) {
                     assignedOptions = ReviewerAssignedOptions;
                   } else if(key==="teambmember") {
                     assignedOptions = TeamBAssignedOptions;
+                  } else if(key==="TeamDmember") {
+                    assignedOptions = TeamDAssignedOptions;
                   }
                   return (
                     <React.Fragment key={key}>

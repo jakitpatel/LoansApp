@@ -14,7 +14,7 @@ import LoanFileUploadWizard from './../LoanFileUploadWizard';
 //import {API_KEY, Loans_Url, env, SetLoans_Url, Loan_Upload_Doc_Url} from './../../../const';
 const {API_KEY, Loans_Url, LoansD_Url, SetLoans_Url} = window.constVar;
 //import {SBAOptions, BrokerOptions, StatusOptions, applicationStatusOptions, BroketTeamOptions, MentorAssignedOptions, ReviewerAssignedOptions, AkayBrokerOptions} from './../../../commonVar.js';
-const {SBAOptions, BrokerOptions, StatusOptions, applicationStatusOptions, BroketTeamOptions, MentorAssignedOptions, ReviewerAssignedOptions, AkayBrokerOptions, TeamBAssignedOptions, TeamDAssignedOptions, StatusTeamDOptions} = window.commonVar;
+const {SBAOptions, BrokerOptions, StatusOptions, applicationStatusOptions, BroketTeamOptions, MentorAssignedOptions, ReviewerAssignedOptions, AkayBrokerOptions, ForgivenessStatusOptions, TeamDAssignedOptions, StatusTeamDOptions} = window.commonVar;
 
 function LoanlistD(props) {
   
@@ -172,12 +172,14 @@ function LoanlistD(props) {
         {
           field: "callernotes",
           Header: "callernotes",
-          accessor: "callernotes"
+          accessor: "callernotes",
+          editable: editableContent,
+          columnType:'textarea'
         },
         {
-          field: "bank_notional_amount",
-          Header: "bank_notional_amount",
-          accessor: "bank_notional_amount",
+          field: "original_loan_amount",
+          Header: "original_loan_amount",
+          accessor: "original_loan_amount",
           disableFilters: true,
           Cell: props => {
             if(props.value===null || props.value===undefined) {
@@ -270,7 +272,13 @@ function LoanlistD(props) {
         {
           field: "Forgiveness_Status",
           Header: "Forgiveness_Status",
-          accessor: "Forgiveness_Status"
+          accessor: "Forgiveness_Status",
+          Filter: SelectColumnFilter,
+          filter: 'includes',
+          options:ForgivenessStatusOptions/*,
+          editable:true,
+          columnType:'list',
+          columnOptions:ForgivenessStatusOptions*/
         },
         {
           field: "Next_Payment_Due_Date",
@@ -282,9 +290,9 @@ function LoanlistD(props) {
           field: "TeamDmember",
           Header: "TeamDmember",
           accessor: "TeamDmember",
-          /*Filter: SelectColumnFilter,
+          Filter: SelectColumnFilter,
           filter: 'includes',
-          options:TeamBAssignedOptions,*/
+          options:TeamDAssignedOptions,
           editable:true,
           columnType:'list',
           columnOptions:TeamDAssignedOptions
@@ -333,7 +341,7 @@ function LoanlistD(props) {
     });
     saveLoanDetails({
       [columnId]:value,
-      ALD_ID:modifiedRec.ALD_ID
+      Loan_Account_Number:modifiedRec.Loan_Account_Number
     });
     //setData(newData);
     dispatch({
@@ -355,12 +363,12 @@ function LoanlistD(props) {
         }
       };
       let tmpLoanObj = obj;
-      if(tmpLoanObj.ALD_ID === "" || tmpLoanObj.ALD_ID === null || tmpLoanObj.ALD_ID === undefined){
+      if(tmpLoanObj.Loan_Account_Number === "" || tmpLoanObj.Loan_Account_Number === null || tmpLoanObj.Loan_Account_Number === undefined){
         //alert("ALD_ID is empty! So, can not able to save the loan.");
-        console.log("ALD_ID is empty! So, can not able to save the loan.");
+        console.log("Loan_Account_Number is empty! So, can not able to save the loan.");
         //return false;
       } else {
-        let ald_id = tmpLoanObj.ALD_ID;
+        let ald_id = tmpLoanObj.Loan_Account_Number;
         //tmpLoanObj.LastUpdateUser = uid;
         tmpLoanObj.LastModifyDate = moment().format('YYYY-MM-DD');
         let res = await axios.put(SetLoans_Url+'/'+ald_id, tmpLoanObj, options);
@@ -702,7 +710,7 @@ function LoanlistD(props) {
                 'Loan_Account_Number' : data.Loan_Account_Number,
                 'Business_Legal_Name' : data.Business_Legal_Name,
                 'status'    : data.status,
-                'bank_notional_amount' : data.bank_notional_amount,
+                'original_loan_amount' : data.original_loan_amount,
                 'forgive_amount' : data.forgive_amount,
                 'created'        : data.created,
                 'SBAfunding_date' : data.SBAfunding_date,
