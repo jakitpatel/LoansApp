@@ -25,6 +25,7 @@ window.constVar = {
     Loans_Url    : API_URL+"getppp",
     LoansD_Url   : API_URL+"getforgivness",
     SetLoans_Url : API_URL+"setloanstatus",
+    SetLoansForgive_Url : API_URL+"setforgivness",
     Loan_Upload_Doc_Url  : API_CONTRIB_URL+"contrib",
     //Loan_Upload_Doc_Url  : API_CONTRIB_URL+"contrib.json",
     LoanDetails_Url      : API_URL+"getLoanDetails?filter=",

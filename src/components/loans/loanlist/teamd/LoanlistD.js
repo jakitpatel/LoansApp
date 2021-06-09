@@ -12,7 +12,7 @@ import ExcelExport from './../../../ExcelExport/ExcelExport';
 import LoanFileUpload from './../LoanFileUpload';
 import LoanFileUploadWizard from './../LoanFileUploadWizard';
 //import {API_KEY, Loans_Url, env, SetLoans_Url, Loan_Upload_Doc_Url} from './../../../const';
-const {API_KEY, Loans_Url, LoansD_Url, SetLoans_Url} = window.constVar;
+const {API_KEY, Loans_Url, LoansD_Url, SetLoans_Url, SetLoansForgive_Url} = window.constVar;
 //import {SBAOptions, BrokerOptions, StatusOptions, applicationStatusOptions, BroketTeamOptions, MentorAssignedOptions, ReviewerAssignedOptions, AkayBrokerOptions} from './../../../commonVar.js';
 const {SBAOptions, BrokerOptions, StatusOptions, applicationStatusOptions, BroketTeamOptions, MentorAssignedOptions, ReviewerAssignedOptions, AkayBrokerOptions, ForgivenessStatusOptions, TeamDAssignedOptions, StatusTeamDOptions} = window.commonVar;
 
@@ -341,7 +341,7 @@ function LoanlistD(props) {
     });
     saveLoanDetails({
       [columnId]:value,
-      Loan_Account_Number:modifiedRec.Loan_Account_Number
+      sba_number:modifiedRec.sba_number
     });
     //setData(newData);
     dispatch({
@@ -363,15 +363,15 @@ function LoanlistD(props) {
         }
       };
       let tmpLoanObj = obj;
-      if(tmpLoanObj.Loan_Account_Number === "" || tmpLoanObj.Loan_Account_Number === null || tmpLoanObj.Loan_Account_Number === undefined){
+      if(tmpLoanObj.sba_number === "" || tmpLoanObj.sba_number === null || tmpLoanObj.sba_number === undefined){
         //alert("ALD_ID is empty! So, can not able to save the loan.");
         console.log("Loan_Account_Number is empty! So, can not able to save the loan.");
         //return false;
       } else {
-        let ald_id = tmpLoanObj.Loan_Account_Number;
+        let ald_id = tmpLoanObj.sba_number;
         //tmpLoanObj.LastUpdateUser = uid;
         tmpLoanObj.LastModifyDate = moment().format('YYYY-MM-DD');
-        let res = await axios.put(SetLoans_Url+'/'+ald_id, tmpLoanObj, options);
+        let res = await axios.put(SetLoansForgive_Url+'/'+ald_id, tmpLoanObj, options);
         console.log(res);
         //alert("Data saved successfully!");
         console.log("Data saved successfully!");

@@ -6,7 +6,7 @@ import SelectInput from './SelectInput';
 import TextAreaInput from './TextAreaInput';
 import TextInput from './TextInput';
 //import {StatusOptions, brokerOverrideOptions, MentorAssignedOptions, ReviewerAssignedOptions, TeamBAssignedOptions} from './../../../commonVar.js';
-const {StatusOptions, brokerOverrideOptions, MentorAssignedOptions, ReviewerAssignedOptions, TeamBAssignedOptions, TeamDAssignedOptions} = window.commonVar;
+const {StatusOptions, StatusTeamDOptions, brokerOverrideOptions, MentorAssignedOptions, ReviewerAssignedOptions, TeamBAssignedOptions, TeamDAssignedOptions} = window.commonVar;
 
 function LoanDetailForm(props) {
   const { isInternalUser, teamInt } = useSelector(state => {
@@ -145,6 +145,10 @@ function LoanDetailForm(props) {
                 if(isInternalUser && (key==="ReviewerAssigned" || key==="MentorAssigned" || key==="StatusAComments" || key==="StatusBComments" || key==="StatusCComments" || key==="StatusDComments" || key==="statusIndication" || key==="businessIndication" || key==="personalIndication" || key==="ownershipIndication" || key==="documentIndication" || key==="finacialSeachIndication" || key==="teambmember" || key==="TeamDmember" || key==="callernotes" || key==="comment")){
                   readOnlyVal = false;
                 }
+                let statusIndOptions = StatusOptions;
+                if(teamInt==="teamd"){
+                  statusIndOptions = StatusTeamDOptions;
+                }
                 if(key==="statusIndication"){
                   if(value===null){
                     value = "";
@@ -159,7 +163,7 @@ function LoanDetailForm(props) {
                         val={value}
                         wireDtObj={loadDtOrdObj}
                         readOnlyValue={readOnlyVal}
-                        optionList={StatusOptions}
+                        optionList={statusIndOptions}
                       />
                     </React.Fragment>
                   )
