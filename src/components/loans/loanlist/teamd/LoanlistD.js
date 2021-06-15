@@ -170,16 +170,9 @@ function LoanlistD(props) {
           accessor: "status"
         },
         {
-          field: "callernotes",
-          Header: "callernotes",
-          accessor: "callernotes",
-          editable: editableContent,
-          columnType:'textarea'
-        },
-        {
-          field: "original_loan_amount",
-          Header: "original_loan_amount",
-          accessor: "original_loan_amount",
+          field: "Original_Note_Amount",
+          Header: "Original_Note_Amount",
+          accessor: "Original_Note_Amount",
           disableFilters: true,
           Cell: props => {
             if(props.value===null || props.value===undefined) {
@@ -192,7 +185,7 @@ function LoanlistD(props) {
             )
           }
         },
-        {
+        /*{
           field: "forgive_amount",
           Header: "forgive_amount",
           accessor: "forgive_amount",
@@ -214,7 +207,7 @@ function LoanlistD(props) {
           accessor: "created",
           disableFilters: true,
         },
-        /*{
+        {
           field: "first_upload_date",
           Header: "first_upload_date",
           accessor: "first_upload_date",
@@ -241,14 +234,14 @@ function LoanlistD(props) {
               </div>
             )
           }
-        },*/
+        },
         {
           field: "SBAfunding_date",
           Header: "SBAfunding_date",
           accessor: "SBAfunding_date",
           disableFilters: true,
         },
-        /*{
+        {
           field: "final_forgive_amount",
           Header: "final_forgive_amount",
           accessor: "final_forgive_amount",
@@ -296,6 +289,13 @@ function LoanlistD(props) {
           editable:true,
           columnType:'list',
           columnOptions:TeamDAssignedOptions
+        },
+        {
+          field: "callernotes",
+          Header: "callernotes",
+          accessor: "callernotes",
+          editable: editableContent,
+          columnType:'textarea'
         },
         {
           field: "comment",

@@ -122,10 +122,11 @@ const TeamBAssignedOptions = [
 
 const TeamDAssignedOptions = [
     { value: 'Adiv Cederbaum', label: 'Adiv Cederbaum' },
-    { value: 'Deanna McConnell', label: 'Deanna McConnell' },
+    { value: 'Yoni Deutsch',   label: 'Yoni Deutsch' },
     { value: 'Mark Elbaz', label: 'Mark Elbaz' },
     { value: 'Joshua Vance', label: 'Joshua Vance' },
     { value: 'Jaime Mathew', label: 'Jaime Mathew' }
+    //{ value: 'Deanna McConnell', label: 'Deanna McConnell' }
 ];
 
 const ReviewerAssignedOptions = [
