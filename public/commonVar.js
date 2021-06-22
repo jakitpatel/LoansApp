@@ -125,8 +125,8 @@ const TeamDAssignedOptions = [
     { value: 'Yoni Deutsch',   label: 'Yoni Deutsch' },
     { value: 'Mark Elbaz', label: 'Mark Elbaz' },
     { value: 'Joshua Vance', label: 'Joshua Vance' },
-    { value: 'Jaime Mathew', label: 'Jaime Mathew' }
-    //{ value: 'Deanna McConnell', label: 'Deanna McConnell' }
+    { value: 'Jaime Mathew', label: 'Jaime Mathew' },
+    { value: 'Other', label: 'Other' }
 ];
 
 const ReviewerAssignedOptions = [
