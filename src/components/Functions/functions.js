@@ -44,7 +44,7 @@ const buildSortByUrl = (sortArr) => {
         filterUrl += " and ("+filterClm+" is null)";
       }
     } else {
-      if(filterClm==="ALDLoanApplicationNumberOnly" || filterClm==="TaxID"){
+      if(filterClm==="ALDLoanApplicationNumberOnly" || filterClm==="TaxID" || filterClm==="Loan_Account_Number"){
         filterOpr = "=";
         filterUrl += " and ("+filterClm+" "+filterOpr+" "+filterVal+")";
       } else if(filterClm==="SBALoanNumber" && filterObj.filterOpr===">" && filterObj.defFilter==="teamc"){
