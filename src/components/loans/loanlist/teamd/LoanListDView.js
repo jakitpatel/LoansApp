@@ -340,7 +340,7 @@ function Table({
           ]
         }]);
       } else if(teamInt==="teamd"){
-        setAllFilters([{
+        /*setAllFilters([{
           id: "Forgiveness_Status", 
           value: [
             { value: 'Forgiveness Awaiting Documents', label: 'Forgiveness Awaiting Documents' },
@@ -348,7 +348,7 @@ function Table({
             { value: 'SBA E-Tran Approved',  label: 'SBA E-Tran Approved' },
             { value: 'Submitted To SBA', label: 'Submitted To SBA' }
           ]
-        }]);
+        }]);*/
       } else if(teamInt==="teamc") {
         //alert(teamInt);
         //alert("Reset All Filters");

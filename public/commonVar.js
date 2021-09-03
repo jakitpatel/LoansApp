@@ -57,15 +57,13 @@ const StatusOptions = [
 const StatusTeamDOptions = [
     { value: '',     label: 'All' },
     { value: 'is NULL', label: 'NULL' },
-    { value: 'Not yet called',     label: 'Not yet called' },
-    { value: 'Called with no success', label: 'Called with no success' },
-    { value: 'Borrower in portal/awaiting app', label: 'Borrower in portal/awaiting app' },
-    { value: 'Ready for review', label: 'Ready for review' },
-    { value: 'Sent back to borrower for changes',  label: 'Sent back to borrower for changes' },
-    { value: 'Ready for submission',    label: 'Ready for submission' },
-    { value: 'Submitted to the SBA',    label: 'Submitted to the SBA' }
-];
- 
+    { value: 'Not Contacted', label: 'Not Contacted' },
+    { value: 'Contacted With No Reply',     label: 'Contacted With No Reply' },
+    { value: 'Forgiveness Requested', label: 'Forgiveness Requested' },
+    { value: 'Borrower Working in Portal', label: 'Borrower Working in Portal' },
+    { value: 'Submitted', label: 'Submitted' },
+    { value: 'Forgiven',  label: 'Forgiven' }
+]; 
 
 const applicationStatusOptions = [
     { value: '',     label: 'All' },
@@ -124,8 +122,8 @@ const TeamDAssignedOptions = [
     { value: 'Adiv Cederbaum', label: 'Adiv Cederbaum' },
     { value: 'Yoni Deutsch',   label: 'Yoni Deutsch' },
     { value: 'Mark Elbaz', label: 'Mark Elbaz' },
-    { value: 'Joshua Vance', label: 'Joshua Vance' },
-    { value: 'Jaime Mathew', label: 'Jaime Mathew' },
+    { value: 'Zahava Deutsch', label: 'Zahava Deutsch' },
+    { value: 'Diane Parotino', label: 'Diane Parotino' },
     { value: 'Other', label: 'Other' }
 ];
 

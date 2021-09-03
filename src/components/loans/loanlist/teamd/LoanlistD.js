@@ -148,140 +148,50 @@ function LoanlistD(props) {
       console.log("Internal Team : "+teamInt);
       if(teamInt==="teamd"){
         columnDefs.push({
-          field: "SBA_Account_Number",
-          Header: "SBA_Account_Number",
-          accessor: "SBA_Account_Number",
-          show: false
+          field: "PrimaryBorrowers",
+          Header: "Borrower Name",
+          accessor: "PrimaryBorrowers"
+        },{
+          field: "sba_number",
+          Header: "SBA Number",
+          accessor: "sba_number"
         },
         {
-          field: "Loan_Account_Number",
-          Header: "Loan_Account_Number",
-          accessor: "Loan_Account_Number",
-          show: false
-        },
-        {
-          field: "Business_Legal_Name",
-          Header: "Business_Legal_Name",
-          accessor: "Business_Legal_Name"
+          field: "OriginalLoanAmount",
+          Header: "Original Loan Amount",
+          accessor: "OriginalLoanAmount",
+          disableFilters: true,
+          Cell: props => {
+            if(props.value===null || props.value===undefined) {
+              return null;
+            }
+            return (
+              <div style={{textAlign: "right"}}>
+                {toCurrency(props.value)}
+              </div>
+            )
+          }
         },
         {
           field: "status",
-          Header: "status",
+          Header: "Status",
           accessor: "status"
         },
         {
-          field: "Original_Note_Amount",
-          Header: "Original_Note_Amount",
-          accessor: "Original_Note_Amount",
-          disableFilters: true,
-          Cell: props => {
-            if(props.value===null || props.value===undefined) {
-              return null;
-            }
-            return (
-              <div style={{textAlign: "right"}}>
-                {toCurrency(props.value)}
-              </div>
-            )
-          }
-        },
-        /*{
-          field: "forgive_amount",
-          Header: "forgive_amount",
-          accessor: "forgive_amount",
-          disableFilters: true,
-          Cell: props => {
-            if(props.value===null || props.value===undefined) {
-              return null;
-            }
-            return (
-              <div style={{textAlign: "right"}}>
-                {toCurrency(props.value)}
-              </div>
-            )
-          }
+          field: "DisbursementDate",
+          Header: "Disbursement Date",
+          accessor: "DisbursementDate",
+          disableFilters: true
         },
         {
-          field: "created",
-          Header: "created",
-          accessor: "created",
-          disableFilters: true,
-        },
-        {
-          field: "first_upload_date",
-          Header: "first_upload_date",
-          accessor: "first_upload_date",
-          disableFilters: true,
-        },
-        {
-          field: "forgive_eidl_application_number",
-          Header: "forgive_eidl_application_number",
-          accessor: "forgive_eidl_application_number",
-          show: false
-        },
-        {
-          field: "forgive_eidl_amount",
-          Header: "forgive_eidl_amount",
-          accessor: "forgive_eidl_amount",
-          disableFilters: true,
-          Cell: props => {
-            if(props.value===null || props.value===undefined) {
-              return null;
-            }
-            return (
-              <div style={{textAlign: "right"}}>
-                {toCurrency(props.value)}
-              </div>
-            )
-          }
-        },
-        {
-          field: "SBAfunding_date",
-          Header: "SBAfunding_date",
-          accessor: "SBAfunding_date",
-          disableFilters: true,
-        },
-        {
-          field: "final_forgive_amount",
-          Header: "final_forgive_amount",
-          accessor: "final_forgive_amount",
-          disableFilters: true,
-          Cell: props => {
-            if(props.value===null || props.value===undefined) {
-              return null;
-            }
-            return (
-              <div style={{textAlign: "right"}}>
-                {toCurrency(props.value)}
-              </div>
-            )
-          }
-        },*/
-        {
-          field: "Loan_Status",
-          Header: "Loan_Status",
-          accessor: "Loan_Status"
-        },
-        {
-          field: "Forgiveness_Status",
-          Header: "Forgiveness_Status",
-          accessor: "Forgiveness_Status",
-          Filter: SelectColumnFilter,
-          filter: 'includes',
-          options:ForgivenessStatusOptions/*,
-          editable:true,
-          columnType:'list',
-          columnOptions:ForgivenessStatusOptions*/
-        },
-        {
-          field: "Next_Payment_Due_Date",
-          Header: "Next_Payment_Due_Date",
-          accessor: "Next_Payment_Due_Date",
-          disableFilters: true,
+          field: "EndofCoveredPeriod",
+          Header: "End of Covered Period",
+          accessor: "EndofCoveredPeriod",
+          disableFilters: true
         },
         {
           field: "TeamDmember",
-          Header: "TeamDmember",
+          Header: "Team D Member",
           accessor: "TeamDmember",
           Filter: SelectColumnFilter,
           filter: 'includes',
@@ -292,21 +202,21 @@ function LoanlistD(props) {
         },
         {
           field: "callernotes",
-          Header: "callernotes",
+          Header: "Caller Notes",
           accessor: "callernotes",
           editable: editableContent,
           columnType:'textarea'
         },
         {
           field: "comment",
-          Header: "comment",
+          Header: "Comment",
           accessor: "comment",
           editable: editableContent,
           columnType:'textarea'
         },
         {
           field: "statusIndication",
-          Header: "statusIndication",
+          Header: "Manual Status",
           accessor: "statusIndication",
           Filter: SelectColumnFilter,
           filter: 'includes',
@@ -314,6 +224,12 @@ function LoanlistD(props) {
           editable:true,
           columnType:'list',
           columnOptions:StatusTeamDOptions
+        },
+        {
+          field: "AppliedAt",
+          Header: "Applied At",
+          accessor: "AppliedAt",
+          disableFilters: true
         });
       } 
     } 
