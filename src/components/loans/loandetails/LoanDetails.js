@@ -5,7 +5,7 @@ import axios from 'axios';
 import moment from 'moment';
 import { useSelector, useDispatch } from 'react-redux';
 //import {API_KEY, SetLoans_Url} from './../../../const';
-const {API_KEY, SetLoans_Url} = window.constVar;
+const {API_KEY, SetLoans_Url, SetLoansForgive_Url} = window.constVar;
 
 function LoanDetails(props) {
   let history = useHistory();
@@ -13,7 +13,7 @@ function LoanDetails(props) {
   const [modWireDtObj, setModWireDtObj] = useState({});
   const dispatch = useDispatch();
 
-  const { session_token, isInternalUser } = useSelector(state => {
+  const { session_token, isInternalUser, teamInt } = useSelector(state => {
       return {
           ...state.userReducer
       }
@@ -90,43 +90,58 @@ function LoanDetails(props) {
         }
       };
       let tmpLoanObj = {};
+      let ald_id = null;
+      let saveLoanURL = SetLoans_Url;
       if(isInternalUser){
         let statusVal = loanDetailsObj.statusIndication;
         if(statusVal===""){
           statusVal = null;
         }
-        console.log("StatusCComments : "+loanDetailsObj.StatusCComments);
-        if(loanDetailsObj.StatusCComments !== "" && loanDetailsObj.StatusCComments !== null){
-          let resSt = loanDetailsObj.StatusCComments.toLowerCase();
-          if(resSt === "funded"){
-            statusVal = "Funded";
+        if(teamInt==="teamd"){
+          tmpLoanObj = {
+            callernotes   : loanDetailsObj.callernotes,
+            //LastModifyDate   : loanDetailsObj.LastModifyDate,
+            comment  : loanDetailsObj.comment,
+            statusIndication : statusVal,
+            TeamDmember    : loanDetailsObj.TeamDmember
+          };
+          ald_id = loanDetailsObj.sba_number;
+          saveLoanURL = SetLoansForgive_Url;
+        } else {
+          console.log("StatusCComments : "+loanDetailsObj.StatusCComments);
+          if(loanDetailsObj.StatusCComments !== "" && loanDetailsObj.StatusCComments !== null){
+            let resSt = loanDetailsObj.StatusCComments.toLowerCase();
+            if(resSt === "funded"){
+              statusVal = "Funded";
+            }
           }
+          console.log("statusVal : "+statusVal);
+          let brokerOverrideVal = loanDetailsObj.brokerOverride;
+          if(brokerOverrideVal===""){
+            brokerOverrideVal = null;
+          }
+          tmpLoanObj = {
+            //ALDLoanApplicationNumberOnly : loanDetailsObj.ALDLoanApplicationNumberOnly,
+            ReviewerAssigned : loanDetailsObj.ReviewerAssigned,
+            MentorAssigned   : loanDetailsObj.MentorAssigned,
+            //LastModifyDate   : loanDetailsObj.LastModifyDate,
+            StatusAComments  : loanDetailsObj.StatusAComments,
+            StatusBComments  : loanDetailsObj.StatusBComments,
+            StatusCComments  : loanDetailsObj.StatusCComments,
+            StatusDComments  : loanDetailsObj.StatusDComments,
+            MentorEmail      : loanDetailsObj.MentorEmail,
+            MentorPhone      : loanDetailsObj.MentorPhone,
+            statusIndication : statusVal,
+            businessIndication  : loanDetailsObj.businessIndication,
+            personalIndication  : loanDetailsObj.personalIndication,
+            ownershipIndication : loanDetailsObj.ownershipIndication,
+            documentIndication  : loanDetailsObj.documentIndication,
+            finacialSeachIndication  : loanDetailsObj.finacialSeachIndication,
+            brokerOverride : brokerOverrideVal,
+            teambmember    : loanDetailsObj.teambmember
+          };
+          ald_id = loanDetailsObj.ALD_ID;
         }
-        console.log("statusVal : "+statusVal);
-        let brokerOverrideVal = loanDetailsObj.brokerOverride;
-        if(brokerOverrideVal===""){
-          brokerOverrideVal = null;
-        }
-        tmpLoanObj = {
-          //ALDLoanApplicationNumberOnly : loanDetailsObj.ALDLoanApplicationNumberOnly,
-          ReviewerAssigned : loanDetailsObj.ReviewerAssigned,
-          MentorAssigned   : loanDetailsObj.MentorAssigned,
-          //LastModifyDate   : loanDetailsObj.LastModifyDate,
-          StatusAComments  : loanDetailsObj.StatusAComments,
-          StatusBComments  : loanDetailsObj.StatusBComments,
-          StatusCComments  : loanDetailsObj.StatusCComments,
-          StatusDComments  : loanDetailsObj.StatusDComments,
-          MentorEmail      : loanDetailsObj.MentorEmail,
-          MentorPhone      : loanDetailsObj.MentorPhone,
-          statusIndication : statusVal,
-          businessIndication  : loanDetailsObj.businessIndication,
-          personalIndication  : loanDetailsObj.personalIndication,
-          ownershipIndication : loanDetailsObj.ownershipIndication,
-          documentIndication  : loanDetailsObj.documentIndication,
-          finacialSeachIndication  : loanDetailsObj.finacialSeachIndication,
-          brokerOverride : brokerOverrideVal,
-          teambmember    : loanDetailsObj.teambmember
-        };
       } else {
         /*
         if(loanDetailsObj.statusIndication!=="Resolved"){
@@ -147,15 +162,16 @@ function LoanDetails(props) {
             statusIndication : "Resolved",
           };
         }
+        ald_id = loanDetailsObj.ALD_ID;
       }
-      if(loanDetailsObj.ALD_ID === "" || loanDetailsObj.ALD_ID === null){
+      if(ald_id === "" || ald_id === null){
         alert("ALD_ID is empty! So, can not able to save the loan.");
         return false;
       }
-      let ald_id = loanDetailsObj.ALD_ID;
+      
       //tmpLoanObj.LastUpdateUser = uid;
       tmpLoanObj.LastModifyDate = moment().format('YYYY-MM-DD');
-      let res = await axios.put(SetLoans_Url+'/'+ald_id, tmpLoanObj, options);
+      let res = await axios.put(saveLoanURL+'/'+ald_id, tmpLoanObj, options);
       console.log(res);
       alert("Data saved successfully!");
       backToLoanList();
