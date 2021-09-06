@@ -257,7 +257,7 @@ function LoanlistD(props) {
     });
     saveLoanDetails({
       [columnId]:value,
-      SBA_Account_Number:modifiedRec.SBA_Account_Number
+      sba_number:modifiedRec.sba_number
     });
     //setData(newData);
     dispatch({
@@ -279,12 +279,12 @@ function LoanlistD(props) {
         }
       };
       let tmpLoanObj = obj;
-      if(tmpLoanObj.SBA_Account_Number === "" || tmpLoanObj.SBA_Account_Number === null || tmpLoanObj.SBA_Account_Number === undefined){
+      if(tmpLoanObj.sba_number === "" || tmpLoanObj.sba_number === null || tmpLoanObj.sba_number === undefined){
         //alert("ALD_ID is empty! So, can not able to save the loan.");
-        console.log("SBA_Account_Number is empty! So, can not able to save the loan.");
+        console.log("sba_number is empty! So, can not able to save the loan.");
         //return false;
       } else {
-        let ald_id = tmpLoanObj.SBA_Account_Number;
+        let ald_id = tmpLoanObj.sba_number;
         //tmpLoanObj.LastUpdateUser = uid;
         tmpLoanObj.LastModifyDate = moment().format('YYYY-MM-DD');
         let res = await axios.put(SetLoansForgive_Url+'/'+ald_id, tmpLoanObj, options);
