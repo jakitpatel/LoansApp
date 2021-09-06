@@ -54,6 +54,17 @@ const StatusOptions = [
     { value: 'Resolved',           label: 'Resolved'}
 ];
 
+const StatusAutoTeamDOptions = [
+    { value: 'Payment Confirmed',     label: 'Payment Confirmed' },
+    { value: 'is NULL', label: 'NULL' },
+    { value: 'Pending Review', label: 'Pending Review' },
+    { value: 'Lender Additional Info Needed',     label: 'Lender Additional Info Needed' },
+    { value: 'Fully Approved', label: 'Fully Approved' },
+    { value: 'Payment Sent', label: 'Payment Sent' },
+    { value: 'Pending Validation', label: 'Pending Validation' },
+    { value: 'Under Review',  label: 'Under Review' }
+]; 
+
 const StatusTeamDOptions = [
     { value: '',     label: 'All' },
     { value: 'is NULL', label: 'NULL' },
@@ -264,5 +275,6 @@ window.commonVar = {
     AkayBrokerOptions : AkayBrokerOptions, 
     internalUserList : internalUserList, 
     UnAssocLoanStatusOptions : UnAssocLoanStatusOptions,
-    ForgivenessStatusOptions : ForgivenessStatusOptions
+    ForgivenessStatusOptions : ForgivenessStatusOptions,
+    StatusAutoTeamDOptions : StatusAutoTeamDOptions
 }

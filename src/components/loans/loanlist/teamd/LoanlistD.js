@@ -14,7 +14,7 @@ import LoanFileUploadWizard from './../LoanFileUploadWizard';
 //import {API_KEY, Loans_Url, env, SetLoans_Url, Loan_Upload_Doc_Url} from './../../../const';
 const {API_KEY, Loans_Url, LoansD_Url, SetLoans_Url, SetLoansForgive_Url} = window.constVar;
 //import {SBAOptions, BrokerOptions, StatusOptions, applicationStatusOptions, BroketTeamOptions, MentorAssignedOptions, ReviewerAssignedOptions, AkayBrokerOptions} from './../../../commonVar.js';
-const {SBAOptions, BrokerOptions, StatusOptions, applicationStatusOptions, BroketTeamOptions, MentorAssignedOptions, ReviewerAssignedOptions, AkayBrokerOptions, ForgivenessStatusOptions, TeamDAssignedOptions, StatusTeamDOptions} = window.commonVar;
+const {SBAOptions, BrokerOptions, StatusAutoTeamDOptions, applicationStatusOptions, BroketTeamOptions, MentorAssignedOptions, ReviewerAssignedOptions, AkayBrokerOptions, ForgivenessStatusOptions, TeamDAssignedOptions, StatusTeamDOptions} = window.commonVar;
 
 function LoanlistD(props) {
   
@@ -175,7 +175,13 @@ function LoanlistD(props) {
         {
           field: "status",
           Header: "Status",
-          accessor: "status"
+          accessor: "status",
+          Filter: SelectColumnFilter,
+          filter: 'includes',
+          options:StatusAutoTeamDOptions
+          //editable:true,
+          //columnType:'list',
+          //columnOptions:StatusTeamDOptions
         },
         {
           field: "DisbursementDate",
