@@ -179,7 +179,6 @@ function LoanlistD(props) {
           Filter: SelectColumnFilter,
           filter: 'includes',
           options:StatusAutoTeamDOptions
-          //editable:true,
           //columnType:'list',
           //columnOptions:StatusTeamDOptions
         },
