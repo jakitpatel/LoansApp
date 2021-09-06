@@ -31,7 +31,6 @@ const BrokerOptions = [
     { value: 'Skyline Capital', label: 'Skyline Capital' }
 ];
 
-
 const StatusOptions = [
     { value: '',     label: 'All' },
     { value: 'is NULL', label: 'NULL' },
