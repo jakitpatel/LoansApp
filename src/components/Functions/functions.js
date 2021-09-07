@@ -21,7 +21,28 @@ const buildSortByUrl = (sortArr) => {
     filterOpr = "like";
     let filterClm = filterObj.id;
     let filterVal = filterObj.value;
-    if(Array.isArray(filterVal) && filterVal.length > 0){
+    if(Array.isArray(filterVal) && filterVal.length > 0 && filterClm==="OriginalLoanAmount"){
+      console.log(filterVal);
+      let val1 = filterVal[0];
+      let val2 = filterVal[1];
+      let filterOpr = filterVal[2];
+      val1 = val1.replace("$", "");
+      val1 = val1.replace(",", "");
+      if(filterOpr === "><"){
+        val2 = val2.replace("$", "");
+        val2 = val2.replace(",", "");
+        if(val1!=="" && val1!==null){
+          filterUrl += " and ("+filterClm+" > "+val1+")";
+        }
+        if(val2!=="" && val2!==null){
+          filterUrl += " and ("+filterClm+" < "+val2+")";
+        }
+      } else {
+        if(val1!=="" && val1!==null){
+          filterUrl += " and ("+filterClm+" "+filterOpr+" "+val1+")";
+        }
+      }
+    } else if(Array.isArray(filterVal) && filterVal.length > 0){
       let multifilterOpr = "IN";
       let isNullFlag = false;
       let selOptionSt = Array.from(filterVal).map(o => { 

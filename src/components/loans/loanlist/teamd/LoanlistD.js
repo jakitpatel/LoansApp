@@ -11,6 +11,7 @@ import SelectColumnFilter from './../../../Filter/SelectColumnFilter.js';
 import ExcelExport from './../../../ExcelExport/ExcelExport';
 import LoanFileUpload from './../LoanFileUpload';
 import LoanFileUploadWizard from './../LoanFileUploadWizard';
+import AmountRangeColumnFilter from './../../../Filter/AmountRangeColumnFilter';
 //import {API_KEY, Loans_Url, env, SetLoans_Url, Loan_Upload_Doc_Url} from './../../../const';
 const {API_KEY, Loans_Url, LoansD_Url, SetLoans_Url, SetLoansForgive_Url} = window.constVar;
 //import {SBAOptions, BrokerOptions, StatusOptions, applicationStatusOptions, BroketTeamOptions, MentorAssignedOptions, ReviewerAssignedOptions, AkayBrokerOptions} from './../../../commonVar.js';
@@ -160,7 +161,14 @@ function LoanlistD(props) {
           field: "OriginalLoanAmount",
           Header: "Original Loan Amount",
           accessor: "OriginalLoanAmount",
-          disableFilters: true,
+          //disableFilters: true,
+          Filter: AmountRangeColumnFilter,
+          /*options: [
+            { value: '=',     label: '=' },
+            { value: '>',     label: '>' },
+            { value: '<',     label: '<' },
+            { value: '><',    label: '><' }
+          ],*/
           Cell: props => {
             if(props.value===null || props.value===undefined) {
               return null;
