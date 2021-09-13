@@ -243,6 +243,21 @@ function LoanlistD(props) {
           Header: "Applied At",
           accessor: "AppliedAt",
           disableFilters: true
+        },
+        {
+          field: "Email",
+          Header: "Email",
+          accessor: "Email",
+          Cell: obj => {
+            //console.log(obj.row);
+            let loanObj = obj.row.original;
+            let emailVal = loanObj.Email;
+            return (
+              <a href={'mailto:'+emailVal}>
+                {loanObj.Email}
+              </a>
+            );
+          }
         });
       } 
     } 
