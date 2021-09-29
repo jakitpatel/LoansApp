@@ -15,7 +15,7 @@ import AmountRangeColumnFilter from './../../../Filter/AmountRangeColumnFilter';
 //import {API_KEY, Loans_Url, env, SetLoans_Url, Loan_Upload_Doc_Url} from './../../../const';
 const {API_KEY, Loans_Url, LoansD_Url, SetLoans_Url, SetLoansForgive_Url} = window.constVar;
 //import {SBAOptions, BrokerOptions, StatusOptions, applicationStatusOptions, BroketTeamOptions, MentorAssignedOptions, ReviewerAssignedOptions, AkayBrokerOptions} from './../../../commonVar.js';
-const {SBAOptions, BrokerOptions, StatusAutoTeamDOptions, applicationStatusOptions, BroketTeamOptions, MentorAssignedOptions, ReviewerAssignedOptions, AkayBrokerOptions, ForgivenessStatusOptions, TeamDAssignedOptions, StatusTeamDOptions} = window.commonVar;
+const {AppliedAtTeamDOptions, StatusAutoTeamDOptions, TeamDAssignedOptions, StatusTeamDOptions} = window.commonVar;
 
 function LoanlistD(props) {
   
@@ -242,7 +242,9 @@ function LoanlistD(props) {
           field: "AppliedAt",
           Header: "Applied At",
           accessor: "AppliedAt",
-          disableFilters: true
+          Filter: SelectColumnFilter,
+          filter: 'includes',
+          options:AppliedAtTeamDOptions
         },
         {
           field: "Email",

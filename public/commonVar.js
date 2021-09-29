@@ -258,6 +258,14 @@ const ForgivenessStatusOptions = [
     { value: 'Submitted To SBA',  label: 'Submitted To SBA' }
 ];
 
+const AppliedAtTeamDOptions = [
+    { value: '',     label: 'All' },
+    { value: 'is NULL', label: 'NULL' },
+    { value: 'SBA',     label: 'SBA' },
+    { value: 'Fiserv', label: 'Fiserv' },
+    { value: 'Abrigo', label: 'Abrigo' }
+];
+
 window.commonVar = {
     SBAOptions : SBAOptions,
     BrokerOptions : BrokerOptions,
@@ -275,5 +283,6 @@ window.commonVar = {
     internalUserList : internalUserList, 
     UnAssocLoanStatusOptions : UnAssocLoanStatusOptions,
     ForgivenessStatusOptions : ForgivenessStatusOptions,
-    StatusAutoTeamDOptions : StatusAutoTeamDOptions
+    StatusAutoTeamDOptions : StatusAutoTeamDOptions,
+    AppliedAtTeamDOptions : AppliedAtTeamDOptions
 }
