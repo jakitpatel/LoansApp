@@ -61,7 +61,8 @@ const StatusAutoTeamDOptions = [
     { value: 'Fully Approved', label: 'Fully Approved' },
     { value: 'Payment Sent', label: 'Payment Sent' },
     { value: 'Pending Validation', label: 'Pending Validation' },
-    { value: 'Under Review',  label: 'Under Review' }
+    { value: 'Under Review',  label: 'Under Review' },
+    { value: 'Cancelled',  label: 'Cancelled' }
 ]; 
 
 const StatusTeamDOptions = [
