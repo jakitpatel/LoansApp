@@ -340,15 +340,19 @@ function Table({
           ]
         }]);
       } else if(teamInt==="teamd"){
-        /*setAllFilters([{
-          id: "Forgiveness_Status", 
+        setAllFilters([{
+          id: "status", 
           value: [
-            { value: 'Forgiveness Awaiting Documents', label: 'Forgiveness Awaiting Documents' },
-            { value: 'Forgiveness Requested', label: 'Forgiveness Requested' },
-            { value: 'SBA E-Tran Approved',  label: 'SBA E-Tran Approved' },
-            { value: 'Submitted To SBA', label: 'Submitted To SBA' }
+            { value: 'Payment Confirmed',     label: 'Payment Confirmed' },
+            { value: 'is NULL', label: 'NULL' },
+            { value: 'Pending Review', label: 'Pending Review' },
+            { value: 'Lender Additional Info Needed',     label: 'Lender Additional Info Needed' },
+            { value: 'Fully Approved', label: 'Fully Approved' },
+            { value: 'Payment Sent', label: 'Payment Sent' },
+            { value: 'Pending Validation', label: 'Pending Validation' },
+            { value: 'Under Review',  label: 'Under Review' }
           ]
-        }]);*/
+        }]);
       } else if(teamInt==="teamc") {
         //alert(teamInt);
         //alert("Reset All Filters");
