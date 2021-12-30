@@ -29,7 +29,7 @@ function MenuListItem(props) {
 // Stateless Function Component
 function LeftNavBar(props) {
   
-  const { LOAN_ENABLER } = useSelector(state => {
+  const { LOAN_ENABLER, isInternalUser } = useSelector(state => {
     return {
         ...state.userReducer
     }
@@ -57,6 +57,16 @@ function LeftNavBar(props) {
             iconName="dollarSign"
             enableVal={LOAN_ENABLER}
           />
+          <React.Fragment>
+            {!isInternalUser &&
+              <MenuListItem
+                menuName="Forgivness"
+                routePath={`${process.env.PUBLIC_URL}/forgivness`}
+                iconName="dollarSign"
+                enableVal={LOAN_ENABLER}
+              />
+            }
+            </React.Fragment>
           <DownloadProtocol protocol={LoanFAQPdf} name="FAQ" />
         </ul>
       </div>

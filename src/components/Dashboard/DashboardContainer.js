@@ -10,6 +10,7 @@ import LoanDocsList from "./../loans/loandocs/LoanDocsList.js";
 import NavBar from "./../Navbar/navbar";
 import LeftNavBar from "./../Leftnavbar/leftnavbar";
 import DashboardMain from "./DashboardMain";
+import ForgivnessList from "./../forgivness/ForgivnessList";
 
 
 const LoanListWrap = props => {
@@ -30,6 +31,11 @@ const MissingLoanListWrap = props => {
 const LoanDocsListtWrap = props => {
   //console.log(props);
   return <LoanDocsList loanRec={props.location.state} />;
+};
+
+const ForgivnessListWrap = props => {
+  //console.log(props);
+  return <ForgivnessList forgvRec={props.location.state} />;
 };
 
 const routes = [
@@ -57,6 +63,11 @@ const routes = [
     path: "/loandetails/:ALDLoanApplicationNumberOnly",
     exact: true,
     main: LoanDetailsWrap
+  },
+  {
+    path: "/forgivness",
+    exact: true,
+    main: ForgivnessListWrap
   }
 ];
 

@@ -1,3 +1,4 @@
 RedirectMatch /loanapp/loans /loanapp
 RedirectMatch /loanapp/missingloans /loanapp
 RedirectMatch /loanapp/dashboard /loanapp
+RedirectMatch /loanapp/forgivness /loanapp

@@ -4,13 +4,15 @@ import loansReducer from './loansReducer';
 import loanDetailsReducer from './loanDetailsReducer';
 import MissingLoansReducer from './MissingLoansReducer';
 import LoanDocsReducer from './LoanDocsReducer';
+import ForgivnessReducer from './ForgivnessReducer';
 
 const rootReducer = combineReducers({
     userReducer,
     loansReducer,
     loanDetailsReducer,
     MissingLoansReducer,
-    LoanDocsReducer
+    LoanDocsReducer,
+    ForgivnessReducer
 });
 
 export default rootReducer;
