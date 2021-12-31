@@ -31,6 +31,18 @@ const BrokerOptions = [
     { value: 'Skyline Capital', label: 'Skyline Capital' }
 ];
 
+const FrgvStatusOptions = [
+    { value: '',     label: 'All' },
+    { value: 'is NULL', label: 'NULL' },
+    { value: 'Payment Confirmed',     label: 'Payment Confirmed' },
+    { value: 'Pending Review', label: 'Pending Review' },
+    { value: 'Lender Additional Info Needed',            label: 'Lender Additional Info Needed' },
+    { value: 'Payment Sent',         label: 'Payment Sent' },
+    { value: 'Cancelled',         label: 'Cancelled' },
+    { value: 'Pending Validation',    label: 'Pending Validation' },
+    { value: 'Under Review',           label: 'Under Review'}
+];
+
 const StatusOptions = [
     { value: '',     label: 'All' },
     { value: 'is NULL', label: 'NULL' },
@@ -285,5 +297,6 @@ window.commonVar = {
     UnAssocLoanStatusOptions : UnAssocLoanStatusOptions,
     ForgivenessStatusOptions : ForgivenessStatusOptions,
     StatusAutoTeamDOptions : StatusAutoTeamDOptions,
-    AppliedAtTeamDOptions : AppliedAtTeamDOptions
+    AppliedAtTeamDOptions : AppliedAtTeamDOptions,
+    FrgvStatusOptions : FrgvStatusOptions
 }

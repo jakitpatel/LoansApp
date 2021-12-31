@@ -10,7 +10,7 @@ import SelectColumnFilter from './../Filter/SelectColumnFilter.js';
 //import {API_KEY, Loans_Url, env, SetLoans_Url, Loan_Upload_Doc_Url} from './../../../const';
 const {API_KEY, Forgivnesslist_Url, SetMissingLoans_Url} = window.constVar;
 //import { BrokerOptions, UnAssocLoanStatusOptions} from './../../../commonVar.js';
-const { BrokerOptions, StatusOptions} = window.commonVar;
+const { FrgvStatusOptions} = window.commonVar;
 
 function ForgivnessList(props) {
   
@@ -67,15 +67,15 @@ function ForgivnessList(props) {
     }
   },
   {
-    field: "statusIndication",
+    field: "status",
     Header: "Status",
-    accessor: "statusIndication",
+    accessor: "status",
     Filter: SelectColumnFilter,
     filter: 'includes',
-    options:StatusOptions,
+    options:FrgvStatusOptions,
     //editable:true,
     columnType:'list',
-    columnOptions:StatusOptions
+    columnOptions:FrgvStatusOptions
   },
   {
     field: "DisbursementDate",
